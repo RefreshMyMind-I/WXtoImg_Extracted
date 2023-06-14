@@ -1,0 +1,166 @@
+.\" -*- nroff -*-
+.\" Copyright (c) 2001-2005 Central North Publishing Limited.
+.\" All rights reserved.
+.\"
+.\".hla de
+.TH WXTOIMG Calibration  "version 2.7.2"
+.SH Kalibrierung
+.I WXtoImg
+muss für optimale Resultate genau eingestellt und kalibriert werden.  Zunächst
+müssen Sie Ihren Standort eingeben und die neusten Kepler-Daten laden.  Die Kalibrierung
+betrifft zwei Bereiche: die Einstellung der Aufnahmelautstärke und die Abstimmung
+der Sampling-Frequenz mit der Sampling-Rate der Soundkarte.  Diese Kalibrierung
+muss nur einmal vorgenommen werden.
+.PP
+.B Bevor Sie anfangen
+.br
+Verbinden Sie den Audio-Ausgang Ihres Empfängers und den  \fIline\fP Input
+Ihres PCs mit einem passenden Kabel.  Falls Sie einen ICOM PCR1000
+Empfänger benutzen, befolgen Sie genau die Anweisungen im Handbuch
+für die Einstellung der internen Jumper für den Ausgangspegel.
+.PP
+Die polumlaufenden Satelliten
+senden auf 137.10, 137.40, 137.50, 137.62, 137.80 oder 137.9125 FM (50kHz
+oder NFM) und jeder Satellit wird Sie zweimal täglich zu jeweils ungefähr gleichen Uhrzeit
+überfliegen (jede 12 Stunden).  Eventuell können Sie schon Überflüge mit
+niedriger Elevation empfangen, die etwa 1,5 bis 2 Stunden vor und nach dem am
+besten zu empfangenden Überflug stattfinden.  Beachten Sie, dass ein
+Satellit aus verschiedenen Gründen wie z. B. der Jahreszeit, der Tageszeit,
+der Abhängigkeit von anderen Satelliten (bewegen sich zu dicht nebeneinander
+bei gleicher Sendefrequenz), der Funktionalität an sich u. ä., manchmal nicht sendet.
+Ein guter Überflug dauert ungefähr 15 Minuten.  Im aktivierten Aufnahmemodus
+zeigt WXtoImg jeweils den nächsten Überflug mit Uhrzeit und Sendefrequenz
+an.
+.PP
+.B Eingabe Ihres Standortes
+.br
+Wählen Sie  \fIGround Station Location\fP im \fIOptions\fP Menü.
+Geben Sie den Namen Ihrer Stadt und das Land ein.  Für Städte
+mit mehr als 100.000 Einwohnern wird durch Klick auf \fILookup Lat/Lon\fP
+automatisch der Längen- und Breitengrad ermittelt.  Wenn Sie sich
+auf See befinden, suchen Sie sich eine Benamung aus, die Ihren
+gegenwärtigen Aufenthaltsort beschreibt.
+.PP
+Sollte es nicht möglich sein, den Längen- und Breitengrad automatisch
+ermitteln zu lassen, müssen Sie diese manuell eingeben.  Die Angaben
+werden in Grad mit Kommastellen erwartet (z. B. 52.500; nicht 52:30
+oder 52:30:00, 52:30.00).  Für Nord und Ost gelten positive Zahlen, für
+Süd und West negative.  Wenn Sie diese Angaben nicht kennen, geben
+Sie die nächstgelegene Stadt mit mehr als 100.000 Einwohnern ein
+und klicken Sie auf \fILookup Lat/Lon\fP.  Für die Höhenangabe geben
+Sie im Zweifel 0.0 ein.
+.PP
+.B Kepler-Daten aktualisieren
+.br
+Verbinden Sie sich mit dem Internet und wählen Sie \fIUpdate Keplers\fP im \fIFile\fP
+Menü (dies lädt die aktuellen Elemente für Wettersatelliten).  Wenn Sie 
+keinen Internetzugang haben übergehen Sie diesen Schritt und aktivieren
+\fIDisable Map Overlay\fP im \fIOptions\fP Menü.
+.PP
+.B Überflüge für den eigenen Standort feststellen
+.br
+Wählen Sie \fISatellite Pass List\fP im \fIFile\fP Menü.  Jetzt erhalten Sie
+eine Liste mit Überflügen für die kommenden 7 Tage.  Die Zeiten werden jeweils
+in lokaler und UTC Zeit angegeben.
+.PP
+.B Einstellung der Lautstärke
+.br
+Stellen Sie den Lautstärkeregler an Ihrem Empfänger auf einen mittleren Pegel, dann
+wählen Sie \fIMixer Control...\fP im \fIFile\fP Menü.  Wählen Sie die Quelle aus
+an der Ihr Empfänger angeschlossen ist (normalerweise Line In), stellen Sie die
+PCM und Recording (Aufnahme) Pegel (nur Linux) ganz nach oben.
+Stellen Sie den Line Pegel (Linux und Windows) ungefähr in die Mitte.  Stellen
+Sie igain (nur Linux) auf den mittleren Wert.  Für die Lautstärke und Line-Pegel
+ist es besser zu niedrig als zu hoch anzufangen.
+.PP
+Unter Windows 95 wählen Sie \fIProperties\fP im \fIOptions\fP Menü beim Mixer
+und wählen Sie den \fIRecording\fP Button aus und überprüfen die \fILine\fP Lautstärke
+bevor Sie die Einstellungen wie oben beschrieben vornehmen.
+.PP
+Wählen Sie \fIRecord...\fP im \fIFile\fP Menü und klicken Sie \fIAuto Record\fP.
+.PP
+Warten Sie auf einen Satelliten.  WXtoImg zeigt in der Statuszeile an, wann der nächste Satellit
+erwartet wird (in UTC) und auf welcher Frequenz er sendet.
+.PP
+WXtoImg wird den Überflug aufnehmen - während dessen wird ggf. ein Bild gezeigt.
+Stören Sie sich zum jetzigen Zeitpunkt nicht an einer zu grossen Helligkeit/Dunkelheit
+oder anderen Erscheinungen.  Bei der Einstellung der Lautstärke sollten Sie niemals
+das Bild als Maßstab benutzen, sondern immer wie unten beschrieben vorgehen.  Nach
+Beenden der Aufnahme wird WXtoImg eine Karte erzeugen und die Aufnahme dekodieren.
+Es wird jetzt versucht das bestmögliche Ergebnis zu erzielen.
+.PP
+Vermeiden Sie während der Aufnahme die Scroll-Balken zu benutzen, dies stört möglicherweise
+und die Aufnahme und teilt das Bild horizontal.
+.PP
+Die vom Programm angezeigte Lautstärke (vol) wird während der Aufnahme angezeigt.  Wird beim
+Überflug eines Satelliten in der Statuszeile immer noch "waiting for carrier" oder "waiting for
+signal" angezeigt, ist die Empfänger-Lautstärke zu niedrig oder der Mixer Input Pegel zu
+niedrig eingestellt.  Erhöhen Sie in diesem Fall langsam die eine oder beide Einstellungen
+bis in der Statuszeile angezeigt wird, dass eine Aufnahme erfolgt.  Die Lautstärke des Empfängers
+(oder der Aufnahmepegel im Mixer) können einfach während des Überflugs angepasst werden,
+bis die Anzeige von vol zwischen 50.0 und 75.0 liegt.  Sollte der Empfänger keine Lautstärkeregelung
+besitzen oder der Lautstärkeregler nicht den von Ihnen gewählten Ausgang beeinflussen, passen
+Sie die Mixer-Einstellungen an (recording, igain oder input line Pegel) bis der angezeigte Wert
+für vol zwischen 50.0 und 75.0 liegt.  Der Lautstärkebalken sollte während des Empfangs grün sein.
+Rot oder gelb zeigen zu hohe oder zu niedrige Werte an.
+.PP
+Das Bild wird nach dem Überflug dekodiert.  Wenn dies beendet ist, wird eine mittlere
+Lautstärke rechts in der Statuszeile angezeigt.
+.PP
+Dieser Wert sollte sich zwischen 40.0 und 85.0 bewegen.  Höhere Werte (z. B. 90.2) zeigen an,
+dass die Lautstärke reduziert werden sollte; niedrigere (z. B. 24.7) zeigen an, dass die Lautstärke
+erhöht werden muss.
+.PP
+Ist die Lautstärke zu hoch eingestellt, werden die empfangenen Daten beschnitten und es werden
+in den weissen Bereich weniger Details dargestellt.  Ist die Lautstärke zu niedrig, gehen im ganzen
+Bild Detailinformationen verloren.
+.PP
+Ausser für diese Kalibrierung vermeiden Sie es bitte, die Lautstärke während eines
+Überflugs zu ändern.  Die Änderung der Lautstärke würde dann unterschiedlich
+helle Bereiche erzeugen und die Temperatur-Kalibrierung beeinflussen.
+.PP
+.B Einstellung der Sampling-Frequenz (Slant Correction)
+.br
+Starten Sie durch Auswahl von \fIDisable PLL\fP im \fIOptions\fP Menü. 
+Dies sollte der einzige ausgewählte Punkt in diesem Menü sein.  Das Ausschalten der PLL ermöglicht eine exaktere Einstellung der Sampling-Rate. 
+.PP
+Jetzt wählen Sie eine Aufnahme zur Dekodierung aus.  Öffnen Sie hierzu \fIOpen Audio File...\fP im
+\fIFile\fP Menü und wählen Sie eine Aufnahme.  Idealerweise verwenden Sie
+eine Aufnahme eines NOAA-Satelliten (das berechnete Bild besteht aus zwei nebeneinander
+dargestellten Bildern).
+.PP
+Warten Sie nun bis das Bild dekodiert und angezeigt wird.  Das Bild wird im
+Verlauf leicht verschoben sein - das ist bei abgeschalteter PLL normal auf
+Grund der Doppler-Verschiebung.
+.PP
+Wählen Sie \fISlant Correction...\fP im \fIImage\fP Menü.  Scrollen Sie
+an den Anfang des Bildes und klicken Sie dort auf den Anfang einer
+schrägen vertikalen Linie.  Halten Sie die Maustaste gedrückt und ziehen
+Sie eine Linie entlang der schrägen Linie im Bild bis an den unteren
+Bildrand - lassen Sie das Bild bis dahin durchscrollen - und lassen
+dort die Taste los.
+.PP
+Es öffnet sich ein Fenster und zeigt die vorgeschlagene Sampling-Rate an.
+Das Programm WXtoImg kann die Sampling-Raten für alle weiteren Satelliten
+schätzen.  Wählen Sie die \fIEstimate and set sampling frequencies for all
+satellites\fP Option wenn Sie nicht bereits ausgewählt ist und klicken
+\fISet\fP.
+.PP
+Entfernen Sie die Auswahl bei \fIDisable PLL\fP im \fIOptions\fP Menü.  Das
+Bild wird jetzt erneut dekodiert und sollte genau senkrecht verlaufen.
+Ist es immer noch verschoben, kontrollieren Sie ob die Auswahl bei
+\fIDisable PLL\fP im \fIOptions\fP Menü tatsächlich entfernt wurde.
+Ggf. müssen Sie diesen Vorgang wiederholen und genau auf die hier
+gemachten Anweisungen achten.
+.PP
+Während die meisten Optionen standardmässig beim Verlassen des Programms
+gespeichert werden, müssen Sie die Sampling-Frequenzen durch \fISave Options\fP
+im \fIOptions\fP Menü separat speichern.
+.PP
+Sie können eventuell noch bessere Ergebnisse erhalten, wenn Sie diesen
+Vorgang für andere Satellitentypen wiederholen - jedoch mit der Auswahl
+\fISet only XXX sampling frequency\fP.  Dies ist am wahrscheinlichsten
+für die Meteosat- und Okean-Satelliten nützlich, da diese sehr genaue
+Einstellungen benötigen.
+.SH Copyright
+Copyright (c) 2001-2005 Central North Publishing Limited.  All rights reserved.

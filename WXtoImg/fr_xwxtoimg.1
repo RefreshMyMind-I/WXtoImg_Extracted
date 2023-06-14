@@ -1,0 +1,836 @@
+.\" -*- nroff -*-
+.\"
+.\" Copyright (c) 2001-2004 Central North Publishing Limited.
+.\" All rights reserved.
+.\"
+.\".hla fr
+.TH WXTOIMG GUI "Versión 2.7.3"
+.SH introduction
+\fIWXtoImg\fP est un logiciel entièrement automatisé pour l'enregistrement, le décodage, l'édition et le visionnage d'images de satellites météorologiques. \fIWXtoImg\fP soutient les recouvrements de carte, les améliorations de couleurs avancées, images 3-D, animations, images à plusieurs passages, transformations de projections (par exemple Mercator), textes de recouvrements, création de page web automatisée, affichage de température et contrôle de plusieurs types de récepteurs pour satellites météorologiques, ainsi que des récepteurs de communications et scanners.
+.PP
+\fIWXtoImg\fP soutient, les transmissions APT des satellites à orbite polaire et les transmissions WEFAX des satellites géostationnaires. \fIWXtoImg\fP dispose d'équipements divers pour faciliter le traitement d'image, mais peut aussi produire des images brutes pour de nouveau traitement. La sortie est en JPEG, PNG, BMP, PBM (PGM/PPM/PNM), ou format AVI.
+.PP
+\fIWXtoImg\fP
+essaye de produire des images appréciables à partir des récepteurs qui ont une largeur de bande IF trop étroite (par exemple des scanners) bien qu'il y ait des limitations sur ce qui peut être fait.
+.PP
+\fIWXtoImg\fP
+utilise les données de télémétries sur les images APT de NOAA pour calibrer très exactement l'image, corriger les non-linéarités dans la force du signal et faire les ajustements pour les changements de gain à travers le passage. Les données de télémétries sont aussi utilisées pour étalonner les instruments pour fournir des lectures de température très précises.
+.PP
+Sur les satellites GOES, l'échelle de gris est employée pour corriger les non-linéarités dans la force du signal
+et pour normaliser l'image. L'étalonnage précis de la température sur les images IR est aussi effectué.
+.PP
+Sur d'autres satellites, l'échelle de gris et les barres noires et blanches sont employées pour ajuster le gain.
+.PP
+\fIWXtoImg\fP
+utilise une technique PLL pour corriger l'effet doppler et pour assurer des images droites sur les satellites NOAA même en présence de niveaux de bruit  très élevé ou un signal de faible qualité. Un cycle burst PLL est employé sur les satellites Meteor et Resurs pour corriger l'effet doppler et aider à avoir des images droites.
+.PP
+.SH Information des lignes de statut
+En haut de l'affichage de WXtoImg il y a plusieurs onglets  (Image, Fichiers Audio, Images Brutes, et Images Sauvegardées). Les versions améliorées auront également des images Composées et des Animations. Le premier onglet (Image), est l'affichage principal de WXtoImg. C'est ou bien une image décodée qui sera montrée ou l'image sera affichée tout en enregistrant. Tous les autres onglets montrent les miniatures des fichiers audio, des images brutes, des images sauvegardées, ou des animations qui ont été créées par WXtoImg. Notez que les images ou les fichiers audio copiés manuellement dans les répertoires de WxtoImg  ne seront pas montrés. Le clic sur une miniature ouvrira le fichier associé. Ceci fournit un moyen facile de passer en revue les passages du jour (ou semaine ou mois) d'un satellite.
+.PP
+En haut de l'écran de WXtoImg, au-dessus de l'image, il y a la ligne d'information. Quand une image est montrée, la ligne d'information montrera le nom ou le type de satellite ainsi que la date et le temps (en UTC) quand l'image commence. Pour les satellites APT la direction de voyage, l'élévation maximale (en degrés au-dessus de l'horizon) et l'azimut (E ou W) à l'élévation maximale seront montrés quand disponible. Pour les satellites APT NOAA, les deux canaux seront également donnés. Pour les images WEFAX, l'information d'en-tête numérique sera également fournie dans la parenthèse (si disponible).
+.PP
+En bas de l'écran de WXtoImg, au-dessous de l'image, il y a deux lignes de statut. La ligne inférieure indique le traitement qui est exécuté, montre des avertissements et parfois des conseils. La ligne de statut au dessus est divisée en un certain nombre de sections, la section à l'extrême gauche montre l'heure UTC actuelle. Vers la droite se trouve la ligne de la sous-information, celle-ci montre habituellement l'élévation satellite et l'azimut dans l'image où le curseur se trouve, tandis que l'enregistrement montrera des informations enregistrées sur l'emplacement du satellite et par moment on peut montrer d'autres informations. Ensuite, vers la droite, se trouve l'affichage de la latitude et de la longitude -- quand le curseur est sur une image qui a une carte de recouvrement associée celui-ci montrera la latitude et la longitude (WGS84) sous le curseur. Ensuite l'affichage de la distance, montrant la distance de l'emplacement de la station au sol à l'emplacement où se trouve le curseur. Juste vers la droite de ceci se trouve l'indication de la température. En affichant les images NOAA ou GOES, la température sous le curseur est montrée dans cette section. Les unités de température (C, F, ou K) peuvent être changées sous \fIGUI Options\fP dans le menu \fIOptions\fP. À la droite de l'indicateur de température se situe les secondes dans l'affichage d'enregistrement. Ceci donne le nombre de secondes dans l'enregistrement sous le curseur. Ceci est particulièrement utile en utilisant \fIPartial Decode \fPpour déterminer quelle partie du signal doit être décodée. La section à l'extrême droite donne le volume employé en décodant l'image. Pendant l'enregistrement elle montre le volume. Normalement le volume du récepteur devrait être ajusté et il devrait montrer un volume entre 50.0 et 75.0 (voir \fIRequired Calibration \fPsous le menu \fIHelp\fP pour plus de détails).
+.PP
+.SH Menu Fichiers
+Ce menu est utilisé pour choisir le fichier à décoder et le nom de fichier images à sauvegarder. Il est aussi employé pour commencer le processus de décodage.
+.TP 10
+\fIOpen Audio File...\fP
+Choisit un fichier audio pour le futur décodage. Le décodage commencera automatiquement aussi longtemps que \fBDisable auto-decode \fPn'est pas choisi dans le menu \fBOptions\fP. Les fichiers d'entrée audio peuvent être ou bien en AU \fI(.au)\fP, WAVE \fI(.wav)\fP, ou  \fIraw\fP ( 8-bit LSB non signé ou 16-bit signé). Les fichiers doivent être codés dans le format linéaire PCM à 11025 échantillons par seconde. Ou 8, 16, ou bien 32 bits par échantillon sont acceptable, mais 8 bit par échantillon d'enregistrement  \fIne contiennent pas\fP assez d'information pour produire des images de bonne qualité. 16 bit par échantillon sont fortement  recommandés. Les fichiers audio doivent être mono. Si un fichier stéréo (ou plusieurs canaux ) est employé le programme ignorera tous sauf un canal. Il est fortement recommandé que seulement les fichiers audio mono, soient employés.
+.TP 10
+\fIOpen Raw Image...\fP
+\fIWXtoImg\fP peut lire les images brutes en\fI PNG\fP,\fI PBM \fP(PGM), ou les formats\fI NOA\fP.Ceci accélère considérablement la durée de traitement sur la lecture du fichier audio. Le décodage commencera automatiquement tant que\fB Disable auto-decode \fPest non sélectionné dans le menu \fBOptions\fP. Les fichiers de format \fINOA\fP sont produit par certains systèmes de réception satellite. Ces images doivent généralement être brutes à 16 bit d'images d'échelle de gris. Les images \fIJPEG\fP, \fIBMP\fP, \fIAVI\fP ou autres formats ne peuvent pas être lu par WXtoImg. Notez que \fBResync, Interpolate \fPet\fB Disable PLL \fPet les réglages de la cadence d'échantillonnage ne sont pas affectés en traitant ces images. Ces réglages s'appliquent seulement quand les fichiers audio sont décodés.
+.TP 10
+\fISave Image As...\fP
+Sauvegarde l'image actuellement montrée. Le format de sortie employé est spécifié par l'extension de nom de fichier (JPEG, PNG,BMP, PNM, AVI) . Si vous n'employez pas d'extension, ou l'extension ne s'applique pas à un des formats soutenus, le format sera le jeu par défaut dans \fBImage and Movie Options\fP.. sous le menu \fBOptions\fP.
+.TP 10
+\fIComposite Image to...\fP
+Sauvegarde l'image actuellement montrée au fichier donné. Si le fichier actuel existe et que vous le recopiez, alors (semblable à la transparence AVI) le fichier sera mis à jour de sorte que l'image originale seulement sera recopiée à l'endroit où l'image actuelle contient les données satellites valides. En choisissant une projection autre que\fI Normal\fP et les réglages de\fI Projection Options \fPsur un large secteur autour de votre emplacement, une image utilisant plusieurs passages satellites peut être créé.
+.TP 10
+\fISave Raw Image as...\fP
+Sauvegarde l'image brute 16 bit au format PNG. Les images brutes sont utiles car elles peuvent être lues en utilisant \fBOpen Raw Image...\fP et peuvent être traitées pour produire toutes les différentes améliorations. Notez que les options\fB Resync\fP, \fBInterpolate\fP, et \fBDisable PLL \fPet les réglages de la cadence d'échantillonnage ne sont pas affectés en traitant les images brutes.
+.TP 10
+\fIMixer Control...\fP
+Lance la table de mixage pour choisir la source d'entrée d'enregistrement, et contrôler le volume d'enregistrement.
+.TP 10
+\fIRecord...\fP
+Commence le processus d'enregistrement. Permet le choix de savoir si l'image doit être décodée et si le fichier audio et/ou l'image brute doivent être sauvegardés. Tient aussi compte d'une série d'images ou de films à créer. Ces réglages sont aussi employés pour la commande \fIAuto Process\fP. Les options pour lesquelles les améliorations doivent être produites et les noms de fichier pour les images et les films peuvent être mis en cliquant sur les boutons de réglages associés. Voir la section \fIModèle de nom de fichier \fPpour une description sur la façon dont les noms de fichiers sont choisis. D'autres aspects du processus d'enregistrement (par exemple bits par échantillon) et si l'enregistrement est squelch ou le passage du satellite principal  peut être changé dans \fBRecording Options.. \fPdans le menu\fB Options\fP. Le traitement d'enregistrement (et de décodage) est arrêté en choisissant \fBStop\fP du menu \fBFile\fP. Le réglage \fIMinimum percent of projection filled\fP (versions améliorées seulement) met hors service la sauvegarde des images et l'ajout d'images de film quand l'image résultante contient moins que le pourcentage choisi de pixel rempli. Notez que les images ne sont jamais sauvegardées si la projection n'avait aucun pixel rempli. Par défaut c'est 0.1 %. Le réglage \fIMinimum solar elevation for visible images \fP(versions mises à niveau seulement) met hors service la sauvegarde des images qui utilisent les capteurs de lumière visible sur le satellite et où l'altitude solaire du centre du passage est moins que le réglage. Par défaut le 0 indique que les images doivent être sauvegardées indépendamment de l'élévation solaire.
+.TP 10
+\fIRecord only (show image if enabled)\fP
+Enregistre les satellites selon les réglages de \fIRecording Options  \fPdu menu options. Une image non traitée sera montrée tout en enregistrant si ceci est permis dans \fIGUI Options\fP. N'effectue pas de traitement complémentaire. Ces enregistrements peuvent être plus tard décodés en employant \fIOpen Audio File \fPsous le menu\fI File\fP ou par clic sur la miniature de l'onglet \fIAudio Files\fP.
+.TP 10
+\fIRecord and auto process\fP
+Enregistre les satellites selon les réglages de \fIRecording Options\fP sous le menu options. Après l'enregistrement, l'audio est décodé et montré en utilisant les réglages sous les menus \fIEnhancements, Options\fP, et \fIProjection. \fPUn certain nombre d'options peuvent être permises pour créer un ensemble d'images, ajouter des images aux animations, créer des images composées, et créer des pages web (voir la FAQ pour les informations détaillées sur créer des pages web). Ces réglages sont aussi employés par la commande \fIAuto Process\fP dans le menu\fI File\fP. En plus, le fichier audio et/ou le fichier de carte (produit pour les recouvrements de carte) peut être enlevé après que le traitement soit fini.
+.TP 10
+\fIDecode\fP
+Démarre le processus de décodage. Le décodage est automatiquement commencé après qu'un fichier soit ouvert ou que la direction ou l'amélioration soit changée. Le décodage automatique peut être mis hors service par la sélection de \fBDisable auto-decode \fPdans le menu\fB Options\fP. Le départ manuel du processus de décodage est toujours exigé après que toutes les options sous le menu \fBOptions\fP aient été changées, ou quand le\fB Satellite\fP a été changé.
+.TP 10
+\fIPartial Decode\fP
+Semblable à \fBDecode\fP mais le début est coupé (choisir le nombre de secondes pour commencer le décodage) et la longueur (choisir le nombre de secondes pour arrêter de décoder) peut être indiquée. C'est utile quand un enregistrement contient des signaux de deux ou plusieurs satellites. C'est aussi utile pour d'une certaine façon couper l'image, en décodant seulement la bonne partie de l'image. Quand on permet les incrustations de texte, ceci à un avantage sur l'utilisation de la commande \fICrop\fP du menu \fIImage\fP parce que les incrustations de texte seront correctement placées dans l'image finale.
+.TP 10
+\fIAuto Process\fP
+Construit et sauvegarde les images et ajoute des images aux films selon les réglages dans \fIRecord\fP (sous le menu \fIFile\fP). Notez que ce traitement n'enlèvera pas les fichiers audio ni fichiers de carte même si ces options sont choisies dans les réglages d'enregistrements.
+.TP 10
+\fIView Image...\fP
+Permet de voir les images. Le format des fichiers en PNG, JPEG, BMP ou PBM (PGM/PPM) peut être vu. Les transformations d'image sous le menu \fIImage\fP peuvent être employées pour éditer les images. Les améliorations et les options ne sont pas applicables à ces images (utiliser \fIOpen Raw Image \fPau lieu de ceci). Les images peuvent être sauvegardées en utilisant le dialogue \fISave Image as... \fPsous le menu \fIFile\fP. En outre, pour les images produites par WXtoImg, l'image peut être géométriquement transformée en utilisant les projections sous le menu \fIProjection\fP.
+.TP 10
+\fIView Movie...\fP
+Permet de voir l'animation AVI. Sous Windows, Direct X version 8.0 ou au dessus doit être installé (notez que pour les utilisateurs de XP, Direct X sera déjà installé). Direct X peut être obtenu à:
+.nf
+    http://www.microsoft.com/directx
+.fi
+.PP
+Sous *NIX xanim doit être installé pour voir les films AVI. Il peut être obtenu à: 
+.nf
+    http://xanim.va.pubnix.com/home.html
+.fi
+.PP
+.TP 10
+\fIUpdate Web Page\fP
+Publie manuellement (via  FTP) la page web actuelle. Ceci n'ajoute pas une image à la page web. Il est utile quand \fIAutomatically FTP as images are added\fP n'est pas choisi dans\fI Web Page Settings\fP sous \fIRecord \fPdans le menu\fI File \fPet est typiquement employé pour transférer la page web manuellement sur un serveur Internet.
+.TP 10
+\fIImage Properties...\fP
+Montre une fenêtre donnant l'information de l'image affichée.
+.TP 10
+\fIProcessing Info...\fP
+Montre une fenêtre donnant l'information de ce qui est apparu sur la ligne d'état pendant le traitement de l'image.
+.TP 10
+\fIUpdate Keplers\fP
+Utilise Internet pour se connecter à www.celestrak.com et télécharge les derniers éléments orbitaux pour satellites météorologiques. Les éléments orbitaux ont besoin d'être mis à jour régulièrement pour utiliser la fonction de recouvrement des passages basés sur les options d'enregistrement. Les données képlers trop anciennes provoqueront un recouvrement sensiblement inexact. Il est recommandé que les données képlers soient mises à jour au moins une fois par semaine si le recouvrement est utilisé. Pour le placement très précis du recouvrement, on recommande des mises à jour quotidienne ou même deux fois par jour.
+.TP 10
+\fISatellite Pass List...\fP
+Montre une liste de passages satellites qui sont prévus pour être enregistrés du jour actuel jusqu'au temps indiqué en avant (par défaut 1 semaine). La liste de passages montre seulement les satellites choisis dans \fIActive APT Satellites\fP sous le menu \fIOptions\fP. Elle est aussi affectée par \fIRecording Options.
+.TP 10
+\fIClear\fP
+Ferme n'importe quelle image étant vue et nettoie l'affichage. Notez que WxtoImg n'incite pas à sauvegarder l'image puisque l'image peut être régénérée plus tard  par le fichier wave original ou par l'image brute.
+.TP 10
+\fIStop\fP
+En enregistrant ou en décodant, ceci arrête le processus de décodage ou d'enregistrement avant qu'il ne finisse.
+.TP 10
+\fIExit\fP, \fIQuit\fB
+Termine le programme. Sur MacOS X, la commande \fIQuit\fP peut être trouvée sous le menu \fIWXtoImg\fP.
+.PP
+.SH Menu Direction
+Ce menu est disponible seulement si on permet le mode expert (voir \fIOptions \fP- > GUI Options). Met la direction du passage pour les satellites à orbite polaire. Ce réglage est ignoré en traitant les images WEFAX. Le réglage est aussi ignoré si l'appui de carte et de projection \fI(GUI Options\fP sous le menu \fIOptions\fP) est permis puisque le programme déterminera la direction.
+.TP 10
+\fIAutodetect\fP
+Utilise la dernière modification temps du fichier d'entrée pour faire une supposition vers quelle direction le satellite voyageait. Cette option ne fonctionnera pas correctement si le fuseau horaire du PC n'est pas mis correctement, si l'horloge est décalée de manière significative, ou si la station est aussi trop près d'un pôle. En outre ceci exige que la période temps sur le fichier représente le temps du passage du satellite.
+.TP 10
+\fISouth->North\fP
+Passage en direction du nord (montant). Le satellite se déplace du sud au nord. Dans ce cas l'image est  retournée à 180 degrés. Pour les images combinées APT de NOAA,  l'image est par la suite décalée d'1/2 c'est la largeur pour que les canaux A et  B reste sur leurs côtés originaux de l'image combinée.
+.TP 10
+\fINorth->South\fP
+Passage en direction du sud (descendant). Le satellite se déplace du nord au sud.
+.SH Menu Satellite 
+Choisit le satellite à décoder. Dans des circonstances normales, pour les satellites à orbite polaire, ceci doit être mis sur \fIAutodetect APT\fP. Pour les satellites géostationnaires choisissez GOES,  \fIMeteosat\fP, ou \fIGMS\fP. Seulement dans des circonstances spéciales (quand le contrôle du récepteur n'est pas disponible et que plusieurs satellites sont au-dessus, et que le mauvais satellite est enregistré, ou en décodant de vieux fichiers audio créés selon d'autres programmes avec des dates ou périodes imprécises), si le satellite spécifique est choisi. Les options spécifiques des satellites sont seulement disponibles si on permet le mode expert (voir Options - > GUI Options).
+.TP 10
+\fIAutodetect APT\fP
+La détection automatique se limite à la vérification pour des images APT aux satellites à orbite polaire. Ceci accélère le processus de détection.
+.TP 10
+\fIMeteosat \fP
+Décode les images WEFAX des satellites géostationnaires Meteosat.
+.TP 10
+\fIGOES  \fP
+Décode les images WEFAX des satellites géostationnaires GOES de NOAA.
+.TP 10
+\fIGMS  \fP
+Décode les images WEFAX des satellites géostationnaire GMS.
+.TP 10
+\fIAutodetect \fP
+La détection automatique essaye de déterminer le satellite en utilisant le signal et le traitement d'image. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options).
+.TP 10
+\fIAutodetect WEFAX\FP
+La détection automatique est limitée à la vérification des satellites géostationnaires pour les images WEFAX. Il vaut bien mieux choisir le satellite géostationnaire spécifique (GOES, Meteosat), plutôt que l'utilisation de cette option. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.TP 10
+\fINOAA  \fP
+Décode les images APT des satellites à orbite polaire NOAA (POES). Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options).
+.TP 10
+\fIMeteor (séries 3)\fP
+Décode les images APT des satellites russes de la série Meteor 3. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options).
+.TP 10
+\fIMeteor (séries 2)\fP
+Décode les images APT des satellites russes de la série Meteor 2. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options).
+.TP 10
+\fIResurs  \fP
+Décode les images APT des satellites russes Resurs. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options\fI).
+.TP 10
+\fIOkean  \fP
+Décode les images APT des satellites russes Okean. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options)\fI.
+.TP 10
+\fISICH \fP
+Décode les images APT des satellites russes SICH. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options)\fI.
+.TP 10
+\fINOAA 12\fP
+Décode les images APT des satellites à orbite polaire NOAA (POES) et les jeux d'étalonnage de température de surface de mer de NOAA 12. Si l'amélioration \fBSea surface temp\fP n'est pas employée, cette option est équivalente à\fI NOAA\fP. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options)\fI.
+.TP 10
+\fINOAA 14\fP
+Décode les images APT des satellites à orbite polaire NOAA (POES) et les jeux d'étalonnage de température de surface de mer de NOAA 14. Si l'amélioration\fB Sea surface temp\fP n'est pas employée, cette option est équivalente à\fI NOAA\fP. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options).
+.TP 10
+\fINOAA 15\fP
+Décode les images APT des satellites à orbite polaire NOAA (POES) et les jeux d'étalonnage de température de surface de mer de NOAA 15. Si l'amélioration\fB Sea surface temp\fP n'est pas employée, cette option est équivalente à\fI NOAA\fP. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options)\fI.
+.TP 10
+\fINOAA 16\fP
+Décode les images APT des satellites à orbite polaire NOAA (POES) et les jeux d'étalonnage de température de surface de mer de NOAA 16. Si l'amélioration\fB Sea surface temp\fP n'est pas employée, cette option est équivalente à\fI NOAA\fP. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options)\fI.
+.TP 10
+\fINOAA 17\fP
+Décode les images APT des satellites à orbite polaire NOAA (POES) et les jeux d'étalonnage de température de surface de mer de NOAA 17. Si l'amélioration\fB Sea surface temp\fP n'est pas employée, cette option est équivalente à\fI NOAA\fP. Cette option est disponible seulement si on permet le mode expert (voir Options - > GUI Options).
+.SH Menu Améliorations 
+Le menu\fB Enhancements\fP fournit une large gamme d'améliorations. Le changement de l'amélioration commencera automatiquement le processus de décodage à moins que\fB Disable auto-decode \fPest choisi dans le menu \fBOptions\fP.
+.TP 10
+\fINormal\fP
+Produit une image normale, en utilisant Gamma, Sharpening, Despeckling etc.. des réglages.
+.TP 10
+\fIPristine  \fP
+Fabrique un produit d'origine (la meilleure représentation de données numériques d'origines).Typiquement employé pour produire des images pour de nouveau traitement par d'autres logiciels. Les images originales sont améliorées, mais à la différence des images brutes elles ont été normalisées pour produire des images qui représentent, le mieux possible ce que peut faire le logiciel, les données originales numériques. Aucune tentative n'est faite sur la température normalisée des images IR. Met hors service le gamma, l'accentuation, la rotation, le déchatoiement et autres améliorations.
+.TP 10
+\fIContrast enhance\fP
+L'amélioration du contraste est exécutée selon le réglage\fI Contrast\fP dans le menu \fIOptions\fP.
+.TP 10
+\fIBlack and white\fP
+Crée une image noire et blanche, plaçant les pixels plus foncés aux pixels noirs et les pixels plus clairs aux pixels blancs.
+.TP 10
+
+\fIContrast enhance (NOAA ch A only)\fP
+L'amélioration du contraste est exécutée seulement sur l'image du canal A de NOAA selon le réglage\fI Contrast\fP dans le menu \fIOptions\fP. L'autre image n'est pas montrée.
+.TP 10
+\fIContrast enhance (NOAA ch B only)\fP
+L'amélioration du contraste est exécutée seulement sur l'image du canal B de NOAA selon le réglage\fI Contrast\fP dans le menu \fIOptions\fP. L'autre image n'est pas montrée
+.TP 10
+\fIMCIR map colour IR (NOAA)\fP
+Colore l'image IR du capteur 4 de NOAA utilisant une carte pour colorier la mer en bleu et la terre en vert. De hauts nuages apparaissent blancs, les nuages inférieurs gris ou terre/mer sont colorés, les nuages apparaissent généralement plus clairs, mais la distinction entre terre/mer et nuage bas peut être difficile. Des couleurs plus sombres indiquent des régions plus chaudes.
+.TP 10
+\fIMSA Multispectral analysis (NOAA-# 2-4)\fP
+Analyse multispectrale. Utilise l'image des canaux 2-4 de NOAA et détermine quelles régions sont le plus susceptibles d'être ou des nuages, ou de la terre, ou de la mer, basée sur une analyse des deux images. Produit une image fausse couleur vive en conséquence. Il y a plusieurs options qui affectent la coloration de ces images dans \fIImage and Movie Options...\fP sous le menu \fIOptions\fP. Cette amélioration n'utilise pas de palette, ce n'est pas non plus la température normalisée.
+.TP 10
+\fIMSA with precipitation (NOAA-# 2-4)\fP
+Identique à l'analyse multispectrale MSA , mais les hauts sommets de nuages froids sont colorés la même que \fINO enhancement\fP pour donner une indication approximative de la probabilité et intensité de précipitation.
+.TP 10
+\fIMSA anaglyph false 3-D (NOAA-# 2-4)\fP
+Identique à l'analyse multispectrale MSA, mais crée une image 3-D anaglyphe (doit être vue avec des verres rouges/bleus). Opérationnel seulement si le logiciel a été mis à niveau.
+.TP 10
+\fIHVCT false-colour (NOAA 2-4)\fP
+Semblable à HVC (ci-dessous), mais avec de l'eau bleue et avec des couleurs plus indicatives de températures de terre.
+.TP 10
+\fIHVCT with precipitation (NOAA 2-4)\fP
+Identique à la fausse couleur HVCT, mais les hauts sommets de nuages froids sont colorés, la même que \fINO enhancement\fP pour donner une indication approximative de la probabilité et intensité de précipitation.
+.TP 10
+\fIHVC false-colour (NOAA 2-4)\fP
+Crée une image APT de NOAA fausse couleur basée sur la température en utilisant le modèle HVC. Emploie la température tirée de l'image du capteur 4 pour choisir la nuance et la brillance de l'égalisation d'histogramme de l'image du canal A  (ou de l'image du canal B si l'option \fIUse other sensor\fP est choisie) pour choisir la valeur et chroma. Le modèle de couleur HVC essaye de s'assurer que les différentes couleurs à la même valeur sembleront à l' oeil être de la même brillance, et l'espacement entre les couleurs représentant chaque degré semblera à l' oeil être semblable. Les secteurs brillants sont complètement non saturés dans ce modèle.
+.TP 10
+\fISea surface temp (NOAA-# 3-4)\fP
+Crée une image APT de NOAA fausse couleur basée sur la température de surface de la mer. Emploie la température de surface de mer tirée de l'image du capteur 3 et 4 pour colorer l'image. Aucune tentative n'est faite pour distinguer le nuage ou la terre de la mer. La température de surface de mer peut être incorrecte dû à la présence de nuages fins ou petits dans le pixel évalué, ou du bruit dans le signal. Le calibrage de température de surface de mer exige de connaître le satellite spécifique NOAA. En utilisant l'amélioration, le satellite spécifique NOAA devrait être choisi du menu \fBSatellite\fP. La température montrée sur la ligne d'état emploiera l'algorithme de température de surface de la mer pour calculer la température, uniquement quand cette amélioration est employée.
+.TP 10
+\fIDaylight sea surface temp (NOAA)\fP
+Crée une image APT de NOAA fausse couleur basée sur la température de surface de la mer. Emploie la température de surface de mer tirée de l'image du capteur 4 pour colorer l'image. C'est moins précis que la température de surface de mer dérivée de l'amélioration \fIsea\fP du capteur 3-4, mais est disponible quand l'image 3-4 n'est pas disponible. Aucune tentative n'est faite pour distinguer le nuage ou la terre de la mer. La température de surface de la mer peut être incorrecte dû à la présence de fins ou petits nuages dans le pixel évalué, ou du bruit dans le signal.
+.TP 10
+\fIVegetation (NOAA 1-2)\fP
+Exige le capteur 1 et 2 rarement disponible de l'image APT de NOAA (vu pendant la phase d'essai après le lancement du satellite). Un index végétatif est créé et ceci est employé pour que la terre soit colorée verte, l'eau bleu foncée et les nuages blancs. Aucune palette n'est employée pour cette amélioration et la production n'est pas la température normalisée.
+.TP 10
+\fIAnaglyph false 3-D (GOES/NOAA)\fP
+Crée une image fausse 3-D (doit être vu avec des verres rouges/bleus) de l'image du canal A  (ou de l'image du canal B si l'option \fIUse other sensor\fP est choisie) en estimant la hauteur du nuage. Opérationnel seulement si le logiciel a été mis à niveau.
+.TP 10
+\fIColour anaglyph false 3-D (NOAA)\fP
+Crée une image fausse couleur 3-D basée sur l'amélioration HVCT (doit être vu avec des verres rouges/bleus) utilisant les images combinées du satellite NOAA (ou juste l'image du canal B si l'option\fI Use other sensor \fPest choisie). Opérationnel seulement si le logiciel a été mis à niveau.
+.TP 10
+\fIClass enhancement (NOAA)\fP
+Classification non supervisée d'images APT de NOAA utilisant un algorithme de classification  itératif optimisé. Utilise initialement les 27 clusters du centre qui sont à égale distance le long de la diagonale bidimensionnel. La classification est employée pour teinter l'image du canal de  l'égalisation d'histogramme
+.TP 10
+\fINO colour IR enhancement (GOES/NOAA)\fP
+Option d'amélioration du contraste de la couleur IR de NOAA . Très grand contraste dans les régions plus foncées de terre/mer et des couleurs de nuage froid d'altitude. Permet de voir le détail fin de la terre et la mer et fournit une indication très lisible de températures de sommet des nuages. Cette option d'amélioration est la température normalisée.
+.TP 10
+\fIZA general IR enhancement (GOES/NOAA)\fP
+Option d'amélioration IR météorologique de NOAA à but générale. Augmente le contraste en saturant les régions à température très basses et très hautes dans lesquelles il y a normalement peu d'information. Cette option d'amélioration est la température normalisée.
+.TP 10
+\fIMB thunderstorm (GOES/NOAA)\fP
+Option d'amélioration de sommet de nuage froid de NOAA . Utile pour montrer où les précipitations les plus fortes se produisent dans les orages. Cette option d'amélioration est la température normalisée.
+.TP 10
+\fIMD warm season MB (GOES/NOAA)\fP
+L'amélioration MD de NOAA est une modification du schéma de l'amélioration MB, d'utilisation populaire et générale. Elle est destinée pour la saison chaude et fournit une meilleure amélioration dans les gris de la "charte graduée "qui représente la convection " du sommet chaud ". Une amélioration complémentaire est une meilleure délinéation des bas nuages chauds (30C à 7C). La gamme de nuage moyenne est légèrement plus large que MB et l'amélioration des détails est réduite au minimum. Autrement, c'est pareil que l'amélioration MB. Cette option d'amélioration est la température normalisée.
+.TP 10
+\fIBD hurricane (GOES/NOAA)\fP
+Option d'amélioration d'ouragan de NOAA. Met en évidence certaines températures dans l' oeil et le mur de l' oeil du système de tempête qui sont connues pour être liées à l'intensité de l'ouragan. Cette option d'amélioration est la température normalisée.
+.TP 10
+\fICC enhancement (GOES/NOAA)\fP
+Courbe d'amélioration CC de NOAA. Cette option d'amélioration est la température normalisée. Cette option est disponible seulement si le mode expert est permis (voir Options - >  GUI Options).
+.TP 10
+\fIEC enhancement (GOES/NOAA)
+Courbe d'amélioration EC de NOAA. Cette option d'amélioration est la température normalisée. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.TP 10
+\fIHE western US (GOES/NOAA)\fP
+L'amélioration HE de NOAA est employée principalement par les bureaux météorologiques des États-Unis de l'ouest. Elle fournit la bonne amélioration d'une grande variété de types de nuages, mais est quelque peu complexe et peut être difficile à utiliser. Elle augmente les bas et les moyens nuages de niveau communs le long de la côte du Pacifique de l'Amérique du Nord dans deux gammes de gris séparées. Le niveau de congélation est facilement déterminé, un avantage pour les utilisateurs de l'aviation concernés par le givrage. Les régions de la charte graduée montrent les températures infrarouges très froides du sommet des nuages liées aux orages et aux systèmes de fronts dans des incréments de 5 degrés vers le bas à -60 C. Deux  segments complémentaires " répéter les gris " définissent les températures supérieurs des nuages plus froids que -60C. Cette option d'amélioration est la température normalisée. Cette option est disponible seulement si on permet le mode expert voir Options - > GUI Options).
+.TP 10
+\fIHF new western US (GOES/NOAA)\fP
+L'amélioration HF de NOAA est la plus actuelle des améliorations de la série "H" et est employée principalement par les bureaux météorologiques des États-Unis de l'ouest. Elle fournit la bonne amélioration des bas et moyens nuages de niveau communs le long de la côte du Pacifique de l'Amérique du Nord. Les régions de la charte graduée montrent les températures infrarouges très froides du sommet des nuages liées aux orages et aux systèmes de fronts dans des incréments de 5 degrés vers le bas à -60 C. Deux  segments complémentaires " répéter les gris " définissent les températures supérieurs des nuages plus froids que -60C. Cette option d'amélioration est la température normalisée. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.TP 10
+\fIJF simple sea surface/cold cloud (GOES/NOAA)\fP
+L'amélioration JF de NOAA est un arrangement d'amélioration hybride employé pour accentuer les deux températures de surface de mer, et des sommets de nuages froids associés aux orages et autres systèmes météorologiques. Elle est légèrement plus simple à interpréter que l'amélioration JJ ci dessous. La partie la plus froide de l'amélioration (moins que -33C) est presque identique à l'utilisation générale de l'amélioration MB. L'amélioration maximum est fournie à l'extrémité chaude (25 à 10C) pour représenter les températures de surface de mer et pour chauffer les bas nuages dans les zones tropicales et subtropicales. Cette option d'amélioration est la température normalisée. Cette option est disponible seulement si le mode expert est permis voir Options - > GUI Options).
+.TP 10
+\fIJJ sea surface/cold cloud (GOES/NOAA)\fP
+L'amélioration JJ de NOAA est employée pour mettre en évidence les deux températures de surface de mer, et des sommets de nuages froids associés aux orages et autres systèmes météorologiques. L'amélioration maximum est fournie à l'extrémité chaude (23 à 0C) pour représenter les températures de surface de mer et les bas nuages. La présence d'un point d'arrêt de niveau congélation est importante pour les usagers de l'aviation intéressés par les conditions de givrage. Les gammes multiples d'améliorations, pente, rampe fournissent le détail considérable dans le sommet des nuages froids  tels que les orages, mais il est difficile de déterminer les températures réelles avec n'importe quelle exactitude. Cette option d'amélioration est la température normalisée. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.TP 10
+\fILC fog/low cloud/precip (GOES)\fP
+La courbe LC de NOAA  est employée sur les images du canal infrarouge (CH2) 3.9 microns onde courte de GOES . Elle fournit le maximum d'amélioration dans la gamme de température où le brouillard et les bas nuages se produisent généralement (36C à -9C). Une autre gamme améliorée thermique est de -10C à -29C, région de génération de précipitation dans les systèmes météorologiques de latitude moyenne . Puisque le CH2 est sensible "aux points chauds," une pente raide contraire est trouvée à l'extrémité chaude (68C à 50C) pour montrer tous les feux observables en tant que blanc. Il n'y a aucune amélioration à l'extrémité très froide (-30 à -67C), dû au bruit d'instrument présent normalement à ces températures. Cette option d'amélioration est la température normalisée. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.TP 10
+\fITA enhancement (GOES/NOAA)\fP
+Courbe d'amélioration TA de NOAA. Cette option d'amélioration est la température normalisée. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.TP 10
+\fIWV water vapour (GOES)\fP
+La courbe modifiée NOAA WV est employée pour le canal de vapeur d'eau de 6.7 micron (CH3) sur GOES. La seule gamme de température qui est améliorée est entre -5C et -90C. Les températures plus froides que -90C sont montrées comme blanc et les températures plus chaudes que -5C sont montrées comme noir. Cette option d'amélioration est la température normalisée. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.SH Menu Options 
+Choisit une variété d'options. Les réglages par défaut  pour toutes les options marche/arrêt dans ce menu sont éteints. Pour Gamma, Sharpen, Despeckle, etc.. Les réglages par défaut  sont indiqués par un astérisque (*); un plus (+) indique un réglage alternatif recommandé.
+.TP 10
+\fIDisable auto-decode\fP
+Si cette option est choisie ceci empêche WXtoImg de commencer automatiquement le décodage chaque fois que l'amélioration ou la direction sont changées.
+.TP 10
+\fIInterpolate\fP
+Si choisi, permet l'interpolation et sur-échantillonne (50 % de plus grandes images). Crée de plus grandes images en augmentant le taux d'échantillonnage dans l'horizontal et l'interpolation dans la verticale. Dans le cas des images NOAA l'image du canal B est également décalée vers le bas pour compenser le mouvement satellite et la méthode d'échantillonnage. Ceci fournit un meilleur enregistrement entre les images et améliore ainsi la qualité de l'image dans les transformations multispectrales. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.TP 10
+\fIUse other sensor\fP
+Utilise l'autre capteur pour l'information visible sur les images combinées. Utilise l'image du canal B comme source pour (au lieu de l'image du canal A) des renseignements pour améliorations HVC, HVCT et anaglyphe.
+.TP 10
+\fIDisable PLL\fP
+Si choisi, met hors service le code de boucle de verrouillage de phase pour s'assurer que l'image n'est pas pliée dû à l'effet doppler ni inclinée à cause des variations légères dans le taux d'échantillonnage. Cette option est parfois utile avec les enregistrements par scanners pour mettre hors service le burst PLL sur les satellites Meteor et Resurs qui peuvent causer des problèmes en décodant les signaux de très mauvaises qualités.
+.TP 10
+\fIShow All\fP
+Si choisi, met hors service la coupe normale des parties bruyante/basse de l'image. Voir aussi \fICrop telemetry\fP qui coupe les côtés de l'image.
+.TP 10
+\fICrop telemetry\fP
+Si choisi, coupe les lignes de télémétrie des côtés de l'image. Voir aussi \fIShow All \fPqui neutralise la coupe automatique du haut et du bas de l'image.
+.TP 10
+\fIResync\fP
+Si choisi, permet des tentatives de re-synchronisation de l'image. Si permis \fIWXtoImg\fP essaye de corriger le temps manquant dans le fichier audio d'entrée, cependant des bas rapports S/N ou d'enregistrement fait par des récepteurs à bandes trop étroites IF (scanners),  peuvent provoquer de fausses corrections ayant pour résultats des images interrompues. Cette option créera des problèmes dans un grand pourcentage de bonnes images et devrait ne presque jamais être permise par défaut. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.TP 10
+\fIDisable Map Overlay\fP
+Si choisi, met hors service le recouvrement de carte sur l'image. Les cartes de recouvrement exigent que les képlers soient à jour. Voir \fIUpdate Keplers \fPdans le menu \fIFile. \fPLa mise hors service du recouvrement de carte ne met pas hors service la génération de carte. Voir \fIEnable map and projection support \fPdans \fIGUI Options\fP.
+.TP 10
+\fINoise filter\fP
+Si choisi, sélectionne le filtre bruit. C'est un filtre médian 5x5 préservant le contour de l'image. Cause le flou significatif de l'image. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options).
+.TP 10
+\fIContrast\fP
+Permet le choix de l'amélioration de contraste utilisée dans les améliorations HVC, HVCT, MSA et \fIveg\fP. Opérationnel seulement si le logiciel a été mis à niveau. Choisissez ou bien \fIHist Eq \fPpour l'égalisation d'histogramme, \fILinear (constant)\fP pour une amélioration constante linéaire qui varie seulement selon le capteur du satellite, \fILinear (variable) \fPpour que l'amélioration variable linéaire soit ajustée pour chaque image, ou \fINone\fP met hors service n'importe quelle amélioration de contraste. Si les images doivent être plus tard comparées ou combinées \fILinear (constant)\fP ou\fI None\fP devraient être utilisés parce que toutes les images sont traitées exactement de la même manière avec ces options.
+.TP 10
+\fIIllumination Compensation\fP
+La compensation d'illumination corrige l'éclairage inégal de la surface terrestre par le soleil. La pleine compensation corrige chaque image pour que la surface de la terre semble être éclairée directement du dessus. High\fB, \fPMed et Low compensation applique une certaine compensation, mais ne les corrigent pas entièrement. \fINone\fP n'exécute aucune compensation. Notez ceci qu'avec les angles bas du soleil la compensation peut considérablement augmenter les effets du bruit dans le signal.
+.TP 10
+\fIGamma\fP
+La correction de gamma par défaut est appliquée. Normalement entre 1.00 et 2.50.Une valeur de 1.00 met hors service la correction de gamma. Pour les affichages sur PC un gamma d'environ 1.40 semble être optimal, pour les affichages sur les systèmes Macintosh 1.15, pour les systèmes SGI 1.10, pour systèmes NeXT 1.00 et pour Sun et autres systèmes 1.40 est recommandé.
+.TP 10
+\fISharpen\fP
+Facteur accentuant. Par défaut il est de 0.6.
+.TP 10
+\fIDespeckle ( déchatoiement ou flou intérieur)\fP
+Permet l'enlèvement du bruit aléatoire dans l'image. Si on permet le mode expert ( Voir Options - > GUI Options\fI),\fP alors le seuil de déchatoiement peut être mis. Pour mettre hors service \fIdespeckling\fP utilisez \fBnone\fP. Le seuil est le nombre d'écarts standard que le pixel en question peut varier de la moyenne des autres pixels, dans un secteur 5x5 autour de lui avant qu'il ne soit considérer bruit, et est remplacé par la valeur moyenne. L'augmentation sigma diminue le nombre de pixels qui seront remplacés, l'augmentation décroissante du sigma augmente le nombre de pixels qui seront remplacés. Par défaut \fBnone \fPest choisi\fB,\fP on  recommande une valeur de 2.0 dans la plupart des circonstances (c'est la valeur utilisée si le déchatoiement est permis en mode non expert). Des valeurs plus basses produiront le flou significatif de l'image.
+.TP 10
+\fIActive APT Satellites\fP
+Permet de choisir les satellites APT actifs. Les commandes de dialogue des satellites actifs APT montrent quelles cartes de satellites peuvent être créées ainsi que les enregistrements si\fI Record only when active APT satellites are overhead \fP est choisi dans les options de dialogue de\fI Recording Options\fP. Permet aussi le réglage de la fréquence satellite (MHz) employé quand la commande du canal du récepteur est vérifiée. Une priorité peut aussi être mise. Quand deux ou plusieurs satellites sont au-dessus alors le satellite avec la priorité la plus haute (1= plus haute, 5= plus basse) sera enregistré. Si les satellites ont la même priorité, alors le satellite avec l'élévation la plus haute maximale sera enregistré. La priorité n'a aucun effet si la commande du récepteur n'est pas permise dans \fIRecording Options\fP. Si \fIUpdate this table when updating Kepler \fPest sélectionné, alors le logiciel choisira les satellites actifs et placera leurs fréquences (les priorités ne seront pas changées) selon les satellites actifs actuellement (téléchargés via Internet). Permettre le \fImode Expert \fPdans \fIGUI Options\fP ne permet plus de transmettre des satellites à choisir.
+.TP 10
+\fIGround Station Location\fP
+Permet de régler l'emplacement de la station au sol. Latitude et longitude doivent être entrées en degrés et fractions de degrés et non pas en degrés minutes et secondes (le nord et l'est doivent être entrés comme nombres positifs, le sud et l'ouest doivent être entrés comme nombres négatifs). Si vous entrez le nom d'une grande ville (population 100,000 ou plus) et le pays (par exemple. Les États-Unis, le Royaume-Uni), vous pouvez mettre la latitude et la longitude automatiquement en cliquant sur le bouton \fILookup Lat/Lon\fP. Ceci doit être mis si les recouvrement de carte sont employés ou si l'option\fI Record only when active APT satellites are overhead\fP est vérifiée dans le dialogue \fIRecording Options\fP.  Alternativement, vous pouvez vérifier la boîte \fIUse GPS\fP et mettre le port série pour connecter un GPS. Vous devez aussi placer le taux de baud (employez 4800 si incertain). Sur votre GPS vous devrez permettre la sortie NMEA (au même taux de baud) comme on ne permettra pas cela par défaut. Vérifiez le manuel du GPS pour les instructions pour faire ceci. Tandis que cette option est permisse, WXtoImg vérifiera le GPS pour assurer l'information de position quand nécessaire. L'option GPS est disponible seulement sur copies mises à niveau. Vous pouvez aussi conserver le jeu d'horloge de PC en utilisant la boite \fISet PC clock from GPS\fP. Pour que cela travaille ceci exige que votre GPS soutienne NMEA 2.x. que WxtoImg emploie les information WGS84 pour la position, les projections et recouvrement de carte. Sur Linux vous devrez diriger la commande \fI/usr/sbin/visudo\fP comme la racine et ajouter une ligne au fond semblable à \fImyusername myhostname = NOPASSWD : /bin/date\fP. Où myusername est votre nom d'utilisateur et myhostname est le nom du serveur ordinateur (diriger \fIhostname\fP pour obtenir le nom du serveur si incertain).
+.TP 10
+\fIRecording Options...\fP
+Utilisé pour choisir le mode et options d'enregistrement.
+.TP 20
+          \fIRecord using WEFAX start/stop tones\fP
+Si choisi l'enregistrement commence quand le signal de départ WEFAX d'un satellite géostationnaire (c'est-à-dire. GOES, Meteosat, ou GMS) est entendu. L'enregistrement s'arrête quand le signal d'arrêt WEFAX est entendu.
+.TP 20
+          \fIRecord only when active APT satellites are overhead\fP
+Si choisi, alors l'enregistrement se produit seulement quand un satellite passe au-dessus quand il est choisi dans le dialogue \fIActive APT Satellite\fP du menu \fIOptions\fP et rencontre aussi les conditions ci-dessous. C'est le défaut. Ce mode d'enregistrement est le plus efficace et utilise moins de CPU puisqu'il n'a pas besoin de décoder en continu le signal audio.
+.TP 20
+          \fIwith maximum elevation above (degrees)\fP
+Satellites seulement où l'élévation maximale (au-dessus de l'horizon) est égale à ou supérieure à la valeur, sera alors enregistrer. Le facteur par défaut est 20.
+.TP 20
+          \fIrecord only when satellite is above (degrees)\fP
+
+
+Attend avant que le satellite ne soit au-dessus de l'horizon par ce nombre en degrés avant l'enregistrement, et l'enregistrement s'arrête quand le satellite chute au-dessous de ce nombre en degrés. Le facteur par défaut est 8.
+.TP 20
+          \fIand require\fP
+Permet un contrôle facultatif complémentaire avant que l'enregistrement n'est commencé. Si\fI squelch break\fP est choisi alors le programme attend le volume pour monter au-dessus de \fIsound trigger level \fPavant l'enregistrement. Si la \fIporteuse 2400Hz\fP est choisie alors le programme attend de détecter la porteuse 2400 Hz  avant le démarrage de l'enregistrement. Si l'une ou l'autre de ces options est choisi alors \fIfinish recording delay \fPest aussi employé mais l'enregistrement s'arrêtera plus tôt si le satellite tombe au-dessous du jeu de valeur dans \fIrecord only when satellite is above\fP. Si \fInothing\fP est choisi, alors le programme enregistrera tandis que le satellite est au-dessus, si un signal est détecté ou non. Le facteur par défaut est une \fIporteuse de 2400Hzt)\fP.
+.TP 20
+          \fIsoundcard\fP
+Permet le choix de la carte-son à employer pour l'enregistrement. Par défaut sur Linux c'est "/dev/dsp" (les carte-son complémentaires sont nommé "/dev/dsp1", "/dev/dsp2", etc..). Sur DOS et Windows le défaut est 0 (les carte-son complémentaires seront numérotées 1, 2,etc).
+.TP 20
+          \fIantenna type\fP
+Antenna type.
+.TP 20
+          \fIreceiver type\fP
+Réglage pour la gestion par ordinateur du canal du récepteur. Mettre sur\fI none\fP si le récepteur ne soutient pas la gestion par ordinateur où n'est pas connecté à l'ordinateur. Le contrôle se produit seulement si le mode d'enregistrement est mis pour \fIRecord only when active APT satellites are overhead\fP.. En utilisant\fI PCR100 \fPou\fI PCR1000, \fPassurez vous que vous avez placé le cavalier interne \fIPCR100/PCR1000  \fPpour la sortie ligne comme montré dans le manuel PCR100/PCR1000 avant utilisation de ce contrôle\fI.\fP La commande du récepteur Kenwood fonctionne par défaut à 4800 bauds. La commande des récepteurs AR3000, AR5000 AOR fonctionne à 4800 bauds par défaut. Le contrôle des récepteurs BC245XLT, BC895XLT et BC780XLT fonctionne par défaut à 9600 bauds. IC-R8500 et IC-R10 emploient par défaut 9600 bauds à l'adresse 4A et 52 respectivement. Utilisez Externe pour diriger la commande externe wxctl (wxctl,  wxctl.com, wxctl.exe, ou wxctl.bat) pour contrôle (avec le nom du satellite comme argument 1, la fréquence en MHz comme argument 2 et le port de récepteur comme argument 3; le nom satellite sera une séquence vide et la fréquence sera 0.00 quand aucun canal n'est choisi -- généralement le programme de contrôle doit entré en mode de balayage ceci est facultatif).
+.TP 20
+          \fIreceiver port\fP
+Le port RS-232 utilisé pour contrôler par l'ordinateur le canal du récepteur. Si le contrôle n'est pas via RS-232 (par exemple le jeu de port) ce réglage est ignoré.
+.TP 20
+          \fIreceiver baud\fP
+Place la vitesse de baud pour communiquer avec le récepteur. Si le taux de baud du récepteur ne peut pas être changé, ce réglage n'aura aucun effet. Employez \fIreceiver default \fPpour choisir le taux de baud par défaut pour le récepteur.
+.TP 10
+Map Overlay Options...
+Permet le choix de particularités et quelles couleurs apparaissent sur le recouvrement de carte.
+.TP 10
+\fIText Options...\fP
+Permet au texte d'être montré sur l'image. Opérationnel seulement si le logiciel a été mis à niveau. Il y a deux secteurs de texte. Permettre ou bien l'un ou l'autre ou bien tous les deux si vous choisissez  la boite Enable. Le texte peut contenir jusqu'à cent séquences qui seront augmentées comme décrit dans \fIModèle de nom de fichier \fPci-dessous. La couleur peut être choisie dans la liste ainsi que la taille de défaut (en points). La position sur l'image peut être spécifiée en employant X: et Y:. La valeur peut être \fIc\fP pour centre, ou un nombre positif pour le nombre de pixels à gauche ou bord du haut, ou un nombre négatif pour le nombre de pixels à droite ou bord du bas. La boîte de texte peut contenir plusieurs lignes. Une ligne peut commencer par \fBfontsize=##\fP, pour mettre une taille de police différente (en points) pour la ligne et n'importe quelles lignes suivantes. La police TrueType permet le choix d'une vraie police de type alternatif. Laissez ceci blanc pour employer la police fournie. Une police alternative peut être employée pour fournir des recouvrements de texte pour les langues européennes et asiatiques pendant que la police intégrée soutient seulement les caractères (anglais) standard d'ASCII.
+.TP 10
+\fIProjection Options...\fP
+Tient compte de la commande de projections. Opérationnel seulement si le logiciel a été mis à niveau.
+.TP 20
+          \fIReference Latitude\fP
+La projection de carte sera centrée à cette latitude. Employez des nombres négatifs pour le sud, positif pour le nord. Notez que ce n'est pas le centre de l'image mais le centre de la projection elle-même (si il y a un doute laissez ce champ blanc).
+.TP 20
+          \fIReference Longitude\fP
+La projection de carte sera centrée à cette longitude. Employez des nombres négatifs pour l'ouest, positif pour l'est. Notez que ce n'est pas le centre de l'image mais le centre de la projection elle-même (si il y a un doute laissez ce champ blanc).
+.TP 20
+          \fINorth Boundary (latitude)\fP
+.TP 20
+          \fISouth Boundary (latitude)\fP
+Si les frontières sont spécifiées alors l'image résultante sera coupée à ces frontières et ne montrera pas de points à l'extérieur. Ne fonctionnera pas à moins que chacune des quatre frontières soient données. Employez des nombres négatifs pour l'hémisphère sud. Doit être entre 90.0 et -90.0.
+.TP 20
+          \fIWest Boundary (longitude)\fP
+.TP 20
+          \fIEast Boundary (longitude)\fP
+Si les frontières sont spécifiées alors l'image résultante sera coupée à ces frontières et ne montrera pas de points à l'extérieur. Ne fonctionnera pas à moins que chacune des quatre frontières soient données. Employez des nombres négatifs pour l'ouest, positif pour l'est. Doit être entre -180.0 et 180.0.
+.TP 20
+          \fIScale (norm 1.0) or output width\fP
+Met l'échelle ou la largeur de sortie pour la projection. L'échelle est une valeur relative par défauts à 1.0. Une valeur de 0.5 aura comme conséquence une image de hauteur et de largeur de moitié. Une valeur de 2.0 aboutira à une image deux fois plus large et deux fois plus haute. Il n'y a aucune meilleure valeur, mais de grandes ou petites valeurs peuvent aboutir à une perte de qualité de l'image. On assume que les valeurs plus grandes que 50 sont exigées pour produire la largeur dans les pixels (plutôt qu'une échelle relative). Les valeurs d'échelle plus grandes que 2.0 ne sont pas soutenues, et des valeurs pour la largeur de sortie de moins de 50 ne sont pas soutenues.
+.TP 20
+
+\fISampling Frequency...\fP
+Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options). Le taux d'échantillonnage peut être beaucoup plus facilement et exactement placer en utilisant \fISlant Correction \fPdans le menu \fIImage\fP. Permet le réglage manuel du taux d'échantillon. Essayez de varier le taux normal d'échantillonnage par 5 échantillons par seconde (ainsi si vous avez 11025 échantillons par seconde essayer sur le fichiers audio, 11020,11030, 11015, 11035, 11010, 11040, etc..) jusqu'à ce que l'image soit raisonnablement verticale, ajustez alors par 1 ou 2 échantillons par seconde jusqu'à ce que le PLL se verrouille et que l'image devienne parfaitement verticale. La détermination du taux d'échantillonnage de la carte son a normalement besoin d'être ajusté seulement une fois. Un réglage de 0.0 indique que le taux d'échantillonnage par défaut doit être utilisé.
+.TP 10
+\fIImage and Movie Options...\fP
+Employé pour mettre une variété d'options concernant l'image et films AVI.
+.TP 20
+          \fIDefault Image Format\fP 
+Permet de mettre le format d'image par défaut à  JPEG, PNG, BMP, PBM (PGM/PPM/PNM), ou AVI. Ceci est employé quand les images sont automatiquement sauvegardées. Normalement, \fIWXtoImg\fP utilise l'extension de nom de fichier (à \fB.\fPpng,\fB.\fPbmp,\fB.\fPpbm,\fB.\fPpgm,\fB.\fPppm,\fB.\fPpnm,\fB.\fPjpg,\fB.\fPjpeg, ou \fB.\fPavi en minuscule ou majuscule) pour déterminer le type de fichier produit, quand \fBSave Image as...\fP  du menu \fBFile\fP est choisi. Si l'extension de fichier de sortie n'est pas spécifiée ou l'extension de sortie n'indique pas de format connu, alors le format d'image par défaut est employé pour mettre le type de fichier.
+.TP 20
+          \fIDefault for Anaglyphs\fP
+Place le format d'image par défaut à JPEG,PNG, BMP, PBM (PGM/PPM/PNM). Ceci est employé quand les images sont automatiquement sauvegardées. Notez qu'il est meilleur de sauvegarder anaglyphes sans perte dans un format d'image (PNG, BMP, ou PPM) car les changements de couleur provoqués par le codage JPEG peuvent affecter la vision 3-D.
+.TP 20
+          \fIDefault for Composites\fP
+Place le format d'image par défaut pour les images composées à JPEG, PNG, BMP, PBM (PGM/PPM/PNM). Ceci est employé quand les images sont automatiquement sauvegardées. Notez qu'il est meilleur de sauvegarder les images composées  dans un format d'image sans perte (PNG, BMP, ou PPM) parce que plusieurs recouvrements de l'image composée peuvent provoquer la perte de qualité de l'image inhérente aux images JPEG.
+.TP 20
+          \fIJPEG Quality\fP
+Place la qualité pour les images JPEG. Le facteur par défaut est 65. La gamme valable est de 0 à 100. Voir \fBFormats des images de sortie \fPpour discussion.
+.TP 20
+          \fIHVC Palette\fP
+Permet le choix de la palette pour l'améliorations HVC. PNG, BMP et les fichiers de format PPM sont soutenus. Voir option -P dans le manuel de ligne de commande de wxtoimg pour les détails techniques. Si laissé blanc, alors la palette par défaut HVC est utilisée.
+.TP 20
+          \fISea Surface Temp Palette\fP
+Permet le choix de la palette pour les améliorations de Température de Mer Superficielle et de Température de Mer Superficielle de Jour. Les fichiers au format PNG, BMP et PPM sont soutenus. Voir l'option -P dans le manuel de ligne de commande wxtoimg pour les détails techniques. Si laissé blanc, alors la palette de Température de Mer Superficielle par défaut est employée.
+.TP 20
+          \fIMSA Sea to Land\fP
+Ajustement de l'analyse multispectrale de la terre et la mer. La valeur par défaut est 50. Ceci doit être diminué si la terre dans les améliorations d'analyse multispectrale apparaît trop bleue et si l'eau apparaît trop verte. La gamme valable est de 0 à 100. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options) elle ne doit jamais vraiment être changée.
+.TP 20
+          \fIMSA Land to Cloud\fP
+Ajustement de l'analyse multispectrale de la terre et des nuages. La valeur par défaut est 50. Ceci doit être diminué si le nuage dans les améliorations d'analyse multispectrale apparaît trop vert et si la terre apparaît trop grise ou blanche. La gamme valable est de 0 à 100. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options) elle ne doit jamais vraiment être changée.
+.TP 20
+          \fIAVI Codec\fP
+La méthode de compression à employer pour les animations AVI. Actuellement trois types sont soutenus: \fIMJPG\fP, \fIJPEG\fP et \fIRGB\fP. MJPG (mouvement JPEG) donne une excellente compression, JPEG fournit légèrement moins de compression (et peut être moins standardisé), RGB ne fait aucune compression. Sous BeOS, JPEG est recommandé (car il n'y a aucun décodeur disponible MJPG), sous tous les autres systèmes d'exploitation MJPG est le choix le plus recommandé (les décodeurs MJPG pour Windows sont disponibles dans le paquet  DirectX ). Les codecs de \fIJPGQ\fP et  \fIlJPGS \fPsont donnés pour la compatibilité en arrière et seront laissé tomber lors d'une prochaine sortie.
+.TP 20
+          \fIAVI Transparency\fP
+Permet la transparence sur les images AVI de sorte que si les pixels dans l'image actuelle ne sont pas mis, les pixels de l'image précédente seront employés. De meilleurs résultats peuvent être réalisés en augmentant \fIAVI Quality \fPou l'utilisation \fIRGB AVI Codec\fP. Le facteur par défaut est permis.
+.TP 20
+          \fIAVI Quality\fP
+Met la qualité pour les animations AVI. Le facteur par défaut est 20. La gamme valable est de 0 à 100. Voir \fBFormats des images de sortie\fP pour discussion.
+.TP 20
+          \fIAVI Max Frames\fP
+Le nombre maximal de cadres dans l'animation. Si, après avoir ajouté une nouvelle image, le nombre de cadres dans l'animation excède ce nombre alors seront laissé tomber les cadres du commencement pour que le nombre total de cadres soient \fIAVI Max Frames\fP.
+.TP 20
+          \fIAVI Frame Rate\fP
+Le taux auquel on montre l'animation en cadres/seconde. Normalement les valeurs entre 0.2 (1 image chaque 5 secondes) et 8.0 (8 images par seconde) sont utiles. Le facteur par défaut est 1.0.
+.TP 20
+          \fIAVI Scale\fP
+Réduit les animations résultante par le facteur \fIfact\fP. Le facteur doit être entre 0.0 et 1.0. Le facteur par défaut est 0.5.
+.TP 10
+\fIFile Names and Locations...\fP
+Utilisé pour définir les emplacements pour ouvrir et sauvegarder les fichiers.
+.TP 20
+          \fIAudio file naming\fP
+Les noms de fichier audio sont le temps de l'enregistrement. Vous pouvez changer le format audio de nom de fichier audio en un autre format de temps. Prenez garde que ce réglage affecte aussi comment WXtoImg détermine quand un fichier a été enregistré. La sélection \fIOther\fP  empêchera WXtoImg d'employer le nom de fichier pour déterminer le temps de l'enregistrement (et les fichiers audio seront enregistrés comme \fIMMDDHHMM UTC temps\fP.
+.TP 20
+          \fIFilename Template\fP
+Employé pour définir le nom fichier de sortie par défaut, et le nom fichier pour fichiers bruts utilisés en enregistrant. Si laissé blanc, alors ceci se transfère sur le nom fichier d'entré ou quand enregistrement \fB%T\fP. Voir section\fB Modèle de nom de fichier\fP pour détails.
+.TP 20
+          \fIUse for audio recordings/maps too\fP
+Si choisi, les enregistrements audio et n'importe quelles cartes de revêtement seront rebaptisés pour correspondre au calibre après décodage. Notez que si l'option non décode est choisi en enregistrant alors les enregistrements audio/cartes ne seront pas rebaptisés pour employer le calibre.
+.TP 20
+          \fIAudio File Location\fP
+Le dossier/répertoire dans lequel les fichiers audio seront sauvegardés quand enregistrement/décodage. En outre c'est l'emplacement par défaut en ouvrant les fichiers audio.
+.TP 20
+          \fIRaw Image Location\fP
+Le dossier/répertoire dans lequel les images brutes seront sauvegardées quand ouvrir/sauvegarder les images brutes.
+.TP 20
+          \fISave Image Location\fP
+C'est l'emplacement par défaut en sauvegardant les images traitées/améliorées en utilisant \fBSave Image as...\fP du menu Option sous le menu \fBFile\fP.
+.TP 20
+          \fIMap File Location\fP
+Le dossier/répertoire dans lequel les fichiers de carte seront sauvegardés quand enregistrement/décodage\fI.
+.TP 20
+          \fIThumbnail Location\fP 
+Le dossier/répertoire dans lequel les images miniatures seront sauvegardées.
+.TP 10
+\fIGUI Options\fI...\fP
+Permet les réglages des opérations qui affectent l'interface graphique utilisateur (GUI).
+.TP 20
+          \fITempérature units\fP
+Quand la température est montrée, ceci indique quelles unités devraient être employées. Les degrés Celsius, Fahrenheit, ou Kelvin peuvent être choisis. Le facteur par défaut est Celsius.
+.TP 20
+          \fIDistance units\fP
+Permet le choix de miles (mi), des miles nautiques (nm), ou kilomètres (km) où WXtoImg montre les distances. Le facteur par défaut est le km.
+.TP 20
+          \fIHelp Language\fP
+Choisissez EN (Anglais), ES (Espagnol), DE (d'Allemand), FR (Français), JA (Japonais), ou PL (Polonais) pour la langue d'aide. Les traductions pour la plupart des langues ne sont pas encore disponible. Si vous pouvez aider dans la traduction pour chacune d'entre elles ou d'autres langues entre en contact avec nous à: 
+.nf
+                        http://www.weather.net.nz/email.html
+
+.fi
+
+.TP 20
+          \fIHelp Font Size\fP
+Permet de changer la taille de police pour le texte d'aide pour être plus grande ou plus petite. +0 est la taille par défaut, l'utilisation de nombres négatifs donne des tailles plus petites que la police normale, les nombres positifs donnent des tailles plus grandes que la police normale.
+.TP 20
+          \fIDate/time format\fP
+Permet le choix de la date et le format de temps où WxtoImg montre les dates et les temps. Opérationnel seulement si le logiciel a été mis à niveau.
+.TP 20
+          \fIShow time as UTC\fP
+Si permis les temps seront montrés en UTC, si mis hors service, l'heure locale sera montrer. Opérationnel seulement si le logiciel a été mis à niveau.
+.TP 20
+          \fIEnable map and projection support\fP
+Par défaut on permet ceci, mais sur les processeurs très lents la neutralisation de ceci  peut accélérer la génération d'image en mettant hors service l'appui pour le recouvrement de carte, projections, bonne qualité MSA (améliorations d'analyse multispectrale), améliorations MCIR et compensation d' illumination. En raison de l'impact significatif sur l'utilisation des améliorations MSA et MCIR et sur d'autres dispositif de WxtoImg, on  recommande fortement que cette particularité soit laissée sur permettre. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options)
+.TP 20
+          \fIFlip Meteor series 3 images\fP
+Si choisi alors les images de la série Meteor 3 seront affichées automatiquement renversées. C'est utile si la carte et l'appui de projection sont mis hors service, et Meteor 3 est dans une phase où toutes les images sont présentées à l'envers. Par défaut est éteint. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options) est peu utile depuis l'échec de Meteor 3-21
+.TP 20
+          \fIUse private colormap\fP
+Si l'affichage a seulement 256 couleurs (8 bit), puis quand ceci est choisi (le facteur par défaut) une nouvelle carte colorée sera installée. Ceci fournit les pleines 256 couleurs à employer par WxtoImg lui-même (au lieu du partage avec toutes les autres applications et le système d'exploitation). Ce réglage ne doit avoir aucun effet sur Hautes Couleurs (15 ou 16 bit) ou adaptateurs Vraie Couleurs (24 ou 32 bit). Les options doivent être sauvegardées et le programme quitté et être redémarrer avant que n'importe quel changement entre en vigueur. Cette option est disponible seulement si le mode expert est permis (voir Options - > GUI Options)
+.TP 20
+          \fITear off menus\fP
+Si permis, alors le programme la prochaine fois est commencé et les menus peuvent être déchirés de l'application (en choisissant la ligne tirets en haut du menu). Ceci placera le menu dans une fenêtre séparée qui peut être déplacée autour de l'écran. Ceci tient compte d'une sélection plus facile des améliorations et options. Opérationnel sur Windows et sur plates-forme Linux seulement et seulement si le logiciel a été mis à niveau.
+.TP 20 
+          \fIAutomatically enter record mode\fp
+Si choisi alors quand WXtoImg entrera automatiquement en mode d'enregistrement comme si \fIRecord\fP avait été choisi du menu \fIFile \fPet\fI Record\fP avait été cliqué. Pour les satellites APT, le mode enregistrement est entré quelques minutes avant le prochain passage satellite et sorti après que le traitement soit complet. Ce mode est aussi utile pour automatiser l'enregistrement/décodage quand WXtoImg est commencé automatiquement, opérationnel seulement si le logiciel a été mis à niveau.
+.TP 20
+          \fIDisable sat position during record\fP
+Met hors service les calculs de la position satellite (élévation et azimut) et montre en enregistrant un satellite passant au-dessus. Ceci peut être utile sur les ordinateurs lents pour aider à empêcher des coupures dans l'image provoquée par des manques de temps dans l'enregistrement.
+.TP 20
+          \fIAutomatically update Keplers\fP
+Si choisi, les képlers seront téléchargés via Internet approximativement chaque 24 heures. Exige" d'être toujours connecté", ou une connexion automatique à Internet. Opérationnel seulement si le logiciel a été mis à niveau et si WXtoImg est utilisé en enregistrement.
+.TP 20
+          \fIAuto-save options on exit\fP
+Si choisi alors toutes les options seront sauvegardées comme\fI Save Options\fP avant la sortie du programme. Le facteur par défaut est branché.
+.TP 20
+          \fIMaximum number of thumbnails
+Met le nombre maximum de miniatures qui peuvent être montrées à chacune des pages des miniatures. Les miniatures les plus récentes sont montrées.
+.TP 20
+          \fIEnable Expert Mode\fP
+Si permis un jeu de particularités surtout historiques, dont beaucoup ont peu d'utilité. Les options doivent être sauvegardées et le programme quitté et redémarré avant que les changements n'entrent en vigueur.
+.TP 10
+\fISave Options\fP
+Ceci sauvegarde toutes les options du menu options (et les dialogues d'options du menu d'options) à l'exception de Interpolate, Show All, Resync, et Disable PLL. Cette option sauvegarde aussi la taille des fenêtres et la position. En outre les modes d'enregistrement et les réglages de l'image et de film sont sauvegardés. Si c'est article de menu n'est pas choisi, alors n'importe quels changements faits ne seront pas établis quand le programme est recommencé (à moins que \fIAuto-save options on exit\fP est choisi dans le dialogue \fIGUI Options\fP).
+.SH Menu Projection 
+Le menu \fBProjection \fPpermet le changement de projection de carte utilisée pour montrer l'image du satellite APT. La projection par défaut \fInormal\fP est la projection spatiale oblique inchangée que le satellite fournit.
+.TP 10
+\fINormal\fP
+La projection spatiale oblique inchangée que le satellite fournit.
+.TP 10
+\fIMercator\fP
+La projection classique Mercator. Les lignes de direction constante (lignes rhumb) apparaissent droites. Cette projection cylindrique ne travaille pas près des pôles et montre une altération considérable de surface loin de l'équateur.
+.TP 10
+\fIEquidistant Cylindrical\fP
+Une projection équidistante cylindrique où les lignes de latitude et longitude sont parallèles et ont un espacement égal. Parfois appelé Plate Carrée. Montre une altération considérable de surface près des pôles.
+.TP 10
+\fIEqual-Area Cylindrical\fP
+Une projection cylindrique où les masses terrestres de secteur semblable montrent la même surface. Montre une altération considérable de surface près des pôles.
+.TP 10
+\fIEckert IV\fP
+Une projection de surface égale avec des méridiens de demi-cercle utilisée pour cartes du monde.
+.TP 10
+\fIEckert VI\fP
+Une projection de surface égale avec des méridiens sinusoïdaux employée pour cartes du monde.
+.TP 10
+\fIMollweide \fP
+Une autre projection de surface égale généralement employée pour cartes du monde.
+.TP 10
+\fIMiller\fP
+Une projection cylindrique de compromis qui montre moins de déformation que Mercator mais ne montre pas les lignes droites de rhumb.
+.TP 10
+\fIPolar Lambert Equal-Area\fP
+Projection Azimutale Polaire de Lambert de surface égale. Une projection azimutale semblable à Stéréographique Polaire mais qui est de surface égale.
+.TP 10
+\fIPolar Stereographic\fP
+Une projection azimutale où les lignes de longitude convergent aux pôles.
+.TP 10
+\fIPolar Azimuthal Equidistant\fP
+
+
+Une projection équidistante centrée aux pôles.
+.TP 10
+\fIOrthographic\fP
+Une projection de perspective de distance infinie.
+.PP
+.SH Menu Image
+Options qui utilisent l'image ou permettent à l'image d'être manuellement changée après le traitement.
+.TP 10
+\fISlant Correction...\fP
+Après la sélection, on peut traîner une ligne le long d'un bord vertical pour mettre le taux d'échantillonnage. Voir document \fIRequired Calibration...\fP sous le menu \fIHelp \fPpour plus de détails.
+.TP 10
+\fIMove Map Overlay...\fP
+Après la sélection on peut traîner une ligne entre un point sur le revêtement et le point correspondant sur l'image pour ajuster la position du revêtement.
+.TP 10
+\fIColour Negative\fP
+Crée une couleur négative de l'image. Pour des images d'échelle de gris, le noir devient blanc et le blanc devient noir.
+.TP 10
+\fIWarmer Colours\fP
+Réchauffe les couleurs dans l'image en décalant l'image vers la fin du spectre rouge. Les effets peuvent être tout à fait subtils, ainsi la commande devrait être répéter avant que l'effet ne devienne apparent.
+.TP 10
+\fIColder Colours\fP
+Refroidit les couleurs dans l'image en décalant l'image vers la fin du spectre bleue. Les effets peuvent être tout à fait subtils, ainsi la commande devrait être répéter avant que l'effet ne devienne apparent.
+.TP 10
+\fIConvert to Grayscale\fP
+Convertit l'image à une image d'échelle de gris.
+.TP 10
+\fIHistogram Equalise Image\fP
+L'image est l'égalisation d'histogramme. Notez que cette opération fonctionne sur l'image entière montrée à 8 bit et donc est inférieure à l'utilisation de l'égalisation d'histogramme sous les améliorations (qui fonctionne en 16-bit). Cependant, c'est tout à fait utile pour l'égalisation d'histogramme pour des images coupées ou agrandies.
+.TP 10
+\fIIncrease Contrast\fP
+Augmente le contraste dans l'image. Employez des temps multiples pour augmenter un peu plus le contraste.
+.TP 10
+\fIFlip Image\fP
+Fait tourner l'image à 180 degrés.
+.TP 10
+\fIWhite Background\fP
+Place l'arrière-plan sur une image qui a été géométriquement transformée (c'est-à-dire que la Projection a été placée à quelque chose d'autre que Normal), de noir au blanc. Cette option ne travaille pas sur les images JPEG en utilisant \fIView Image\fP. Voir aussi \fIWhite background on projections \fPdans \fIImage Settings \fPsous\fI Record \fPdans le menu\fI File \fPpour réglages de l'arrière-plan à blanc pour automatiquement sauvegardées les images.
+.TP 10
+\fIShift Image...\fP
+Après sélection, un point sur l'image montrée peut être choisi qui sera mis comme le nouveau bord gauche.
+.TP 10
+\fICrop Image.. \fP
+Après sélection, en cliquant et traînant une boîte, la région à être coupée peut être choisie. Alors en cliquant à l'intérieur de la boîte cela coupera l'image; cliquez à l'extérieur de la boîte annulera l'opération.
+.TP 10
+\fIRotate Image.. \fP
+Permet à l'image d'être tournée. Après ce choix, traînez une ligne de gauche à droite. Cette ligne deviendra horizontale dans l'image tournée.
+.TP 10
+\fIResize Image...\fP
+Un sous-menu permet le choix de la nouvelle taille (comme un pourcentage de l'original). L'image peut seulement être réduite dans la taille. L'image peut être réduite plusieurs fois pour créer de très petites images.
+.TP 10
+\fIMagnify Area...\fPUn sous-menu permet le choix du degré de grossissement (comme un pourcentage de l'original). Après la sélection, en cliquant et traînant une boîte, la région à grossir peut être choisie. Cliquer à l'intérieur de la boîte provoquera l'agrandissement de la partie de l'image; cliquer à l'extérieur de la boîte annulera l'opération. L'agrandissement utilise l'interpolation pour réduire au minimum la pixelation.
+.TP 10
+
+\fIView Enhancement Curve\fP
+Montre la courbe actuelle d'amélioration ou la palette pour l'amélioration choisie dans le menu \fIEnhancements\fP. Si l'amélioration est une amélioration d'égalisation d'histogramme, alors l'égalisation d'histogramme pour l'image actuelle sera montrée.
+.TP 10
+\fIUndo All (Decode)\fP
+Fait un décodage, qui a l'effet de détruire tous les changements et les opérations produites.
+.SH Modèle de nom de fichier
+Le modèle de nom de fichier indique le format de nom de fichier de production. Cela peut être trouvé dans \fBFile Names and Locations... \fPsous le menu \fBOptions\fP. Si le modèle de nom de fichier est laissé blanc il se transfère sur le nom de chemin original. Les séquences % dans le calibre de nom de fichier sont remplacées comme défini ci-dessous. Tous les remplacements seront convertis en lettre minuscule.
+.PP
+Par exemple un \fImodèle de nom de  fichier\fP de:
+.nf
+    %s-%T-%e
+.fi
+.PP
+Pourraient produire des noms de fichier comme:
+.nf
+    Meteor3-01061123-norm.jpg
+    Noaa-12-01062348-msa.bmp
+    Noaa-01062352-mcir-precip.png
+    Noaa-01062350-raw.png
+
+    Met7-01022603-norm.png
+
+.fi
+.PP
+Les modèles peuvent s'étendre pour créer des répertoires, par exemple:
+.nf
+    %Y/%m/%d/%s-%e
+    %Y\\%m\\%d\\%s-%e
+.fi
+.PP
+Sous Linux/*NIX/MacOS X et Windows/DOS respectivement.
+.TP 10
+\fB%@\fP
+Oblige n'importe quelles séquences % de temps ou de date (avant ou bien après le %@) à utiliser l'heure locale plutôt que le temps UTC.
+.TP 10
+\fB%s\fP
+est remplacé avec le nom satellite en minuscule (jusqu'à 8 caractères, par exemple \fBmet7\fP, \fBnoaa-14\fP, \fBmeteor3\fP).
+.TP 10
+\fB%N\fP
+est remplacé avec le nom satellite dans ce cas mélangé et avec des espaces (par exemple \fBMET7\fP, \fBNOAA 17\fP, \fBMétéore 3-5\fP).
+.TP 10
+\fB%g\fP
+est remplacé avec le satellite tapez la lettre minuscule (par exemple \fBmet\fP, \fBnoaa\fP, \fBmeteor3\fP).
+.TP 10
+\fB%D\fP
+est remplacé avec la direction satellite, ou bien \fBen direction du nord\fP  ou bien \fBen direction du sud\fP.
+.TP 10
+\fB%p\fP
+est remplacé avec une abréviation de caractère simple pour la direction satellite, ou bien \fBN\fP en direction du nord ou bien \fBS\fP pour en direction du sud.
+.TP 10
+\fB%E\fP
+est remplacé avec l'élévation maximale pour le passage en degrés (\fB0\fP-\fB90\fP).
+.TP 10
+\fB%^\fP
+est remplacé avec l'azimut à l'élévation maximale pour le passage en degrés (\fB0\fP-\fB360\fP).
+.TP 10
+\fB%z\fP
+est remplacé d'une lettre simple, ou bien \fBE\fP ou bien \fBW\fP pour indiquer que l'azimut est plus vers l'est ou plus vers l'ouest à élévation maximale.
+.TP 10
+\fB%:\fP
+est remplacé avec \fBeast\fP ou bien \fBwest\fP pour spécifier que l'azimut est plus vers l'est ou plus vers l'ouest à élévation maximale.
+.TP 10
+\fB%f\fP
+est remplacé avec le nom du fichier audio original d'entrée, mais sans nom de dossier ou de répertoire ni aucune extension (par exemple si le nom de fichier d'entrée est /tmp/03042215.wav alors %f est remplacé par 03042215).
+.TP 10
+\fB%F\fP
+est remplacé du format (ou bien \fBapt\fP ou bien \fBwefax\fP).
+.TP 10
+\fB%C\fP
+est remplacé de la bande spectrale WEFAX ou le canal A ou canal B de NOAA APT. Jusqu'à 3 caractères, par exemple. WEFAX: \fBvis\fP, \fBir\fP, \fBnir\fP; NOAA APT: \fB2-4\fP, \fB3-4\fP. Si inconnu ne seront remplacé par rien.
+.TP 10
+\fB%e\fP
+est remplacé par le nom de l'amélioration (par exemple \fBza\fP, \fBhvc\fP) ou \fBraw\fP pour raw, \fBpris\fP pour pristine, \fBnorm\fP pour normal (aucune amélioration). Avec les améliorations histeq et norm, si seulement le canal A ou B est choisi alors le nom de l'amélioration est ajoutée avec a ou b (par exemple histeqb, contrasta, norma).
+.TP 10
+\fB%l\fP
+est remplacé par le secteur. Jusqu'à 4 informations de secteur de caractère d'en-tête numérique WEFAX. Si non disponible (ou APT), seront substitué avec rien.
+.TP 10
+\fB%8,9,10,11%
+est remplacé par les 9ème, 10ème, 11ème et 12ème caractères de l'en-tête numérique WEFAX (ils apparaissent par un parce que le numérotage commence à 0). La gamme valable des nombres est de 0 - 49 qui correspond aux 50 caractères dans l'en-tête numérique. Le nombre commence à 0, et est séparé par des virgules et un % finit la séquence. Si le caractère choisi est un espace (ou est autrement non disponible) alors rien ne sera substitué (c'est-à-dire le nom de fichier résultant ne contiendra pas de caractère d'espace).
+.TP 10
+\fB%r\fP
+est remplacé par la fréquence radio satellite en MHz (par exemple 137.50).
+.TP 10
+\fB%k\fP
+est remplacé par la date dans le format YYMMDD. Pour WEFAX c'est la date incluse dans l'en-tête numérique de l'image. Pour APT la date actuellement employée est UTC. (équivalent de \fBy%m%d\fP).
+.TP 10
+\fB%K\fP
+est le même que \fB%k\fP, mais dans le format  DDMMYY (équivalent de\fB d%m%y\fP).
+.TP 10
+\fB%L\fP
+est le même que \fB%k\fP, mais dans le format  MMDDYY (équivalent de\fB m%d%y\fP).
+.TP 10
+\fB%d\fP
+est remplacé par les 2 chiffres du jour et du mois \fB(01-31)\fP.
+.TP 10
+\fB%m\fP
+est remplacé par les 2 chiffres du mois \fB(01-12)\fP.
+.TP 10
+\fB%y\fP
+est remplacé par l'année sans le siècle (par exemple \fB01\fP).
+.TP 10
+\fB%Y\fP
+est remplacé par l'année avec le siècle (par exemple \fB2001\fP).
+.TP 10
+\fB%T\fP
+
+est remplacé par la date et le temps dans le format MMDDHHMM. Pour WEFAX c'est la date et  l'heure incluse dans l'en-tête numérique de l'image. Pour APT la date actuellement employée est UTC (équivalent de\fB %m %d%H%M\fP).
+.TP 10
+\fB%t\fP
+est remplacé par le temps dans le format HHMM. Pour WEFAX c'est la date et l'heure incluse dans l'en-tête numérique de l'image. Pour APT la date actuellement employée est UTC. (équivalent de\fB H%M\fP).
+.TP 10
+\fB%H\fP
+est remplacé par les 2 chiffres de l'heure (horloge de 24 heures) \fB(00-23)\fP.
+.TP 10
+\fB%I\fP
+est remplacé par les 2 chiffres de l'heure (horloge de 12 heures) \fB(0-12)\fP.
+.TP 10
+\fB%P\fP
+est remplacé par la désignation AM/PM.
+.TP 10
+\fB%M\fP
+est remplacé par les 2 chiffres des minutes \fB(00-59)\fP.
+.TP 10
+\fB%Z\fP
+est remplacé par le nom du fuseau horaire ou l'abréviation.
+.TP 10
+\fB%%\fP
+est remplacé par %.
+.SH Formats des images de sortie 
+Les images peuvent être produites en \fIJPEG\fP, \fIPNG\fP, \fIBMP\fP, \fIPBM\fP (PGM/PPM/PNM), ou format \fIAVI\fP.
+.PP
+Le format de sortie: JPEG (.jpg), PNG (.png), BMP (.bmp), PNM (.pnm), ou AVI (.avi) utilisé pour la production est spécifié par l'extension de nom de fichier. Si vous n'employez pas d'extension, ou l'extension ne touche pas à un des formats de sortie soutenus, le défaut sera le jeu de format dans \fBImage and Movie Options...\fP sous le menu \fBOptions\fP.
+.PP
+Les fichiers JPEG sont un format comprimé lossy . La qualité (\fIImage and Movie Options \fPsous le menu\fI Options\fP) peut être varier pour contrôler la quantité de détails à préserver et le taux de compression. La qualité peut variée de 0 à 100. La gamme utile est probablement de 30 à 95 où une qualité de 30 produit une image bien comprimée (bien que beaucoup de détails manquent et avec quelques artefacts significatifs), tandis qu'une qualité de 95 produit une très bonne image, mais avec une petite compression. JPEG ne peut pas soutenir 16 bit images d'échelle de gris. Les images JPEG peuvent contenir des commentaires.
+.PP
+Les fichiers PNG sont un format d'image comprimé sans perte. Grâce à une bonne compression et étant sans perte c'est le format préféré. PNG soutient 16 bit images d'échelle de gris, commentaires et enregistre le gamma.
+.PP
+Les fichiers BMP sont un format d'image largement employé sur les systèmes basés sur PC. Les fichiers BMP produits par \fIWXtoImg\fP ne sont pas comprimés. Les fichiers BMP ne peuvent pas soutenir 16 bit images d'échelle de gris, ils ne peuvent pas contenir non plus de commentaires.
+.PP
+Les fichiers PBM sont un format d'image non comprimé, mais convenant bien à un traitement ultérieur et affichage sur systèmes *NIX. Les fichiers PBM (bitmap) sont aussi appelés PPM (couleur), PGM (échelle de gris) et PNM (chacun). Ils soutiennent 16 bit images d'échelle de gris et commentaires.
+.PP
+Les fichiers AVI sont des séquences animées d'images. Les fichiers AVI  soutiennent les différents types de compression, RGB qui est non comprimé, JPEG qui emploie la compression JPEG et MJPG (ou mouvement JPEG) qui emploie une forme spéciale abrégée de compression JPEG. Le type de compression employée dans le fichier AVI est contrôlé avec le fichier de configuration paramètre \fIAVI Codec\fP. Pour JPEG et MJPG la qualité AVI (\fIImage and Movie Options \fPsous le menu\fI Options\fP) contrôlera la qualité de l'animation AVI. Les fichiers AVI emploient la qualité inférieure par défaut pour réaliser une meilleure compression. En raison du mouvement, la qualité inférieure d'image est nécessaire. Quand vous choisissez un fichier AVI pour la production, si le fichier existe, la nouvelle image sera ajoutée à la fin de la séquence. Si le fichier AVI n'existe pas déjà, alors un nouveau fichier AVI sera créé avec seulement la nouvelle image. Si le fichier AVI contient déjà le nombre maximal ou plus grand de cadres (images) alors dans la séquence le premier cadre (ou image) sera enlevé de sorte que le nombre de cadres soit le maximum après que la nouvelle image soit ajoutée.
+.SH Contrôle de Volume
+En enregistrant les signaux il est important que le volume ne soit pas mis trop haut ou trop bas. Si le volume est mis trop haut, la coupure arrivera et le détail sera perdu dans les secteurs des blancs de l'image. Si le volume est mis trop bas, certains détails seront perdus dans toute l'image.
+.PP
+Le volume doit être ajusté pour que vol qui est montré quand le signal est traité soit environ entre 50.0 et 75.0. Des valeurs numériques plus élevées de vol (par exemple 92.3) indiquent que le volume doit être diminué, baisser les valeurs numériques de vol (par exemple 24.7) indiquent que le volume du récepteur doit être augmenté.
+.PP
+Le volume sera montré quand un signal est enregistré. Le volume sur le récepteur peut être facilement ajusté pendant un passage satellite pour placer un vol raisonnable. Notez qu'on ne recommande pas de changer le volume pendant chaque passage satellite (car les images résultantes montreront des bandes éclairées et sombres). Le volume doit être mis une fois et ensuite quitter.
+.PP
+En utilisant des fichiers à 8 bits audio, le volume doit être lentement augmenté jusqu'à ce que le vol affiche environ entre 85.0 et 92.0. Malheureusement, chaque satellite exigera un réglage optimal différent du volume. Les résultats ne seront jamais aussi bons que des images créées des enregistrements 16 bits, particulièrement où chacune des améliorations d'image est employée.
+.PP
+Si le volume est mis trop haut, WXtoImg peut publier un message d'avertissement.
+.PP
+.SH Équipement Requis
+Pour vous servir de ce programme pour les transmissions APT vous aurez besoin d'un récepteur capable de recevoir les signaux dans la bande 137-138MHz (cherchez les satellites à 137.30,137.40, 137.50, 137.62, 137.80 et 137.85 MHz). Pour ce but un récepteur conçu  pour satellites météorologiques est la meilleure option pour la sensibilité, et la largeur de bande IF (50kHz) sera correcte.
+.PP
+Les scanners et les récepteurs de communication d'usage courant peuvent être employés, cependant ceux-ci  ont souvent une très étroite largeur de bande IF (près de 15kHz) avec pour résultat que les blancs (au-dessus environ de 128 sur une échelle de 0-255) seront invariablement bruyants et écrêtés. La largeur de bande étroite provoquera aussi beaucoup de bruit car le changement doppler combiné avec la largeur étroite de bande IF aboutira à un très pauvre signal sauf quand le satellite est directement au dessus. Cependant, les versions WXtoImg mises à niveau  ajustent la fréquence pour compenser l'effet doppler sur les récepteurs soutenus avec une connexion RS-232. Quelques récepteurs de communication avec option de filtre ont un 30kHz ou 50kHz IF (acceptable si la fréquence est ajustée en utilisant une version améliorée de WXtoImg), et il y a des modifications pour que quelques scanners augmentent la largeur de bande IF. Un pré-ampli peut aider avec une pauvre sensibilité, mais ces modifications ne peuvent pas aboutir à la même qualité d'image qu'un récepteur conçu  pour recevoir les satellites météorologiques.
+.PP
+Les versions mises à niveau de WXtoImg contiennent aussi un code spécial pour fabriquer beaucoup plus précisément les améliorations de couleur en employant les récepteurs à largeur de bande étroite. La mise à niveau sera encore plus considérable pour ceux obtenant des images raisonnables en utilisant l'amélioration\fI Contrast enhance (NOAA ch B only)\fP.
+.PP
+Une antenne spéciale sera nécessaire indépendamment du récepteur que vous avez. Vous pouvez construire une antenne, il y a plusieurs conceptions pour l'antenne fortement recommandée QFH disponible sur Internet. La Turnstile et les antennes dipôles croisées sont d'autre options.
+.PP
+Vous, aurez bien sûr besoin d'un câble audio entre "la sortie du haut parleur" de votre récepteur et "l'entrée ligne" de votre carte-son.
+.PP
+Finalement, il peut être utile de savoir quand les satellites météorologiques à orbite polaire passent au-dessus, donc vous pourriez vouloir obtenir un programme de dépistage. Cependant, dans le mode enregistrement WXtoImg vous fera part quand il attend le passage suivant du satellite.
+.PP
+Pour les transmissions WEFAX de satellites géostationnaires, la méthode la plus commune est d'employer une petite antenne parabolique, couplée avec une source et le convertisseur pour convertir le signal de bande 1600 MHz à la bande 137 MHz. Alors le même récepteur peut être employé pour ces satellites. Voir les références pour plus d'informations.
+.SH Références et plus d'information
+Paul Hayes a l'information pour construire une antenne QFH à: 
+.nf
+    http://homepage.ntlworld.com/phqfh1/qfh_diy_guide.htm
+.fi
+.PP
+Vérifiez aussi l'information et la FAQ sur la page d'accueil de WXtoImg à:
+.nf
+    http://www.wxtoimg.com/
+.fi
+.PP
+.SH Les bogues connus
+L'option resync pour corriger les intervalles absents dans l'enregistrement ne fait pas toujours le travail et peut travailler incorrectement.
+.PP
+La détection automatique des satellites Okean ne travaille pas habituellement. Choisissez Okean du menu Satellite avant de décoder les enregistrements à partir de ces satellites.
+.PP
+Le déclenchement sur les satellites Okean n'est pas disponible aboutissant aux images incurvées dû à l'effet doppler, on a besoin d'ajuster précisément le taux d'échantillonnage pour correspondre à la carte-son pour les satellites Okean et Meteosat.
+.SH Conditions générales
+Le programme \fIWXtoImg\fP (qui inclut wxtoimg, xwxtoimg, wxrec, wxmap, wxproj, et wxbatch) et la documentation n'est pas garanti pour être sans bogues). Vous devez sauvegarder votre système avant l'installation de ce logiciel. Évitez de diriger ce logiciel comme racine ou avec racine, gestionnaire, ou groupes de privilèges. À cause de la nature des signaux analogiques et du traitement complexe effectué, ne vous attendez pas à ce que les résultats de ce programme soit correct à chaque fois.
+.PP
+Les programmes WXtoImg et documentation sont fournis "COMME TEL". Central North Publishing Limited dément toutes garanties de quelque nature que ce soit, expresse ou implicite, y compris, sans limitation, les garanties de valeur commerciale et de santé pour n'importe quel but. En aucun cas Central North Publishing Limited ne serait tenu responsable pour les dommages direct, indirect, des dégâts fortuits, spéciaux, exceptionnelles, ou consécutifs, qui peuvent résulter de l'utilisation des programmes WXtoImg, même si vous êtes informé de la possibilité de tels dégâts.
+.PP
+Les programmes WXtoImg et la documentation ne sont pas destinés pour être employés pour protéger la vie, la santé, la sécurité, ou la propriété qui peuvent être en danger.
+.PP
+L'édition du freeware  public du logiciel WXtoImg peut être employée à des buts personnels, et non lucratifs. Des particularités complémentaires sont disponibles seulement à ceux qui mettent à niveau leurs copies du logiciel.
+.PP
+L'utilisation par n'importe quelle organisation commerciale, ou n'importe quelle personne à buts lucratifs exige l'achat d'une clef d'édition professionnelle de mise à niveau. Une clef de mise à niveau peut être obtenu de:
+.nf
+    Central North Publishing Limited
+    P.O. Box 99597
+    Newmarket
+    Auckland
+    New Zealand
+    Email:http://www.wxtoimg.com/email.html
+    http://www.wxtoimg.com/reg/
+.fi
+.PP
+Les programmes et la documentation WXtoImg peuvent seulement être redistribués pour utilisation personnelle, sur une base non commerciale et dans leurs paquets originaux, et non modifiés. Aucune autre redistribution n'est permise. Central North Publishing Limited  se réserve le droit d'arrêter la redistribution. Les clefs de mise à niveau peuvent être employées seulement sur un seul ordinateur et ne peuvent être reproduites, distribuées ou révélées à d'autres parties.
+.PP
+Les programmes WXtoImg sont Droit d'auteur (c) 2001-2013 Central North Publishing Limited. Tous droits réservés.
+.PP
+.SH Remerciements
+Remerciements spéciaux à Andreas Rehberg, Gerd Berg (DK1RR), John Boudreau, Adrian Chamberlain, Ari Ervaskivi, Andy Eskelson, Jakub Gorzynski (SQ2WB), Les Hamilton, Paul Hayes, Paul Holder, Nakato Mikiya, Pauli Nunez (EA3BLQ), Andre Phillips, Steven Ross, Jeremy Royle, Hartmut Schaksmeier et beaucoup d'autres qui ont évaluées les nombreuses premières versions béta de ce logiciel.
+.PP
+NOAA a fourni une richesse d'information sur leur site web et dans leurs publications, et a développé la plupart des courbes d'améliorations employées dans \fIWXtoImg\fP et a fourni un remarquable appui.
+.PP
+.SH Avis
+Droit d'auteur (c) 2001-2004 Central North Publishing Limited. Tous droits réservés.
+.PP
+Les courbes d'améliorations  ZA, MB, MD, BD, CC, EC, HE, HF, JF, JJ, LC, TA, WV, et amélioration NO ont été fournis par l'Administration Nationale Océanique et Atmosphérique (NOAA). 
+.PP
+L'appui JPEG , a été fourni en partie par le Groupe Indépendant JPEG.
+.PP
+L'appui de recouvrement de texte est basé sur le travail de FreeType Team.
+

@@ -1,0 +1,807 @@
+.\" -*- nroff -*-
+.\" Copyright (c) 2001-2004 Central North Publishing Limited.
+.\" All rights reserved.
+.\" Translated by Nakato Mikiya
+.\"
+.TH WXTOIMG FAQ  "2.7.3"
+.SH 受信録音(Recording)
+.B 録音を始めると
+.B "Error: wave In Open failed!"
+.B と表示されます。どうすればよいですか?
+.br
+[Options]にある
+[Recording Options...]
+にあるサウンドカード(soundcard)を替えて下さい。貴方のPCにあるサウンドカードが一枚のみでも替えて下さい。変更後に[OK]を押し、再び録音を始めて下さい。録音ができるサウンドカードを指定できるまで、全てを試して下さい。それでも録音ができないならば、最新のドライバをインストールする必要があるかもしれません。
+.PP
+.B 録音が始まりません。どうすればよいですか?
+.br
+サウンドカードのライン入力と受信機がつながっていることを確認して下さい。次に受信機のスピーカー出力(ライン出力ではありません。)にオーディオケーブルがつながっていることを確認して下さい。
+後は、[help]にある
+[Required Calibration...]
+に従って下さい。
+.PP
+.B 画像が分れるのは、なぜですか?(ときどき"as sync loss"と表示がされます)
+.br
+その画像は、水平方向に切られたように見えるでしょう。また、上部や下部が左右のどちらかに入れ替わっているようにも見えるでしょう。これが一カ所か、あるいは数ヵ所にあるかもしれません。
+.PP
+まずは、衛星通過を記録中に、スクロール・バーを使わないようにしましょう。あるいは、スクロール時にマウスボタンを必要以上に押し続けないようにしましょう。
+.PP
+その他によくある原因は、WXtoImgが衛星通過を記録中に使われる他のプログラムによります。スクリーン・セーバーは止めましょう。遅いコンピュータでは、WXtoImgの録音中は別のプログラムが同時に動いていると、画像表示に問題を起こすでしょう。
+.PP
+衛星通過中に画像表示をしないようにもできます。[Options]にある[GUI Options]中の
+[Disable sat position during record]
+を選び、
+[Show image while recording]
+の印を外しましょう。
+.PP
+.B "Status: opening soundcard..."と表示して、WXtoImgが止まるのはなせですか?
+.br
+別のソフトなどがサウンドカードやミキサーを使っているのでしょう。それらの操作を終えて下さい。
+.PP
+.B 極軌道衛星を受信すると、直ぐに録音が始まり、また、録音が止まらないのはなぜですか?
+.br
+もしかすると、スケルチ機能が受信機に無いのでしょう。
+[Options]中の
+[Recording Options...]
+にある
+[Record when 2400 Hz carrier present]
+を、もしくは
+[Record only when selected active APT satellites are overhead]
+を使って下さい。
+.PP
+.B 静止衛星を受信すると、録音が止まらないのはなぜですか?
+.br
+[Options]中の
+[Recording Options...]
+にある
+[Record using WEFAX start/stop tones]
+を使って下さい。
+.PP
+.B 静止気象衛星からの音声ファイルのみを録音し、画像表示がされないのは、なぜですか?
+.br
+おそらく、処理が長くかかりすぎています。[Options]にある[Despeckle]を調整して(あるいは、\fInone\fPにします)、処理時間を短くすることができます。[Despeckle]は地表図の細線を消すので、WEFAX画像に使うには不向きです。また、[Options]にある[Sharpen]を"none"にすると処理時間が早まるでしょう。
+.PP
+[Options]にある[[GUI Options]
+中の
+[Maximum number of thumbnails]
+を"0"にすることで、さらに処理時間を短縮できます。
+.PP
+ファイルの改名は処理時間がかかります。ですから、[Options]にある
+[File Names and Locations]
+中の
+[Use for audio recordings/maps too]
+を選ばないことで処理時間を短くできます。最後に、[File]にある[Record]に指定された、自動画像処理やその他の処理の数を減らして下さい。
+.PP
+貴方のコンピュータが次の受信前に、画像処理が完了できないならば、貴方のコンピュータを改良することをお勧めします。
+または、[File]にある
+[Record]中の[Record only (show image if enabled)]
+を選ぶことも良いかもしれません。この処理方法は、音声ファイルだけを保存
+します。録音がされると
+"Audio Files"
+タブに表示されるでしょう。
+.PP
+.B 上空を極軌道衛星が通過していない時に録音をしようとします。どうすればよいですか?
+.br
+コンピュータの時刻と時間帯を受信場所に合わせて下さい。MS-Windowsでは"日付/時間のプロパティ"を見て下さい。時間帯は近くの都市を選びます。(「自動的に夏時間の調整をする」を選ぶと時刻が正確になります。訳者:日本では夏時間の調整は不必要です)
+.PP
+MS-Windowsでは、"autoexec.bat"の
+"SET TZ="
+で始まる行を見て下さい。これは、コントロールパネルで指定した時間帯を無視し、WXtoImgの動きに影響を与えます。ですから、この行を消すかコメントアウトをして下さい。
+.PP
+.B 古い画像や受信録音を自動に消すには、どうしたらよいですか?
+.br
+[File]にある[Record]を見て下さい。ここでは、受信録音、raw画像、地表図、画像ファイルに関する操作をします。これらをいつ消すかを選んで下さい。[Accept]を押したならば、次に[Options]にある
+[Save Options]
+を押して下さい。この機能は、WXtoImgが作ったファイルを消します。
+[Save Image as..]
+や
+[Save Raw Image as...]
+で保存したものや他のプログラムが作った音声ファイルは消しません。
+.br
+.TP 10
+訳者端書き:
+*NIXでしたら、crontabも使えます。次のような行を/etc/crontabに加えて下さい。
+5 1,13 * * * /usr/bin/find [ファイルがあるディレクトリ] -maxdepth 1 -name *.wav -type f -mtime 2 -print |/usr/bin/xargs /bin/rm -f
+.TP 10
+"-mtime 2"は、48時間より古いファイルを消去し、"-mtime 3"
+は、72時間以上古いファイルを消去します。これは全ての古い"wav"ファイルを削除します。ですから残したいファイルは、指定したディレクトリに置かないで下さい。
+
+.PP
+.SH 斜めな画像 (Image Slant)
+.B 画像が斜めになるのは、なぜですか?
+.br
+サンプリング周波数を調節しましょう。サンプリング周波数を調節する案内は、
+[Help]中の
+[Required Calibration ...]
+にあります。
+.TP 10
+訳者端書き: 実際のサンプリング割合
+WXtoImgのサンプリング割合は、11025Hzです。しかし、貴方がお使いのサウンドカードがごくわずかに早かったり、または遅いサンプリング割合になっているでしょう(例えば、11025.26Hzならば、わずか0.0026%だけ速い)。そこで、サウンドカードの水晶発振子の速度をWXtoImgに正確に教えましょう。これは、特別に難しいことはありません。
+.PP
+.B 斜めの画像に垂直側の端がありません。
+.br
+これはサウンドカードが、11,025Hzからかなり外れた周波数でサンプリングしているからです。垂直側の端が表示されないことは、さほど問題ではありません。貴方の画像には、斜めな水平側の線があるでしょう。その画像を横切る斜めな線の内一つに沿って、左から右までマウスで線を引いて下さい。(下図を見て下さい)
+.PP
+次に、
+[Estimate and set sampling frequencies for all satellites]
+を選び、[Set]を押して下さい。
+.PP
+続いて、[File]から[Decode]を選びます。この操作を繰り返して下さい。この時に、画像の端は垂直に近づいているでしょう。
+.PP
+画像が正常に表示されたら
+[Disable PLL]
+の印を外し、サンプリング割合を保存するために[Options]にある
+[Save Options]
+を押して下さい。
+.PP
+.\" IMG=slantcor1.gif CAP=赤い線を、水平側の線に沿って引きます。
+.\" IMG=slantcor2.gif CAP=[Estimate and set sampling frequencies for all satelltes]を選び[Set]を押しましょう。
+.PP
+.SH 地表図 (Map Overlays)
+.B WXtoImgは、他のプログラムの受信録音にも地表図が表示できますか?
+.br
+もちろん出来ます。でもその前に、[Options]の
+[File Names and Locations]
+にある
+[Audio file naming]
+を[Other]にしましょう。
+.PP
+ファイル名がMMDDHHMM.wav(月日時分)であっても、WXtoImgは衛星が地平線上に現れた時刻ではなく、録音開始時刻を必要とするので、[Other]にする必要があります。
+.PP
+.B 地表図が表示されずに、
+.B "could not find matching pass to buildoverlay map"
+.B と表示されるのはなぜですか?
+.br
+[Options]にある
+[Ground Station Location...]
+が、貴方が受信する場所の緯度と経度に一致することを確認して下さい。
+.PP
+また、[Options]にある
+[Active APT Satellites]
+で受信をする衛星が選ばれていることを確認して下さい。選ばれてないならば[Active]を押して下さい。
+.PP
+貴方のコンピュータ時間がかなり(5分以上)標準時からずれていませんか? 次の「地表図がずれて表示されるのは、なぜですか?」をご覧下さい。
+.PP
+コンピュータの時間帯が正しくないと、世界標準時(UTC)の計算を間違うことがあります。貴方がお使いのコンピュータの時間帯設定を確認して下さい。MS-Windowsならば、「日付と時刻のプロパティ」(スタート→設定→コントロールパネル→日付と時刻)の都市名が、近くにあるものですか?
+.PP
+WXtoImgは、地表図作成の為に必要な緯度と経度から、世界標準時(UTC)を決められません。
+.PP
+.B 地表図がずれて表示されるのは、なぜですか?
+.br
+コンピュータ内部時計が、1秒以上ずれていませんか?
+地表図の正確な表示には、コンピュータ内部時計の正確さが必要です。WXtoImgのUpgrade版では、コンピュータ内部時計をGPSに合わせることができます。または、コンピュータ内部時計をインターネット上の時刻送出、あるいはGPSに合わせるプログラムを使う方法もあります。貴方が他のコンピュータで受信をするならば、そのコンピュータの内部時計を正確に合わせましょう。
+.PP
+.B 私のコンピュータ内部時計は正確です。他の原因には何がありますか?
+.br
+古い軌道要素を使うと、地表図表示がさらにずれます。[File]にある
+[Update Keplers]
+を押して下さい。
+.PP
+貴方が他のコンピュータから持ってきた録音を使うと、録音の日付がずれた地表図表示の原因になります。日付を保存するコピー・プログラムを使って下さい。(GUN/Linuxや*NIXでは、cpコマンドのpオプションやmvを使います)
+.PP
+.B まだ、ずれた地表図を表示しています。何か解決法はありませんか?
+.br
+[Image]にある
+[Move Overlay...]
+を使って地表図を動かして下さい。MS-Windowsでは、autoexec.batにある、
+[SET TZ=]
+で始まる設定を確認して下さい。これは、「コントロールパネル」に指定された時間帯を無視し、WXtoImgに不具合を引き起こすことがあります。ですから、[SET TZ=]を消すかコメントアウトして下さい。
+.PP
+インターネットファイアウォールが、xwxtoimg.exeからインターネットへの接続を許可することを確認して下さい。接続ができれば、軌道要素を更新できます。
+.PP
+.SH 軌道要素 (Keplers)
+.B 軌道要素の更新は、いつするのがよいですか?
+.br
+地表図がずれて表示されないように、数日おきに軌道要素を更新しましょう。インターネットに接続し、[File]にある
+[Update Keplers]
+を押して、最新の軌道要素を取り入れて下さい。
+.PP
+.B 軌道要素が更新できないのは、なぜですか?
+.br
+貴方のインターネット接続を確認して下さい。接続が良好でも軌道更新ができないならば、インターネットファイアウォールが、xwxtoimg.exeの接続(HTTPによるポート80)を許可していないのかもしれません。貴方のインターネットファイアウォールの詳細を確認して下さい。
+.PP
+.B 私はインターネットに接続が出来ません。軌道要素を更新する方法がありますか?
+.br
+貴方が電子メールアカウント持っているならば、軌道要素をメールで受け取ったり、フロッピーディスク等で受け取ることができます。受け取った軌道要素をMS-Windowsでは\\ProgramFiles\wxtoimg\weather.txt、*NIXでは~/.wxtoimg/weather.txtとして入れて下さい。
+.PP
+.SH 全般な質問 (General)
+.B "enhancement ignored: could not find a NOAA sensor 2 (or 3) image" この表示はなんですか?
+.br
+NOAA衛星は、2つのセンサから画像を送っています。夜間は、センサ3(中間赤外線)とセンサ4(熱赤外線)の画像を送ります。日中と薄明時には、センサ2(可視光/近赤外線)とセンサ4(熱赤外線)の画像を送信しています。
+.PP
+表示されるこの注意は、貴方の選んだ増強が、解析に受信した以外のセンサ画像を求めるからです。この時にWXtoImgは、その増強を使わずに"Normal"の画像を表示します。
+.PP
+.B 私は、長い間送信していない衛星の古い".WAVファイル"を解析してもよいですか?
+.br
+もちろん解析ができます。先ずは[Options]にある
+[GUI Options]
+中の
+[Enable expert mode]
+を選んで下さい。次に、WXtoImgを一度終えて、再度動かして下さい。[Satellite]にある衛星名から貴方が解析をする衛星を選んで下さい。そして、
+[File]にある
+[Open Audio File...]
+から音声ファイルを選びます。
+.PP
+WXtoImgが地表図を表示しない場合は、WAVEファイルの日付が不正確なのかもしれません。この場合は、ファイル名を世界標準時で"年月日時分秒.wav"に替えてみましょう。例えば、1999年9月28日2時59分12秒(世界標準時)ならば、19990928025912.wavです。
+.PP
+時刻はできるだけ正確だと良いのですが、5分差は大丈夫でしょう。でも、もしかすると[Image]にある[Move Map Overlay]
+を使い、地表図を移動させなければならないでしょう。
+.PP
+[Options]にある
+[File Names and Locations]を見て下さい。
+[Audio file naming]
+は[YYYYMMDDHHMMSS UTC time]
+を選び[OK]を押して下さい。最後にファイル名を変更したファイルを
+[Open Audio File...]
+から選びましょう。
+.PP
+.B 灰色表示で使えない機能があるのはなぜですか?
+.br
+それらは、Upgrade版で使えます。Upgrade版についは、次の案内を見て下さい。
+.nf
+    http://www.wxtoimg.com/reg/
+.fi
+.PP
+WXtoImgが録音中や解析中ならば、[Help]、[Stop]、[Exit]以外は灰色表示です。
+.PP
+.B 世界標準時(UTC)ではなく、現地時間を表示するにはどうすればよいですか?
+.br
+現地時間は、Upgrade版のみ表示できます。[Options]にある
+[GUI Options]
+内の
+[Show time as UTC]
+の印を外して下さい。
+.PP
+Upgrade版で画像に入れる時間を替えるには、[Options]にある
+[Text Options...]
+を見て下さい。世界標準時(UTC)は"UTC"、現地時間は"%@local"、もしくは"%@"の後に時間帯を入れて下さい。日本ならば"%@JST"です。最後に[OK]を押して下さい。
+.PP
+.B 画質を良くするには、どうすればよいですか?
+.br
+狭い帯域幅の受信機や無線機を使っているならば、Upgrade版にした後に、[Options]にある[Recording Options]を見て下さい。
+[receiver type]
+には"Scanner"か"Communications"を選んで下さい。これは、画質の特別な処理を行います。
+.PP
+受信機や無線機の制御用ケーブルが手元にあり、
+[receiver type]
+に貴方の受信機や無線機が載っているならば、それを選んで下さい。WXtoImgは貴方の受信機を調整して、良質な画像が得られるでしょう。
+Upgrade版ならば、
+\fIContrast enhance (NOAA ch B only)\fP
+を使い、明確な画像が得られるでしょう。
+.PP
+APT画像では、斑点のような小さな模様を取り除く為に、[Options]にある[Despeckle]を"2.0"にしてみましょう。WEFAX画像では、[Despeckle]を用いずに[none]にして下さい。
+.PP
+[Options]にある[Contrast]を[Linear(variable)]にしましょう。これは、
+[Hist Eq]
+が作る荒い明暗差を減らします。
+.PP
+印刷用に画像を作るならば、[Options]にある[Gamma]を[none]にして下さい。
+.PP
+NOAA衛星が夕刻や夜に通過する時に疑似立体表示増強を使うならば、[Options]にある
+[Use other sensor]
+を使って下さい。さらに、PNGまたはBMP形式(.pngあるいは.bmp)で、立体画像を保存して下さい。JPEG形式では、3次元立体効果に悪影響を及ぼす色変換を起こすことがあります。
+.PP
+画像上部と下部の雑音が多い部分を除くには、[Options]にある
+[Recording Options...]
+から[Record only when selected active APT satellites are overhead]
+を選んで下さい。
+[record only when satellite is above (degrees)]
+には"15"を入れて下さい。これは、衛星高度が約15度以上ならば録音をします。この高度は、貴方の受信状況によります。(8度から18度の範囲が一般でしょう)
+.PP
+.B 『Digital Atmosphere』用の画像を作るには、どうすればよいですか?
+.br
+これは、Upgrad版のみができます。[Projection]は[Orthographic]を選びます。
+[Options]にある[Projection Options]
+を見て下さい。[Scale]に"640"を入れます。(あるいは、貴方が地図幅の変更したならば、あなたのDA地図はそのピクセル幅になります)
+.PP
+DA地図を見て、緯度の最北と最南、経度の最東と最西を詳しく推測して下さい。その緯度と経度をそれぞれの境界に使います。(南緯と西経は負の数、北緯と東経には正の数です)
+DA地図の中心経度を[Reference Longitude]に入れて下さい。
+DA地図の中心緯度を[Reference Latitude]に入れて下さい。
+.TP 10
+訳者端書き: "Digital Atmosphere"
+世界中の観測地点からの気象データを使い、詳細な各種気象情報の表示ができるソフトウェアです。アメリカ、テキサス州の気象情報会社
+"Weather Graphics Technologies"
+のシェアウェアです。詳しくは、次のURLを参照して下さい。
+.nf
+    http://www.weathergraphics.com/
+.fi
+.PP
+.PP
+.B 画像を印刷するには、どうすればよいですか?
+.br
+WXtoImgでは印刷ができません。まずは画像を保存して下さい。名前は元の指定のJPEGではなく、".png"や".bmp"を使い、PNGやBMP形式にします(これは印刷品質の改善にもなるでしょう)。保存をする前に[Option]にある[Gamma]は、"none"にするもの良いでしょう。保存された画像は、色々なソフトで使えます。他の画像ソフトやブラウザから、この画像を印刷をして下さい。
+.PP
+.B 表示している色がおかしいのは、なでですか?
+.br
+それは貴方のグラフィックアダプタが、256色(8ビット)になっているからでしょう。WXtoImgは、良質な画像を表示する為に256色以上を使います。ですから、ディスプレイの設定を15ビットや16ビット又は24ビットや32ビットに変更してみましょう。
+.PP
+貴方のディスプレイアダプターが256色以上を扱えず、変な色表示をしているならば、[Options]の
+[GUI Options]
+にある
+[Use private colormap]
+は、選ばないで下さい。
+忘れずに
+[Save Options]
+を行って、一度WXtoImgを終えてから再度使って下さい。
+.PP
+.B "northbound 51 W"は、どういう意味ですか?
+.br
+これは、衛星通過の状況を示しています。Southbound(南行き)やNorthbound(北行き)は、衛星が進む方向を示しています。
+.PP
+次に最高角度(この場合は仰角51度)が表示されます。衛星通過時の最大角度は0度から90度(頭上通過は90度)になります。次のE又はWは、衛星の最高高度時の方位を表します。
+.PP
+.B 私は綺麗な疑似色画像が欲しいです。どうすればよいですか?
+.br
+太陽が強く照る夏の間は、[MSA](多重波長解析)や[HVCT]、[HVC]増強等が綺麗な画像を表示します。[Enhancements]から、これらを選んで下さい。
+.PP
+冬から夏の間や夜間のNOAA衛星では、[MCIR]、[NO]増強を使うと良いでしょう。
+.PP
+.B WXtoImgはどういう意味ですか?
+.br
+WXtoImgは"WX to image"「気象衛星から画像」の略です。
+.PP
+.SH 動画 (AVI Animations)
+.B 極軌道衛星の動画がつくれますか?
+.br
+Upgrade版はできます。次のようにします。
+.PP
+先ずは、[Options]にある
+[Recording Options]
+を見て下さい。
+[Record only when selected active APT satellites are overhead]
+を選び、[OK]を押します。
+.PP
+次に、[Options]にある[Contrast]から[Linear(constant)]を選びます。これは、動画中の各コマが同じ明るさと明暗差になるようにします。
+.PP
+[Options]にある
+[Illumination Compensation]
+から[Full]を選びます。これもまた、各コマが同じ明るさと明暗差になるようにします。
+.PP
+HVC、HVCTや立体増強の動画を作るならば、[Options]にある
+[Use other sensor]
+を使う良い場合があります。
+.PP
+[Options]にある[Image and Movie Options...]を見て下さい。
+[AVI Scale]
+を"1.000"にします(動画表示の大きさを変えたいならば、[File]にある[Record]から
+[Movie Settings]
+を選び、
+[Projection Scale]
+を変更しましょう)。立体増強を使う3次元表示の動画を作るならば、
+[AVI Codec]
+は[RGB]にしましょう(ファイルは大きくなりますが、3次元表示には適しています)。その他では、"MJPG"を選びましょう。最後に[OK]を押して下さい。
+.PP
+[File]にある[Record]を見て下さい。[Record and auto process]
+と
+[Create Movie(s)]
+を選んで下さい。次に、
+[Movie Settings]
+を押して下さい。
+.PP
+[Movie Filename Template]に"%g-%e"を入れます。
+.PP
+貴方が表示したい増強を、[Enhancements]から選びましょう。動画は選んだ増強から作られます。
+次の増強がAVI動画に適しています。
+\fIMCIR map colour IR (NOAA)\fP、
+\fIContrast enhance (NOAA ch B only)\fP、
+\fIDaylight sea surface temp\fP、
+\fIAnaglyph false 3-D\fP、
+\fIColour anaglyph false 3-D\fP、
+\fINO colour IR enhancement\fP、
+\fIZA general IR enhancement\fP、
+さらに\fIHVC false-colour\fPと
+\fIHVCT false-colour\fP
+も良いでしょう。
+.PP
+[Projection]を"Mercator"などにしましょう。("Normal"以外を選んで下さい)貴方の近くにある経度を画像中心経度
+(Centre Longitude)
+に指定もできますし、その指定を空白にもできます。次に東西南北の境界を決めます。貴方の緯度と経度から東西南北にそれぞれ約10度の範囲を、境界にしましょう。緯度と経度は、度単位の10進数です。東西南北の全てに境界を決めた後に、[Set]を押します。
+.PP
+[Minimum percent of projection filled]
+を"50.0"にすると、画像に対してピクセルが50%未満のコマは、動画に加わりません。
+.PP
+さて、[Record]を押しましょう。衛星の通過後に動画が加わるでしょう。動画は、[File]にある[View Movie]で見られます。
+.PP
+.B 古い録音やraw画像や画像を使って、動画をつくることができますか?
+.br
+Upgrade版はできます。新しい明暗差増強は、WXtoImg2.3版以降で使えます。また、動画の画質を良くすることに使えます。古いWXtoImgの画像から作った動画は、raw画像や録音から作られた動画と比べると質が落ちます。
+.PP
+[Options]にある[Contrast]から[Linear(constant)]を選びます。これは、動画中の各コマが同じ明るさと明暗差になるようにします。
+.PP
+次に、[Options]にある
+[Illumination Compensation]
+から[Full]を選びます。これもまた、各コマが同じ明るさと明暗差になるようにします。
+.PP
+[Options]にある
+[Image and Movie Options...]
+を見て下さい。
+[AVI Scale]
+を"1.000"にします。(動画表示の範囲を変えたいならば、[Options]の
+[Projection Options]
+にある、各々の緯度と経度を入れましょう)
+.PP
+立体増強を使う3次元の動画を作るならば、
+[AVI Codec]
+は[RGB]にしましょう(ファイルは大きくなりますが、3次元表示には適しています)。その他では、"MJPG"を選びます。最後に[OK]を押して下さい。
+.PP
+[Options]にある
+[Projection Options]
+を見て下さい。貴方の近くにある経度を画像中心経度に指定もできますし、その指定を空白にもできます。次に東西南北の境界を決めます。貴方の緯度と経度から、東西南北に約10度の範囲を境界にしましょう。緯度と経度は、度単位の10進数です。東西南北の全てに境界を決めた後に、[OK]を押します。
+.PP
+[Projection]からNormal以外の表示したい投影法を選んで下さい。
+.PP
+[Enhancements]から貴方が動画に使う増強を選びましょう。
+次の増強がAVI動画に適しています。
+\fIMCIR map colour IR (NOAA)\fP、
+\fIContrast enhance (NOAA ch B only)\fP、
+\fIDaylight sea surface temp\fP、
+\fIAnaglyph false 3-D\fP、
+\fINO colour IR enhancement\fP、
+\fIZA general IR enhancement\fP、
+さらに\fIHVC false-colour\fPと
+\fIHVCT false-colour\fPと
+\fIVegetation\fPも良いでしょう。
+.PP
+[Options]にある
+[Use other sensor]
+を使わないと良い場合もあります。また、太陽光がある画像を選びましょう。
+.PP
+[File]から、録音ファイルは
+[Open Audio File]
+、raw画像は
+[Open Raw Image]
+、WXtoImgが作った画像は
+[View Image]
+から、それぞれ選びます。画像解析が終わったならば、[File]にある
+[Save Image as...]
+を使って画像を保存します。".avi"の拡張子を使い、AVI動画として保存します。(例えば、\fInoaa-za.avi\fP)
+.PP
+繰り返して録音ファイルやraw画像を解析して同じ名前で保存しましょう。上書きの確認が表示されますが、保存は上書きをして下さい。AVI動画は、単純に上書きせずに後のコマに追加されます。
+.PP
+全ての画像を付け加え終えたならば、[File]にある[View Movie]で動画をご覧下さい。
+.PP
+.B 判りました。でももっと簡単に古い画像から、色々な動画を作るにはどうすればよいですか?
+.br
+上記の「極軌道衛星の動画がつくれますか?」の解説を追って下さい。ただし、最後は[Record]ではなく[Accept]を押して下さい。
+.PP
+[File]から、録音ファイルは
+[Open Audio File]
+、raw画像は
+[Open Raw Image]
+、WXtoImgが作った画像は
+[View Image]
+から、それぞれ選びます。処理が終わったならば、[File]にある
+[Auto Process]
+を押しましょう。後は繰り返して下さい。
+.PP
+.B MS-Windowsメディアプレーヤを使ってAVIを表示できません。どうすればよいですか?
+.br
+残念なことに、古いWindowsメディアプレーヤは、WXtoImg1.0版以降に含まれ
+るMJPG
+(Motion JPEG)
+を扱えません。この場合には、特別なコーデックが、Windowsメディアプレーヤに必要です。マイクロソフトDirect X8.0版以降のMJPGコーデックは次のURLから得られます。
+.nf
+    http://www.microsoft.com/directx
+.fi
+.PP
+Windows-95をお使いでしたら、DirectXの異なる版を入れるべきでしょう。Windows-XPをお使いでしたらその必要はありません。
+.PP
+まだ表示できないならば、モニタ設定を確認し、24ビットか32ビット表示にして下さい。(Windows-95は:スタート→コントロールパネル→ディスプレイ→設定。Windows-XPは:スタート→コントロールパネル→デスクトップの表示とテーマ→画面解像度を変更する→設定) 
+.PP
+あるいは、Windows版アップルQuicktimeプレーヤが使えるでしょう。次のURLから入手して下さい。
+.nf
+    http://www.apple.com/quicktime/download/
+.fi
+.PP
+最後に、[Options]から
+[Image and Movie Options...]
+を選び、
+[AVI Codec]
+を"RGB"にしましょう。これは未圧縮の動画を作ります。この形式は、ほとんどのAVIソフトが表示できるでしょう。
+.PP
+GNU/Linuxや*NIXのxanim playerは、MJPGが扱えます。
+.PP
+.SH 複合画像 (Composite Images)
+.B 複数の衛星を組み合わせた画像を自動につくれますか?
+.br
+Upgrade版ならばつくれます。次の通りです。
+.PP
+先ずは、[Options]にある
+[Recording Options]
+を見て下さい。
+[Record only when selected active APT satellites are overhead]
+を選び、[OK]を押して下さい。
+.PP
+次に、[Options]にある[Contrast]から[Linear(constant)]を選んで下さい。合成画面の各部分が、同じ明るさと明暗差になります。
+.PP
+[Options]にある
+[IIllumination Compensation]
+から[Full]を選んで下さい。これもまた、明るさと明暗差を同じにします。
+.PP
+HVC、HVCTや立体増強の合成画像を作るならば、[Options]にある
+[Use other sensor]
+を選ぶと良い場合があります。
+.PP
+[File]にある[Record]を見て下さい。そこにある
+[Record and auto process]
+を選んで下さい。次に
+[Create composite image(s)]
+を選び、
+[Composite Image Settings]
+を押して下さい。
+.PP
+[Composite Image Filename Template]
+に"%g-%@%Y%m%d-%p-%e"を入れて下さい。これは、%s-%e,%g-%k-%e,%s-%k-%e,%g-%k-%p-%e,%s-%k-%p-%eなどに替えられます。詳しくは[Help]にある
+[Graphic User Interface]
+の
+[Filename Template]
+を見て下さい。
+.PP
+次に、貴方が複合画像に使いたい増強を、[Enhancements]から選んで下さい。
+.PP
+[Projection]から表示したい投影法を選んで下さい。近くの経度を画像中心にするならば
+[Centre Longitude]
+にその経度を入れて下さい。空白のままでもよいです。
+.PP
+次に、画像を表示する東西南北の境界を決めます。貴方の緯度と経度から南北に約30度、東西に約30度から40度の範囲を境界にしましょう。緯度と経度は、10進数の度単位です。北緯と東経は正の数字、南緯と西経は負の数字です。東西南北の全てに境界を決めた後に、[OK]を押します。
+.PP
+画像合成には、
+[Minimum percent of projection filled]
+は使われません。([File]の[Record]にあります)
+.PP
+[Record]を押して下さい。衛星が通過するごとに画像が合成されます。[File]にある
+[View Image]
+で合成された画像を見て下さい。
+.PP
+.B 複合画面を手動でつくれますか?
+.br
+Upgrade版ならば作れます。
+.PP
+[Options]にある[Contrast]から[Linear(constant)]を選んで下さい。複合画面の各部分が、同じ明るさ明暗差になります。
+.PP
+[Options]にある
+[IIllumination Compensation]
+から[Full]を選んで下さい。これもまた、明るさと明暗差を同じにします。
+.PP
+HVC、HVCTや立体増強の合成画像を作るならば、[Options]にある
+[Use other sensor]
+を選ぶと良い場合があります。
+.PP
+[Options]にある
+[Projection Options]
+を見て下さい。貴方の付近にある経度を画像中心経度
+(Centre Longitude)
+に指定もできますし、その指定を空白にもできます。
+.PP
+次に、画像を表示する東西南北の境界を決めます。貴方の緯度と経度から南北に約30度、東西に約30度から40度の範囲を境界にしましょう。緯度と経度は、度単位の10進数です。東西南北の全てに境界を決めた後に、[OK]を押します。
+.PP
+[Projection]から"Normal"以外の表示したい投影法を選んで下さい。
+.PP
+次に、貴方が合成画像に使いたい増強を、[Enhancements]から選んで下さい。
+.PP
+[File]から、録音ファイルは[Open Audio File]、
+raw画像は[Open Raw Image]、
+WXtoImgが作った画像は[View Image]から、
+それぞれを選びます。
+.PP
+音声記録やRAW画像を用いることは、一般により良い結果になるでしょう。画像解析が終わったならば、[File]にある
+[Composite Image to]
+を使って画像を保存します。".png"や".bmp"の拡張子を使い、PNGもしくはBMPで保存するのが良いでしょう。例えば"noaa-20040608.png"の名前にします。
+.PP
+繰り返して録音ファイルやraw画像や動画、WXtoImgで作った画像を解析して同じ名前で保存しましょう。
+.PP
+上書きの確認が表示されますが、保存は上書きをして下さい。二度目以降の画像保存は、前の画像に加わり合成されます。
+.PP
+最初は、衛星通過の高度が低い画像を保存し、次に高い高度の通過を保存すると、綺麗な部分の画像が、複合画像に多く含まれるでしょう。
+.PP
+全ての合成を終えたならば、[File]にある
+[View Image]
+を使って見てみましょう。
+.PP
+.SH ウェブページを作る (Creating Web Pages)
+.B 自動にウェブページを公表できますか?
+.br
+もちろんできます。次のようにします。
+.PP
+[File]にある[Record]を見て下さい。
+[Record and auto process]
+と、
+[Add images to web page]
+に印を付けて下さい。次に、
+[Web Page Settings]
+を押して下さい。
+.\" If you have purchased an upgrade key, leave the HTML Template alone for now. 
+.PP
+ウェブページに表示する増強を、
+[Enhancement to use]
+一覧から選んで下さい。"MSA,MCIR,contrast"を選ぶと、MSA増強が使えるならばMSA増強を、そうでなければMCIR増強が、もしくは単なる明暗差増強が使われます。
+.PP
+[Thumbnail size]
+は、縮小画像の大きさを選びましょう。"20.0%"をお勧めしますが、もう少し大きめ(25.0%)な表示が良い場合もあるでしょう。
+.PP
+[HTML Filename]
+は、作られるHTMLの名前です。よく判らなければ、"index.html"のままにして下さい。
+.PP
+ほとんどのインターネット・サービス・プロバイダ(ISP)は、ホームページを貴方のために用意しているので確認して下さい。
+.PP
+貴方のISPは、次を用意しています。
+貴方のホームページへのFTPアクセス用のホスト名(\fIHostname\fP)
+ホームページへのFTPアクセス用のユーザー名かログイン名(\fIUser\fP)
+FTPアクセス用のパスワード(\fIPassword\fP)
+.PP
+ISPの案内に従って、各々に入れて下さい。
+.PP
+\fIDirectory\fPには、貴方のウェブページを置く場所を入れます。ISPにディレクトリが無いならば、WXtoImgはディレクトリを作ろうとします。ディレクトリの作り方が判らないならば、貴方のISPにお尋ね下さい。
+.PP
+貴方がインターネットへ常に接続をしているならば、
+[Automatically FTP as images are added]
+を選んで下さい。これは、各衛星の通過後に画像解析し終えると、WXtoImgが自動に貴方のウェブページを更新します。これを選ばない時も、[File]にある
+[Update Web Page]
+を押してウェブページの更新ができます。
+[Place web page into folder]
+と、どちらかを選んで下さい。
+.PP
+ISPによりますが、貴方のウェブページのURLは、たぶん次の様でしょう。
+(\fIHostname\fP, \fIUser\fP, \fIDirectory\fPが使われます)
+.br
+http://www.Hostname/User/Directory/index.html
+.br
+もしくは、
+.br
+http://www.Hostname/~User/Directory/index.htmlでしょう。
+.PP
+貴方のウェブページにFTPが使えるか等は、ISPに確認して下さい。
+.PP
+ウェブページを公表したくないならば、貴方がお使いのコンピュータ内のディレクトリにウェブページを作ることができます。
+[Place web page into folder]
+に印を付けて選んで下さい。
+.PP
+ウェブページを作りたいディレクトリを指定しましょう。[Browse]を押してディレクトリを選びます。[HTML Filename]
+のhtmlファイルがそこに作られます(基本はindex.htmlです)。
+.PP
+FTPとディレクトリの指定をした後に、[OK]を押します。
+.PP
+画面には[Record]が表示されているでしょう。そこにある
+[Create Image(s)]
+を選んで下さい。次に、
+[Image Settings]
+を押して画像の指定をしましょう。
+.PP
+[Web Page Settings]にある
+[Enhancement to use]
+で指定した増強を、[Enhancements]の中からその増強を選びましょう。
+.PP
+[OK]を押して下さい。
+.PP
+[Accept]を押して下さい。
+.PP
+最後に、[Options]にある[Save Options]を押して下さい。
+.PP
+[File]の[Record...]にある[Record]を押しましょう。衛星が通過する度に、画像と縮小画像を作り、ウェブページが作られます。
+.PP
+.B ウェブページにある画像の質を高めるには、どうすればよいですか?
+.br
+可視光線を含む画像を載せましょう。
+[Enhancement to use]
+を例えば,"MSA,MCIR,contrast"にしましょう。
+([Enhancement to use]
+は、[File]にある[Record]内の
+[Web Page Settings]
+にあります)
+.PP
+[Minimum solar elevation for visible images]
+を"15"にしましょう(Upgrade版の[File]中[Record]にあります)。これは、可視光の弱い画像をウェブページに掲載しません。
+.PP
+地図投影法に"Normal"以外を使うならば、
+[Minimum percent of projectionfilled]
+を"66"にしましょう(Upgraded版の[File]中[Record]にあります)。表示範囲に対して66%以下の画像は、ウェブページに使いません。
+.PP
+[Options]にある[Recording Options]から[Record only when selected active APT satellites are overhead]が選ばれていることを確認しましょう。
+.PP
+[with maximum elevation above (degrees)]
+は、"30"ぐらいにしましょう。最高高度が30度より低い衛星通過の画像は、ウェブページに載りません。
+.PP
+[record only when satellite is above (degrees)]
+を"15"ぐらいにしましょう。高度15度以下は受信しないので、雑音が多い部分を画像上下部から除きます。
+.PP
+.B ウェブページに現地時間を表示するには、どうすればよいですか?
+.br
+Upgrade版ならば、[File]の[Record]にある
+[Web Page Settings]
+を見て下さい。
+[HTML Template]
+の後ろにある[Browse]を押して[template2.html]を選びましょう。その後に[OK]を押し、[Accept]を押します。
+.PP
+[Options]にある
+[Text Options]
+を使って画像に時刻を表示するならば、"UTC"の替りに"%@%Z"や"%@local"か"%@"の直後に時間帯を入れて下さい。日本ならば"%@JST"です。
+.PP
+.B ウェブページの構成や画像の数、案内を替えるには、どうすればよいですか?
+.br
+Upgrade版ならば次の様にします。[File]の[Record]にある
+[Web Page Settings]
+を見て下さい。そこには
+[HTML Template]
+があります。これは、ウェブページ作成に使われる元のHTMLです。貴方は、元になるHTMLを他に替えられます。(次の衛星通過まで、ウェブページは替りません)
+.PP
+もちろん、元になるHTMLを自分で作ることもできます。"template1.html"などを参考にされると良いでしょう。"template1.html"を他にコピーし、それを編集するもの良いでしょう。
+.PP
+[HTML filename]のウェブページは、
+[HTML Template]
+に指定されるHTMLファイルを使って作られます。
+.PP
+[imageX.jpg]は、WXtoImgが作る画像名に置き換わります。[thumbX.jpg]は、対応する縮小画像名に置き換わります。[X]は1から始まります。最新の画像はimage1.jpgになります。
+.PP
+画像番号は、"食い違い"をしてはいけません。ウェブページに4つの画像を表示するならば、その名前は[image1.jpg]、[image2.jpg]、[image3.jpg]、[image4.jpg]です。
+.PP
+これに対応する縮小画像の名前は、[thumb1.jpg]、[thumb2.jpg]、[thumb3.jpg]、[thumb4.jpg]にして下さい。
+.PP
+衛星通過や受信地、画像処理に関する案内は、ウェブページに追加できます。[template1.html]にあるINFO(X,Y)の[X]は、対応する画像と置き換わります(最新の画像は[1]です)。[Y]は、表示する案内を意味する数字です(下記にある一覧から選びます)。
+.PP
+ここには、空白は含まないで下さい。例えば、[INFO(2,  4)](,と4の間に空白)
+は何も変換されずに、そのまま表示されてしまいます。Yに入る"4"や"44"の数字(下記一覧)は、日付や時刻に関する形式を指定します。例えば、
+[INFO(1,44,%Y/%m/%d %H:%M %Z)]
+は、"image1.jpg"に衛星通過時刻:年/月/日 時:分 時刻帯を表示します。
+.nf
+   数値  記述内容
+     0  画像幅 (ピクセル数)
+     1  画像高 (ピクセル数)
+     2  縮小画像幅 (ピクセル数)
+     3  縮小画像高 (ピクセル数)
+     4  衛星通過時刻(世界標準時)
+    44  衛星通過時刻(現地時間)
+     5  衛星名(例えば NOAA 17)
+     6  衛星通過の最大角度
+     7  最高角度時の方位角 (E か W)
+     8  飛行方向 (northbound, southbound)
+     9  増強名 (例えば MSA)
+    10  受信位置
+    11  受信位置の緯度
+    12  受信位置の経度
+    13  周波数(MHz) (例えば 137.62)
+    14  地図投射法名 (例えば Mercator)
+    15  channel A (e.g. 3)
+    16  channel B (e.g. 4)
+    17  language (e.g. en)
+    18  character set (e.g. iso-8859-1)
+    19  wxtoimgの版番号 (例えば 2.4.15)
+    20  receiver (e.g. R2FX)
+    21  pass duration (e.g. 14:59)
+    22  solar elevation (e.g. 23.3)
+    23  antenna type
+    24  ページ更新の予定時刻 (世界標準時)
+    64  ページ更新の予定時刻 (現地時刻)
+.fi
+.PP
+予定される衛星通過情報を貴方のウェブページに表示するには、[X]には-1,-2などを使います。-1は次の衛星通過です。
+[Y]の24と64は、予定される衛星通過に当てはまります。
+日付/時間表示に使う[Y]の数字は、4と44と同様に[Y]には、24と64が共に使えます。
+.fi
+.PP
+次の文字は、日付と時刻に使います。
+.nf
+    %a  略称曜日名
+    %A  曜日名
+    %b  略称月名
+    %B  月名
+    %d  日
+    %H  24時間制
+    %I  12時間制
+    %j  年内日数 (001-365)
+    %m  月
+    %M  分
+    %p  am/pm
+    %S  秒
+    %y  2桁年(例えば 03)
+    %Y  4桁年(例えば 2004)
+    %Z  略称時間帯
+    %%  %文字
+.nf
+.PP
+.PP
+.PP
+.SH 著作権
+Copyright (c) 2001-2004 Central North Publishing Limited.  All rights reserved. 
+.PP
+ 著作権は、 2001-2013年 Central North Publishing Limitedが全て保有します。
+Translated by Nakato Mikiya (中藤 幹也).

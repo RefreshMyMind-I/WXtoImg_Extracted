@@ -1,0 +1,886 @@
+.\" -*- nroff -*-
+.\" Copyright (c) 2001-2005 Central North Publishing Limited.
+.\" All rights reserved.
+.\"
+.\".hla de
+.TH WXTOIMG FAQ  "version 2.7.2"
+.SH Aufzeichnen
+.B Warum erhalte ich die Meldung "Warning: couldn't find telemetry
+data" (Warnung: keine Telemetrie-Daten gefunden), wenn ich ein Bild
+ansehen will?
+.br
+Sie müssen die Sampling-Frequenz anpassen. Informationen hier zu
+finden Sie unter \fIRequired Calibration...\fP im \fIHelp\fP Menü.
+Siehe auch \fISlant Correction\fP weiter unten.
+.PP
+.B Warum erhalte ich "Error: waveInOpen failed!", wenn WXtoImg aufzunehmen versucht?
+.br
+Öffnen Sie \fIRecord Options\fP im \fIOptions\fP Menü und ändern Sie
+die Einstellung für die Soundkarte (auch wenn Sie nur eine einzige
+Soundkarte besitzen, kann diese Änderung notwendig sein, um aufnehmen
+zu können). Klicken Sie OK und gehen Sie erneut zum Testen in den
+Aufnahmemodus (record mode). Probieren Sie alle Werte bis Sie den
+funktionierenden gefunden haben. Falls sich das Problem hierdurch nicht
+lösen lässt, sollten Sie den neuesten Treiber für Ihre Soundkarte
+installieren.
+.PP
+.B Warum startet die Aufzeichnung nicht?
+.br
+Stellen Sie sicher, dass das Audiokabel vom Empfänger mit dem Line Input
+der Soundkarte verbunden ist. Vergewissern Sie sich, dass Sie den
+Lautsprecherausgang (nicht den line output) am Empfänger verwenden. Folgen
+Sie den Anweisungen unter \fIRequired Calibration...\fP im
+\fIHelp\fP Menü.
+.PP
+.B Warum ist das Bild geteilt (auch "sync loss" = Synchronisationsfehler genannt)?
+.br
+Das Bild sieht so aus, als sei es horizontal zerschnitten und der
+obere gegen den unteren Teil nach links oder rechts versetzt. Dies
+kann einmal oder an mehreren Stellen auftreten.
+.PP
+Zunächst beachten Sie bitte, dass Sie während der Aufzeichnung das Bild nicht
+scrollen - oder zumindest die Maustaste hierzu nur sehr kurz betätigen.
+.PP
+Im Allgemeinen wird dies aber von anderen Programmen verursacht, die
+gleichzeitig während der Aufnahme mit WXtoImg laufen.
+Bildschirmschoner können ebenfalls die Ursache sein, daher empfiehlt
+es sich diese zu deaktivieren. Auf langsamen Computern oder in Fällen
+in denen ein anderes Programm unbedingt gleichzeitig laufen muss, kann
+die Darstellung des gerade aufgenommenen Bildes das Problem verursachen.
+In diesem Fall sollten Sie diese Anzeige abschalten unter
+\fIShow image while recording\fP und Auswahl \fIDisable sat
+position during record\fP in \fIGUI Options\fP unter dem \fIOptions\fP Menü.
+.PP
+.B Warum "hängt" das Programm mit der Meldung "Status: opening soundcard..."?
+.br
+Die Soundkarte wird schon von einem anderen Programm benutzt (vielleicht
+ist auch nur das Fenster für die Einstellungen der Lautstärke offen). Schliessen Sie
+bitte diese Programme.
+.PP
+.B Warum startet die Aufzeichnung sofort und stoppt nicht mehr, wenn ich Signale von polumlaufenden Satelliten aufzeichne?
+.br
+Sehr wahrscheinlich besitzt Ihr Empfänger keinen Squelch am Ausgang des
+Audio-Signals. Wählen Sie entweder \fIRecord when 2400 Hz carrier present\fP
+(nur aufnehmen, wenn ein 2400Hz Träger empfangen wird) oder
+\fIRecord only when selected active APT Satelliten are overhead\fP
+(nur aufnehmen, wenn gerade ein APT-Satellit hörbar ist).
+.PP
+.B Warum wird die Aufzeichnung von geostationären Satelliten nicht beendet?
+.br
+Sie müssen folgende Einstellung vornehmen: \fIRecord using WEFAX start/stop
+tones\fP unter \fIRecording Options...\fP im \fIOptions\fP Menü.
+.PP
+.B Warum wird nur jedes zweite Bild bei geostationären Satelliten aufgezeichnet?
+.br
+Die Berechnung dauert zu lange. Sie können diese Zeit verringern indem Sie
+folgende Option entfernen -> Despeckle (oder auf \fInone\fP setzen).  Despeckle
+ist allgemein ungeeignet für WEFAX-Bilder, da dies die Auflösung in den Karten
+reduzieren würde.  Die Einstellung von -> Sharpen (schärfen) auf \fInone\fP erhöht die
+Rechengeschwindigkeit zusätzlich ein wenig.
+.PP
+Sie können den Rechenaufwand weiter reduzieren, indem Sie \fIMaximum number of
+thumbnails\fP auf \fI0\fP setzen unter \fIGUI Options\fP im \fIOptions\fP Menü.
+.PP
+Stellen Sie ausserdem sicher, dass folgender Eintrag nicht ausgewählt ist:
+\fIUse for audio recordings/maps too\fP bei \fIFile Names and Locations\fP im
+\fIOptions\fP Menü.  Die Umbenennung dieser Dateien beansprucht besonders viel
+Zeit. Schliesslich reduzieren Sie die Anzahl der automatisch berechneten Bilder
+und Schritte unter \fIRecord\fP im \fIFile\fP Menü.
+.PP
+Wenn Ihr Computer jetzt immer noch nicht schnell genug ist, um die Berechnung
+eines Bilders abzuschliessen bevor das nächste eintrifft, sollten Sie ein
+Upgrade Ihres Rechners ins Auge fassen.
+Alternativ wählen Sie \fIRecord only (show image if enabled)\fP aus bei \fIRecord\fP
+im File Menü.  In diesem Modus werden nur die Audio-Dateien gespeichert und das
+Bild während der Aufzeichnung angezeigt. 
+.PP
+.B Das Programm versucht zu einer falschen Uhrzeit umlaufende Satelliten aufzuzeichnen, was kann die Ursache sein? 
+.br
+Überprüfen Sie, ob die Uhrzeit und die Zeitzone richtig eingestellt sind.
+Unter Windows öffnen Sie: (Start -> Einstellungen -> Systemsteuerung -> 
+Datum/Uhrzeit), stellen Sie sicher, dass eine nahegelegene Stadt und "Uhr
+automatisch auf Sommer- und Winterzeit einstellen" ausgewählt sind und die
+Uhrzeit richtig ist. 
+.PP
+Überprüfen Sie unter Windows die Datei \fIautoexec.bat\fP, ob dort ein Eintrag
+beginnend mit \fISET TZ=\fP vorkommt.  Dies würde die Zeitzoneneinstellung
+überschreiben und könnte die Probleme mit WXtoImg verursachen. Entfernen Sie
+diese Zeile.
+.PP
+.B Wie kann ich automatisch ältere Bilder und Aufzeichnungen löschen?
+.br
+Wählen Sie \fIRecord\fP im \fIFile\fP Menü.  Dort gibt es unterschiedliche
+Optionen für den Zeitpunkt der Entfernung von Audiodateien, RAW-Bildern, Karten
+und Bildern. Suchen Sie sich eine entsprechende Zeit aus. Klicken Sie
+\fIAccept\fP, dann \fISave Options\fP im \fIOptions\fP Menü.  Beachten Sie, dass
+nur automatisch von WXtoImg erstellte Dateien gelöscht werden.  Wenn Sie
+\fISave Image as\fP oder \fISave Raw Image as\fP benutzen, werden die so
+erzeugten Dateien nicht automatisch gelöscht.  Dies gilt auch für Audiodateien
+die mit anderen Programmen erstellt wurden.
+.PP
+.SH Schräglage (Slant)
+.B Warum erhalte ich die Meldung "Warning: couldn't find telemetry
+data" (Warnung: keine Telemetrie-Daten gefunden), wenn ich ein Bild
+ansehen will?
+.br
+Sie müssen die Sampling-Frequenz anpassen. Informationen hier zu
+finden Sie unter \fIRequired Calibration...\fP im \fIHelp\fP Menü.
+Siehe auch die hier folgenden Informationen.
+.PP
+.B Warum haben meine Bilder eine Schräglage?
+.br
+Sie müssen die Sampling-Frequenz justieren.  Informationen hierüber finden Sie
+im \fIRequired Calibration...\fP Dokument im \fIHelp\fP Menü.
+.PP
+.B Ich finde keine vertikale Linie, um die Schräglagenkorrektur auszuführen.
+.br
+Vergewissern Sie sich, dass \fIDisable PLL\fP im \fIOptions\fP Menü ausgewählt
+ist und wählen Sie dann \fISlant Correction\fP im \fIImage\fP Menü.
+.PP
+Die Einstellung der Sampling-Frequenz Ihrer Soundkarte weicht sehr stark vom
+Soll-Wert 11025 Hz ab.  Das macht aber nichts.  Im Bild sind leicht geneigte
+horizontale Linien.  Statt eine Linie vertikal zu ziehen, ziehen Sie sie entlang
+einer dieser schrägen Linien von links nach rechts quer über das Bild.
+.PP
+Jetzt wählen Sie \fIEstimate and set sampling frequencies for all Satelliten\fP
+und klicken auf \fISet\fP.
+.PP
+Wählen Sie \fIDecode\fP im \fIFile\fP Menü.  Jetzt müsste das Bild nahezu
+vertikal sein. 
+.PP
+Vergewissern Sie sich, dass \fIDisable PLL\fP nicht ausgewählt ist und klicken
+Sie \fISave Options\fP im \fIOptions Menü\fP, um diese Einstellungen zu
+speichern.
+.PP
+.\" IMG=slantcor1.gif CAP=Beispiel einer entlang einer leicht schrägen Linie gezogenen Markierung.
+.\" IMG=slantcor2.gif CAP=Wählen Sie "Estimate and set sampling frequencies for all satellites" und klicken Sie auf "Set".
+.PP
+.SH Kartenüberlagerung
+.B Kann WxtoImg Kartenüberlagerungen für von anderen Programmen erzeugten Aufnahmen herstellen?
+.br
+Ja.  Jedoch kann es notwendig sein \fIAudio file naming\fP in \fIOther\fP zu
+ändern, im \fIFile Names and Locations\fP Dialog im \fIOptions\fP Menü.
+Dies ist häufig notwendig, selbst wenn die Dateinamen im Format
+MMDDHHMM.wav (month (Monat), day (Tag), hour (Stunde), minute) vorliegen, da WXtoImg erwartet, dass die
+Zeit des Beginns der Aufzeichnung und nicht die Zeit des Erscheinens über dem
+Horizont eingetragen ist.
+.PP
+.B Warum sehe ich keine Kartenüberlagerung und erhalte die Meldung "could not
+find matching pass to build overlay map" (= konnte keinen passenden Überflug
+finden, um die Karte zu erstellen)?
+.br
+Stellen Sie sicher, dass Sie die Länge und Breite unter \fIGround Station
+Location...\fP im \fIOptions\fP Menü für Ihren Standort eingetragen haben.
+.PP
+Überprüfen Sie ausserdem, dass der zugehörige Satelliten-Typ ausgewählt ist im
+\fIActive APT Satellites\fP sub-Menü im \fIOptions\fP Menü.
+.PP
+Es könnte auch sein, dass Ihre Uhr im Computer falsch geht (Abweichung um 5
+Minuten oder mehr).  Siehe unten: \fIWarum sind die Karten nie genau bündig\fP.
+.PP
+Schliesslich könnte noch die Einstellung Ihrer Zeitzone falsch sein, so dass die
+Berechnung der UTC nicht stimmt.
+Unter Windows öffnen Sie: (Start -> Einstellungen -> Systemsteuerung -> 
+Datum/Uhrzeit), stellen Sie sicher, dass eine nahegelegene Stadt und "Uhr
+automatisch auf Sommer- und Winterzeit einstellen" ausgewählt sind und die
+Uhrzeit richtig ist.
+.PP
+Hinweis: der Standort der Beobachtungsstation (Ground Station Location) wird nur
+zur Berechnung der Karten verwendet und nicht um die UTC zu bestimmen.
+.PP
+.B Warum sind die Karten nie genau bündig?
+.br
+Die Hauptursache ist eine falsch gehende Uhr im Computer mit einer Abweichung
+von mehr als 250ms (1/4 Sekunde).  Um die Überlagerung genau bündig zu platzieren muss die
+Uhrzeit sehr genau eingestellt sein.  
+Unter Windows XP und Windows Server 2003 kann WXtoImg die Uhrzeit selbst von
+einem Server im Internet holen. Siehe \fIInternet Options\fP im \fIOptions\fP
+Menü. Für andere Betriebssysteme stehen einige Programme im Internet zur Verfügung
+um die Computer-Uhr über eine Referenzquelle im Internet einzustellen.
+Upgegradete Versionen von WXtoImg können die Zeit auch über GPS synchronisieren.
+Wenn Sie mit einem anderen Computer aufnehmen muss dessen Uhrzeit genau
+eingestellt sein.
+.PP
+.B Meine Uhr geht genau, woran kann es noch liegen?
+.br
+Veraltete Kepler-Daten können ebenfalls dafür verantwortlich sein.  Benutzen Sie
+die \fIUpdate Keplers\fP Option im \fIFile\fP Menü.
+.PP
+Auch beim Kopieren von Dateien können die Zeitinformationen verändert werden.
+Benutzen Sie Kopierprogramme, bei denen dies nicht auftritt (unter Unix cp mit
+der -p Option oder mv).
+.PP
+.B Was kann ich tun, wenn die Überlagerungen immer noch fehlen oder nicht bündig sind?
+.br
+Benutzen Sie die \fIMove Overlay...\fP Option im \fIImage\fP Menü, um die nicht
+bündigen Überlagerungen zu bewegen.
+.PP
+Überprüfen Sie unter Windows die Datei \fIautoexec.bat\fP, ob dort ein Eintrag
+beginnend mit \fISET TZ=\fP vorkommt.  Dies würde die Zeitzoneneinstellung
+überschreiben und könnte die Probleme mit WXtoImg verursachen. Entfernen Sie
+diese Zeile.
+.PP
+Überprüfen Sie, ob Ihre Internet-Firewall so konfiguriert ist, dass sie
+Verbindungen von xwxtoimg.exe zulässt, damit Kepler-Daten aktualisiert werden
+können.
+.SH Kepler-Elemente
+.B Wie oft sollte ich die Kepler-Daten aktualisieren?
+.br
+Um zu vermeiden, dass Sie die überlagerte Karte bewegen müssen, sollten Sie die
+Kepler-Daten jeweils nach zwei bis drei Tagen aktualisieren.  Verbinden Sie den
+PC mit dem Internet und wählen Sie \fIUpdate Keplers\fP im \fIFile\fP Menü.
+.PP
+.B Ich kann die Kepler-Daten nicht aktualisieren, was ist los?
+.br
+Überprüfen Sie die Internet-Verbindung.  Wenn diese in Ordnung ist, aber der
+update der Kepler-Daten immer noch nicht fuktioniert, ist wahrscheinlich die
+Firewall so konfiguriert, dass sie xwxtoimg.exe nicht erlaubt Verbindungen ins
+Internet aufzubauen (über HTTP Port 80). Beachten Sie hierzu die Angaben im
+Handbuch Ihrer Firewall.
+.PP
+.B Ich habe keinen Internetzugang, wie kann ich trotzdem die Kepler-Daten updaten?
+.br
+Sollten Sie über einen EMail-Zugang verfügen, können Ihnen die Kepler-Daten
+zugemailt werden. Ggf. kann Sie Ihnen auch jemand auf einer Diskette oder einem
+anderen Datenträger zur Verfügung stellen. Kopieren Sie dann einfach die Datei
+nach \\Documents and Settings\\...your name...\Application Data\\WXtoImg\\weather.txt unter Windows, bzw.
+~/.wxtoimg/weather.txt unter *NIX.
+.PP
+.SH Allgemeines
+.B Warum erhalte ich die Warn-Meldung "enhancement ignored: could not find a NOAA sensor 2 (or 3) image"?
+.br
+Die NOAA-Satelliten senden Bilder von zwei Sensoren. Nachts werden Bilder vom
+Sensor 3 (mittleres Infrarot) und Sensor 4 (Infrarot) gesendet. Am Tag (und in
+der Dämmerung) sendet Sensor 2 (sichtbares/kurzes Infrarot) und Sensor 4
+(Infrarot) Bilder.  Die Warnung besagt, dass für die ausgewählten Konvertierung
+ein Sensor benötigt wird, der zu dieser Zeit nicht verfügbar ist.  In diesem
+Fall ignoriert WXtoImg die betreffende Konvertierung und erstellt ein Bild mit
+der Konvertierungsmethode "Normal".
+.PP
+.B Kann ich Bilder aus .WAV-Dateien berechnen, die von Satelliten stammen, die seit langer Zeit ausser Betrieb sind?
+.br
+Ja. Schalten Sie zunächst den Experten-Modus ein unter \fIGUI Options\fP im
+\fIOptions\fP Menü.
+Verlassen Sie WXtoImg und starten es erneut.
+Wählen Sie jetzt den zur Datei passenden Satelliten im \fISatellite\fP Menü aus.
+Öffnen Sie die WAVE-Datei mittels \fIOpen Audio File\fP im \fIFile\fP Menü.
+.PP
+Wenn es dem Programm nicht gelingt eine Karte zu erstellen, liegt dies
+wahrscheinlich an einer falschen Zeitangabe in der Datei.  Stellen Sie sicher,
+dass der Dateiname sich folgendermassen zusammensetzt: YYYYMMDDHHMMSS.wav für die UTC
+Zeit an dem Sie aufgezeichnet wurde (z. B. 19990928025912 für den 28.
+September 1999 02:59:12 UTC).  Dies sollte so genau wie möglich geschehen, eine
+Abweichung von +/- 5 Minuten wird allerdings toleriert (führt aber dazu, dass
+Sie die überlagerte Karte manuell nachführen müssen durch \fIMove Map Overlay\fP
+im \fIImage\fP Menü).
+Öffnen Sie jetzt \fIFile Names and Locations\fP im \fIOptions\fP Menü und setzen
+Sie \fI Audio file naming auf \fIYYYYMMDDHHMMSS UTC time\fP. Klicken Sie OK.
+Zum Schluss öffnen Sie die umbenannte Datei durch \fIOpen Audio File\fP.
+.PP
+.B Warum sind einige Menüpunkte grau hinterlegt und können nicht ausgewählt werden?
+.br
+Diese Punkte sind nur in der upgegradeten Version verfügbar.  Informationen dazu
+erhalten Sie hier:
+.nf
+    http://www.wxtoimg.com/reg/
+.fi
+.PP
+Beachten Sie, dass während der Aufnahme und wenn gerade Bilder konvertiert
+werden alle Optionen ausser \fIHelp\fP, \fIStop\fP und \fIExit\fP nicht
+verfügbar sind.
+.PP
+.B Wie kann ich die lokale anstatt der UTC-Zeit angezeigt bekommen?
+.br
+Dies funktioniert nur bei WXtoImg-Versionen mit installiertem Upgrade-Schlüssel.
+Deaktivieren Sie dort \fIShow time as UTC\fP unter \fIGUI Options\fP im
+\fIOptions\fP Menü.
+.PP
+Um die Zeiten für Texteinblendungen (nur dort) zu ändern, öffnen Sie \fIText
+Options\fI im \fIOptions\fP Menü.  Ersetzen Sie \fIUTC\fP durch \fI%@%Z\fP oder
+\fI%@local\fP oder benutzen Sie \fI%@\fP gefolgt von Ihrer Zeitzone (z. B.
+\fI%@EST\fP).  Klicken Sie \fIOK\fP.
+.PP
+.B Tipps zur Verbesserung der Bildqualität.
+.br
+Wenn Sie einen schmalbandigen Scanner oder anderen Empfänger verwenden, sollten
+Sie den Upgrade-Schlüssel erwerben. Öffnen Sie \fIRecording Options\fP und
+setzen Sie \fIreceiver type\fP auf \fIScanner\fP oder \fICommunications\fP. 
+Jetzt verwendet die Software ein spezielles Berechnungsverfahren, das die
+Bildqualität drastisch verbessert.  Falls Sie ein Steuerungskabel für einen vom
+Programm unterstützten Empfänger verwenden, geben Sie diesen dort an.  Noch bessere
+Bilder erhalten Sie, wenn WXtoImg den Empfänger steuern kann.  Erwerben Sie aber
+das Upgrade nur, wenn Sie mit Ihrem Empfänger deutlich erkennbare Bilder mit der
+\fIContrast enhance (NOAA ch B only)\fP Option empfangen können.
+.PP
+Bei APT-Bildern stellen Sie \fIDespeckle\fP auf 2.0 im \fIOptions\fP Menü, um
+das Rauschen etwas zu reduzieren.  Bei WEFAX-Bildern sollte die Einstellung
+unter \fIDespeckle\fP auf \fInone\fP gesetzt sein.
+.PP
+In upgegradeten Versionen setzen Sie \fIMinimum Solar Elevation for visible
+Images\fP auf 15.0 unter \fIRecord\fP im \fIFile\fP Menü.
+.PP
+Ausserdem stellen Sie \fIIllumination Compensation\fP auf \fIFull\fP oder
+\fIMid\fP oder einen anderen Wert ausser \fINone\fP ein, falls \fIContrast\fP
+auf \fILinear (constant)\fP eingestellt sein sollte.
+.PP
+Wenn Sie ein Bild drucken wollen, setzen Sie \fIGamma\fP auf \fInone\fP
+im \fIOptions\fP Menü und speichern sie das Bild als PNG, indem Sie .png
+als Dateierweiterung eingeben.
+.PP
+Sollten Sie eine der Anaglyph-Konvertierungen bei NOAA-Satelliten in der
+Dämmerung oder Nachts verwenden, aktivieren Sie \fIUse other sensor\fP im
+\fIOptions\fP Menü.  Ausserdem speichern Sie Ihre Bilder als \fIPNG\fP oder
+\fIBMP\fP Dateien (einfach die \fI.png\fP oder \fI.bmp\fP Dateierweiterung
+benutzen).  Dies ist in der Regel notwendig, da das verlustbehaftete JPEG-Format
+Farbverschiebungen verursachen kann, die den 3D-Effekt negativ beeinflussen.
+.PP
+Um die verrauschten Bildanteile am oberen und unteren Rand zu entfernen, öffnen
+Sie den \fIRecording Options...\fP Dialog im \fIOptions\fP Menü und wählen
+\fIRecord only when selected active APT Satelliten are overhead\fP,
+dann setzen Sie \fIrecord only when satellite is above (degrees)\fP auf etwa 15.
+Dadurch wird sichergestellt, dass eine Aufnahme nur dann erfolgt, wenn sich der
+Satellit mindestens 15 Grad über dem Horizont befindet.  Der genaue Wert hängt
+von den örtlichen Gegebenheiten und Ihrem Empfangsgerät ab (typische Werte
+liegen zwischen 8 und 18).
+.PP
+.B Wie kann ich Bilder für den Import nach "Digital Atmosphere" herstellen?
+.br
+Dies betrifft nur upgegradete Versionen.
+Setzen Sie \fIProjection\fP auf \fIOrthographic\fP.
+Öffnen Sie \fIProjection Options\fP im \fIOptions\fP Menü.  Setzen Sie
+\fIScale\fP auf 640 (oder falls Sie die Breite der Karte geändert haben
+verwenden Sie die Breite der DA-Karte in Pixeln).  Sehen Sie sich die DA-Karte
+an und schätzen Sie so genau wie möglich die nördlichste- und südlichste Breite
+sowie die östlichste- und westlichste Länge (dezimal in Grad).  Verwenden Sie
+diese Werte (negativ für Süd und West, positiv für Nord und Ost) für die
+nördliche, südliche, westliche und östliche Begrenzung.  Setzen Sie die
+\fIReference Longitude\fP auf die Länge, in der Mitte der DA-Karte.  Setzen Sie
+die \fIReference Latitude\fP auf die Breite in der Mitte der DA-Karte.
+.PP
+.B Wie kann ich ein Bild drucken?
+.br
+Da WXtoImg über keine eingebaute Druckmöglichkeit verfügt, müssen Sie zunächst
+das Bild in einer Datei speichern (wählen Sie \fISave Image As\fP im \fIFile\fP
+Menü).  Verwenden Sie bevorzugt Endungen wie .png oder .bmp statt dem
+voreingestelltem JPEG (zur Verbesserung der Druckqualität).  Sie sollten
+ausserdem \fIGamma\fP auf \fInone\fP im \fIOptions\fP Menü setzen bevor Sie das
+Bild speichern.  Ist das Bild einmal gespeichert, können Sie es mit einer
+Vielzahl von Programmen, auch Photo-Editoren oder Ihrem Internet-Browser
+drucken.
+.PP
+.B Warum sehen die Farben auf einem Bildschirm so seltsam aus wenn ich WXtoImg gestartet habe?
+.br
+Ihre Grafikkarte ist auf 256 Farben (8-bit) eingestellt.
+WXtoImg beansprucht alle 256 Farben für sich; so lassen sich die Bilder viel
+besser darstellen.  Sie sollten versuchen die Bildschirmeinstellungen auf True
+Color (24 oder 32 bit) oder High Color (15 oder 16 bit) einzustellen.  Falls
+Ihre Grafikkarte dies nicht unterstützt können Sie diese Funktion auch
+abschalten durch Entfernen der Auswahl bei \fIUse private colormap\fP, unter
+\fIGUI Options\fP im \fIOptions\fP Menü.  Vergessen Sie nicht zu speichern durch
+\fISave Options\fP, dann verlassen Sie WXtoImg und starten das Programm erneut.
+.PP
+.B Was bedeuted "northbound 51 W"?
+.br
+Dies beschreibt den Überflug des Satelliten. Southbound (südlich) oder
+northbound (nördlich) gibt die Richtung an, in der der Satellit sich bewegt.
+Die maximale Elevation (hier 51 Grad) ist zusätzlich angegeben.  Der Wert für
+die maximale Elevation variiert zwischen 0 und 90 Grad (wobei 90 Grad für
+einen Überflug genau senkrecht über dem Beobachtungsstandort steht). Danach
+folgt entweder ein E (east = Ost) oder W (West) zur Angabe ob sich der Satellit
+in östlicher- oder westlicher Richtung bewegt (für den Zeitpunkt der maximalen
+Elevation).
+.PP
+.B Ich möchte einfach nur ein schönes Falschfarbenbild. Was muss ich tun?
+.br
+Im Sommer, wenn die Bilder durch die Sonne gut ausgeleuchtet sind, ergeben die
+MSA Multispectral analysis, HVC und HVCT-Konvertierungen bei NOAA-Satelliten die
+besten Ergebnisse.  Wählen Sie diese im \fIEnhancements\fP Menü aus.
+.PP
+In den übrigen Zeiten, auch nachts, sollten Sie die MCIR- und NO-Konvertierungen
+bei NOAA-Satelliten verwenden.
+.PP
+.B Was bedeutet WXtoImg?
+.br
+WXtoImg ist die Abkürzung für "WX to image" (weather satellite to image =
+Wettersatellit zu Bild).
+.PP
+.SH AVI Animationen
+.B Kann ich Filme von polumlaufenden Satelliten erstellen?
+.br
+Ja, falls Sie das Upgrade gekauft haben. So wird's gemacht:
+.PP
+Zunächst, öffnen Sie den \fIRecording Options\fP Dialog im \fIOptions\fP
+Menü.  Wählen Sie \fIRecord only when selected active APT Satelliten are
+overhead\fP.  Wählen Sie \fIOK\fP.
+.PP
+Wenn Sie Animationen aus den HVC, HVCT oder Anaglyph-Konvertierungen erstellen
+wollen, wählen Sie \fIUse other sensor\fP im \fIOptions\fP Menü (hierdurch
+können Bilder sowohl tagsüber als auch nachts hinzugefügt werden, ansonsten
+nur tagsüber).
+.PP
+Öffnen Sie den \fIImage and Movie Options...\fP Dialog im \fIOptions\fP
+Menü.  Für qualitativ hochwertige Filme oder zum Betrachten von 3D-Filmen
+(Anaglyph-Konvertierungen) ändern Sie ggf. \fIAVI Codec\fP auf \fIRGB\fP.  (Das ergibt sehr große
+Filmdateien verstärkt aber den 3D-Effekt.)  Andernfalls benutzen Sie den
+\fIMJPG\fP codec.
+Wählen Sie \fIOK\fP.
+.PP
+Öffnen Sie den \fIRecord\fP Dialog im \fIFile\fP Menü.  Vergewissern Sie sich,
+dass \fIRecord and auto process\fP und \fICreate Movie(s)\fP ausgewählt sind.
+Jetzt Klicken Sie auf den \fIMovie Settings\fP an.
+.PP
+Wählen Sie die gewünschten Konvertierungen für den Film aus.  Es wird für jede
+ausgewählte Konvertierungsart ein eigener Film erstellt.  Die geeignetsten
+Konvertierungen für AVI-Filme sind
+\fIMCIR map colour IR (NOAA)\fP,
+\fIContrast enhance (NOAA ch B only)\fP,
+\fIDaylight sea surface temp\fP,
+\fIAnaglyph false 3-D\fP,
+\fIColour anaglyph false 3-D\fP,
+\fINO colour IR enhancement\fP und
+\fIZA general IR enhancement\fP.
+Brauchbare Ergebnisse liefern auch noch \fIHVC false-colour\fP
+und \fIHVCT false-colour\fP Konvertierungen.
+.PP
+Klicken Sie auf\fIEasy Set Default\fP (einfache Grundkonfiguration).
+.PP
+Setzen Sie \fIMinimum percent of projection filled\fP auf 50.0, damit Teilbilder
+die weniger als 50% der Pixel enthalten nicht hinzugefügt werden.
+.PP
+Klicken Sie jetzt den \fIRecord\fP Button. Bei jedem Überflug eines Satelliten
+wird jetzt ein Teilbild zum Film hinzugefügt.  Sie können Ihre erstellten Filme
+unter \fIView Movie\fP im \fIFile\fP Menü betrachten.
+.PP
+.B Kann ich aus einer Anzahl älterer Bilder, RAW-Bildern oder Audio-Aufnahmen einen Film erstellen?
+.br
+Ja, sofern Sie das Upgrade gekauft haben und die berechneten- oder RAW-Bilder
+von WXtoImg erzeugt wurden.  Beachten Sie, dass seit WXtoImg v2.3 neue Kontrast-
+Konvertierungen verfügbar sind, die die Bild-zu-Bild-Übereinstimmung verbessern.
+Filme, die aus normalen Bildern von älteren Versionen von WXtoImg erstellt
+wurden werden nicht die gleiche Qualität erreichen, wie die von RAW-Bildern oder
+Audio-Aufnahmen.
+.PP
+Wählen Sie \fILinear (constant)\fP im \fIContrast\fP Sub-Menü im \fIOptions\fP
+Menü. Dies hilft dabei, dass jedes Teilbild der Animation die gleiche
+Helligkeit und den gleichen Kontrast besitzt.
+.PP
+Wählen Sie \fIFull\fP im \fIIllumination Compensation\fP Sub-Menü im
+\fIOptions\fP Menü. Dies hilft ebenfalls dabei, dass jedes Teilbild der
+Animation die gleiche Helligkeit und den gleichen Kontrast besitzt.
+.PP
+Wenn Sie Animationen aus den HVC, HVCT oder Anaglyph-Konvertierungen erstellen
+wollen, wählen Sie \fIUse other sensor\fP im \fIOptions\fP Menü.
+.PP
+Öffnen Sie den \fIImage and Movie Options...\fP Dialog im \fIOptions\fP
+Menü.  Ändern Sie \fIAVI Scale\fP auf \fI1.000\fP.  (Wenn Sie die Grösse der
+Animation ändern wollen, benutzen Sie \fIProjection Scale\fP im \fIMovie
+Settings\fP Dialog im \fIRecord\fP Dialog unter dem \fIFile\fP Menü.)
+Möchten Sie 3D-Filme betrachten, verwenden Sie eine der Anaglyph-Konvertierungen
+und ändern Sie ggf. \fIAVI Codec\fP auf \fIRGB\fP.  (Das ergibt sehr grosse
+Filmdateien verstärkt aber den 3D-Effekt.)  Andernfalls benutzen Sie den
+\fIMJPG\fP codec.
+Wählen Sie \fIOK\fP.
+.PP
+Öffnen Sie the \fIProjection Options\fP Dialog im \fIOptions\fP Menü.
+Sie können die \fICentre Longitude\fP falls gewünscht auf eine Länge in Ihrer
+Nähe setzen oder einfach frei lassen.  Jetzt setzen Sie die nördlichen,
+südlichen, östlichen und westlichen Grenzen.
+Versuchen Sie sie auf 10 Grad nördlich, südlich, östlich und westlich Ihres
+Standortes einzustellen.  Breite und Länge werden dezimal in Grad (und ggf.
+Kommastellen) angegeben.  Positive Werte für Nord und Ost, negative für Süd und
+West.  Sie müssen Werte für alle vier Begrenzungen angeben.  Wählen Sie
+\fISet\fP.
+.PP
+Ändern Sie \fIProjection\fP auf \fIMercator\fP (oder irgendeine andere
+Projektion als \fINormal\fP).
+.PP
+Wählen Sie die gewünschten Konvertierungen für den Film aus.  Es wird für jede
+ausgewählte Konvertierungsart ein eigener Film erstellt.  Die geeignetsten
+Konvertierungen für AVI-Filme sind
+\fIMCIR map colour IR (NOAA)\fP,
+\fIContrast enhance (NOAA ch B only)\fP,
+\fIDaylight sea surface temp\fP,
+\fIAnaglyph false 3-D\fP,
+\fINO colour IR enhancement\fP und
+\fIZA general IR enhancement\fP.
+Brauchbare Ergebnisse liefern auch noch \fIHVC false-colour\fP,
+\fIHVCT false-colour\fP und Vegetation-Konvertierungen.
+.PP
+Öffnen Sie jetzt eine Aufzeichnung \fIOpen Audio File\fP, ein RAW-Bild
+\fIOpen Raw Image\fP oder ein berechnetes Bild \fIView Image\fP aus dem
+\fIFile\fP Menü.  Nach Abschluss der Berechnung, wählen Sie \fISave Image\fP im
+\fIFile\fP Menü.  Speichern Sie die Datei in einen AVI-Film durch Angabe der
+Dateierweiterung \fI.avi\fP (z. B. \fInoaa-za.avi\fP).
+.PP
+Wiederholen Sie diese Schritte für weitere Aufzeichnungen, RAW-Bilder und Filme
+und speichern Sie diese unter dem gleichen Dateinamen ab.  Wenn Sie gefragt
+werden, ob Sie die bestehende Datei überschreiben wollen, antworten Sie
+\fIyes\fP.  Die AVI-Filme werden nicht überschrieben, sondern es wird jeweils
+ein weiteres Teilbild an das Ende des Films angehängt.
+.PP
+Nachdem Sie alle Bilder hinzugefügt haben, wählen Sie \fIView Movie\fP im
+\fIFile\fP Menü und klicken auf die Datei die Sie gerade erstellt haben.
+.PP
+.B Gut, aber gibt es keinen einfacheren Weg um viele verschiedene AVIs aus alten Bildern zu erstellen?
+.br
+Ja. Folgen Sie den Anweisungen unter \fICan I build movies from polar orbiting
+Satelliten?\fP (Kann ich Filme von polumlaufenden Satelliten erstellen?) jedoch 
+klicken Sie beim letzten Schritt auf \fIAccept\fP anstatt auf \fIRecord\fP.
+.PP
+Jetzt öffnen Sie eine Aufzeichnung \fIOpen Audio File\fP, ein RAW-Bild unter
+\fIOpen Raw Image\fP oder ein berechnetes Bild unter \fIView Image\fP aus dem
+\fIFile\fP Menü.  Nach Abschluss der Berechnung, wählen Sie \fIAuto Process\fP
+im \fIFile\fP Menü.  Wiederholen Sie dies.
+.PP
+.B Ich kann die AVIs im Windows Media Player nicht betrachten.
+.br
+\fIBedauerlicherweise\fP unterstützen ältere Versionen des Windows Media Players
+die MJPG (Motion JPEG) Kodierung nicht, die standardmässig von WXtoImg Version
+1.0 und höher verwendet wird.  Windows Media Player benötigt einen speziellen
+Codec um diese Dateien abspielen zu können.  Sie erhalten diesen MJPG Codec
+durch Installation von Microsoft Direct X Version 8.0 oder höher.  Verfügbar
+unter:
+.nf
+    http://www.microsoft.com/directx
+.fi
+.PP
+Beachten Sie, dass Nutzer von Windows 95 eine andere Version von Direct X
+herunterladen müssen und dass Windows XP User dies gar nicht installieren
+müssen.
+.PP
+Sollten Sie immer noch Schwierigkeiten haben, überprüfen Sie Ihre
+Bildschirmeinstellungen (Start -> Einstellungen -> Systemsteuerung -> Anzeige -> 
+Einstellungen oder unter XP: Start -> Einstellungen -> Erscheinungsbild -> 
+Anzeige -> Einstellungen) und setzen Sie Farbeinstellung auf 32 oder 24
+bit.
+.PP
+Alternativ können Sie auch den gut funktionierenden "Apple Quicktime player for
+Windows" verwenden.
+Dieser kann hier geladen werden:
+.nf
+    http://www.apple.com/quicktime/download/
+.fi
+.PP
+Ausserdem können sie auch \fIImage und Movie Options...\fP im
+\fIOptions\fP Menü wählen und \fIAVI Codec\fP auf \fIRGB\fP setzen.  Jetzt
+werden \fIsehr grosse\fP unkomprimierte Animationen erstellt, die aber dafür von
+fast jedem AVI-Betrachter gelesen werden können.
+.PP
+Auch der Linux/*NIX xanim Player unterstützt die benutzte MJPG-Kodierungs-Methode.
+.PP
+.B Kann ich Filme aus Bildern der geostationären Satelliten erstellen?
+.br
+Ja, so wird's gemacht:
+.PP
+Zunächst öffnen Sie \fIRecording Options\fP im \fIOptions\fP Menü.
+Wählen Sie \fIRecord using WEFAX start/stop tones\fP aus. Klicken Sie auf
+\fIOK\fP.
+.PP
+Im \fIContrast\fP Untermenü des \fIOptions\fP Menüs wählen Sie \fILinear (constant)\fP
+aus. Hierdurch erhalten die einzelnen Teilbilder der Animation eine
+möglichst ähnliche Helligkeit und vergleichbaren Kontrast.
+.PP
+Öffnen Sie den \fIImage and Movie Options...\fP Dialog im \fIOptions\fP Menü.
+Setzen Sie \fIAVI Scale\fP auf \fI0.500\fP. Klicken Sie \fIOK\fP.
+.PP
+Öffnen Sie den \fIRecord\fP Dialog im \fIFile\fP Menü. Vergewissern Sie sich,
+dass \fIRecord and auto process\fP sowie \fICreate Movie(s)\fP ausgewählt sind.
+Jetzt klicken Sie auf \fIMovie Settings\fP.
+.PP
+Setzen Sie \fIMovie Filename Template\fP auf \fI%s-%l-%C-%e\fP.
+.PP
+Suchen Sie sich eine Konvertierungsart aus. Für die geostationären Satelliten
+stehen nur bestimmte Konvertierungsarten zur Verfügung. Im Zweifel wählen Sie
+\fINormal\fP und dann \fIOK\fP.
+.PP
+Klicken Sie jetzt \fIRecord\fP. Im Anschluss an die Dekodierung eines Bildes
+wird es dem betreffenden Fild hinzugefügt. Für jeden Sektor, jeden Sensor und
+jede Konvertierungsart kann jeweils ein eigener Film erstellt werden.
+Die Filme können unter \fIView Movie\fP im \fIFile\fP Menü betrachtet werden.
+.PP
+.SH Zusammengesetzte Bilder
+.B Kann ich automatisch Bilder aus verschiedenen Überflügen aneinander setzen?
+.br
+Ja, sofern Sie das Upgrade gekauft haben.  So wird's gemacht:
+.PP
+Zunächst öffnen Sie den \fIRecording Options\fP Dialog im \fIOptions\fP
+Menü.  Wählen Sie \fIRecord only when selected active APT Satelliten are
+overhead\fP.  Wählen Sie \fIOK\fP.
+.PP
+Wenn Sie zusammengesetzte Bilder unter Benutzung der HVC, HVCT oder Anaglyph-
+Konvertierungen erstellen wollen, sollten Sie \fIUse other sensor\fP im
+\fIOptions\fP Menü auswählen.
+.PP
+Öffnen Sie den \fIRecord\fP Dialog im \fIFile\fP Menü.  Stellen Sie sicher, dass
+\fIRecord and auto process\fP und \fICreate composite image(s)\fP ausgewählt
+sind.  Klicken Sie nun auf \fIComposite Image Settings\fP.
+.PP
+Wählen Sie die Konvertierung mit der Sie das zusammengesetzte Bild erstellen
+wollen.
+.PP
+Klicken Sie auf \fIEasy Set Defaults\fP (einfache Grundkonfiguration).
+.PP
+Beachten Sie, dass die Funktion \fIMinimum percent of projection filled\fP nicht
+bei zusammengesetzten Bildern angewandt werden kann.
+.PP
+Klicken Sie jetzt auf \fIRecord\fP. Bei jedem Überflug eines Satelliten wird
+jetzt das Bild zu dem vorhandenen Bild angefügt.  Sie können die
+zusammengesetzten Bilder unter \fIView Image\fP im \fIFile\fP Menü betrachten.
+.PP
+.B Kann ich Bilder auch manuell zusammensetzen?
+.br
+Ja, sofern Sie das Upgrade gekauft haben.
+.PP
+Wählen Sie \fILinear (constant)\fP im \fIContrast\fP Sub-Menü im \fIOptions\fP
+Menü. Dies hilft dabei, dass jeder Teil des zusammengesetzten Bildes eine
+ähnliche Helligkeit und Kontrast aufweist.
+.PP
+Ändern Sie \fIProjection\fP auf \fIMercator\fP (oder irgendeine andere
+Projektion). Falls gewünscht können Sie die \fICentre Longitude\fP auf eine
+Länge in Ihrer Nähe ändern oder einfach frei lassen.  Jetzt setzen Sie die
+nördlichen, südlichen, westlichen und östlichen Grenzen.  Versuchen Sie diese
+auf etwa 30 Grad nördlich und südlich und etwa 30 - 40 Grad westlich und östlich
+von Ihrem Standort einzustellen.
+Breite und Länge werden dezimal in Grad (und ggf. Kommastellen) angegeben.
+Positive Werte für Nord und Ost, negative für Süd und West.  Sie müssen Werte
+für alle vier Begrenzungen angeben.  Wählen Sie \fISet\fP.
+.PP
+Im \fIEnhancements\fP Menü wählen Sie die Konvertierung aus mit der Sie das
+zusammengesetzte Bild erstellen möchten.
+.PP
+Öffnen Sie eine Aufzeichnung \fIOpen Audio File\fP, ein RAW-Bild \fIOpen Raw
+Image\fP oder ein berechnetes Bild (von WXtoImg) \fIView Image\fP im \fIFile\fP
+Menü.  Die Verwendung von Audiodateien oder RAW-Bildern führt im Allgemeinen zu
+besseren Ergebnissen.  Nach Abschluss der Berechnung wählen Sie \fIComposite
+Image to\fP im \fIFile\fP Menü.  Bessere Ergebnisse erreichen Sie durch
+Speicherung der Dateien als PNG oder BMP-Dateien (setzen Sie die
+Dateierweiterung auf \fI.png\fP oder \fI.bmp\fP (z. B. \fInoaa-2401.png\fP).
+.PP
+Wiederholen Sie diese Schritte für weitere Aufzeichnungen, RAW-Bilder und Filme,
+und speichern Sie diese unter dem gleichen Dateinamen ab.  Wenn Sie gefragt
+werden, ob Sie die bestehende Datei überschreiben wollen, antworten Sie
+\fIyes\fP. Zusammengesetzte Bilder werden nicht überschrieben, statt dessen wird
+das neue Bild an das vorhandene angefügt.
+.PP
+Sie erreichen bessere Ergebnisse, wenn die Überflüge mit geringer Elevation
+zuerst und die mit der höheren zum Schluss gespeichert werden.  Hierdurch nehmen
+die besseren Bilder den grösseren Raum im fertigen Bild ein.
+.PP
+Nachdem Sie alle Bilder hinzugefügt haben, wählen Sie \fIView Image\fP im
+\fIFile\fP Menü und sehen Sie sich das Ergebnis an.
+.PP
+.SH Erstellung von Web-Seiten
+.B Kann ich automatisch Web-Seiten erstellen und ins Internet übertragen?
+.br
+Ja.  So wird's gemacht:
+.PP
+Öffnen Sie den \fIRecord\fP Dialog im \fIFile\fP Menü.  Vergewissern Sie sich,
+dass \fIRecord and auto process\fP und \fIAdd images to web page\fP ausgewählt sind.
+Jetzt klicken Sie auf \fIWeb Page Settings\fP.
+.PP
+Falls Sie im Besitz eines Upgrade-Schlüssels sind, verlassen Sie zunächst das
+\fIHTML Template\fP.
+.PP
+Wählen Sie die Konvertierung, die Sie auf der Web-Seite verwenden möchten.  Wenn
+mehr als eine ausgewählt ist, wird die erste verfügbare Konvertierung in der Liste benutzt.
+Wenn Sie "MSA,MCIR,contrast" auswählen, wird die MSA-Konvertierung - sofern
+möglich - angewandt, sonst die MCIR-Konvertierung oder schliesslich einfach die
+Kontrast-Konvertierung.
+.PP
+Suchen Sie sich eine Thumbnailgrösse aus (für das Bild in der Voransicht).
+Empfohlen werden 20.0%, in einigen Fällen sehen aber auch Thumbnails der Grösse
+25.0% besser aus.
+.PP
+Der \fIHTML Filename\fP ist der Name der HTML-Datei, die erstellt werden soll.
+Im Zweifel belassen Sie \fIindex.html\fP.
+.PP
+Die meisten Internet Service Provider (ISPs) stellen kostenlose Homepages
+bereit. Sprechen Sie mit Ihrem ISP, wenn Sie darüber nicht genau informiert
+sind. Er sollte Ihnen folgendes zur Verfügung stellen:
+den Hostnamen für den FTP-Zugriff zu Ihrer Homepage (\fIHostname\fP), einen
+Benutzernamen oder Login für den FTP-Zugriff (\fIUser\fP) und ein Passwort
+(\fIPassword\fP).  Geben Sie dies in die entsprechenden Felder ein.
+.PP
+Unter \fIDirectory\fP tragen Sie das Verzeichnis ein, in dem Ihre Web-Seite
+abgelegt werden soll.  Falls das Verzeichnis nicht existiert, wird WXtoImg
+versuchen es anzulegen.  Ggf. hilft Ihnen Ihr ISP ein FTP-Verzeichnis anzulegen.
+.PP
+Wenn Sie ständig online sind, wählen Sie \fIAutomatically FTP as images are
+added\fP aus. So wird Ihre Web-Seite nach jedem Überflug automatisch sofort
+aktualisiert.  Wenn Sie diese Option nicht auswählen können Sie jederzeit Ihre
+Web-Seite manuell aktualisieren mittels \fIUpdate Web Page\fP im \fIFile\fP
+Menü.
+.PP
+Obwohl dies von ISP zu ISP sehr unterschiedlich ist, sieht der Zugriff zu Ihrer
+Web-Seite wahrscheinlich so aus (ersetzen Sie \fIHostname\fP, \fIUser\fP und
+\fIDirectory\fP durch Ihre Daten):
+.nf
+    http://www.Hostname/User/Directory/index.html
+.fi
+.br
+or
+.nf
+    http://www.Hostname/~User/Directory/index.html
+.fi
+.PP
+Sprechen Sie mit Ihrem ISP, um weitere Informationen zur Benutzung von FTP und
+dem Upload Ihrer Homepage zu erhalten.
+.PP
+Wenn Sie die Web-Seite nicht ins Internet stellen möchten, können Sie auch ein
+entsprechendes Verzeichnis auf Ihrem Computer anlegen:
+.PP
+Stellen Sie sicher, dass \fIPlace web page into folder\fP ausgewählt ist.
+.PP
+Geben Sie das Verzeichnis an in dem die Web-Seite abgelegt werden soll. Sie
+können den \fIBrowse\fP Button benutzen um ein vorhandenes Verzeichnis zu
+verwenden.  Der \fIHTML Filename\fP wird dort angelegt (normalerweise
+\fIindex.html\fP).
+.PP
+Nach Eingabe der Einstellungen, wählen Sie \fIOK\fP.
+.PP
+Jetzt sollten Sie sich wieder im \fIRecord\fP Dialog befinden.  Vergewissern Sie
+sich, dass "Create Image(s)" ausgewählt ist.  Klicken Sie jetzt auf \fIImage
+Settings\fP.  Bei den Konvertierungen wählen Sie sich die gewünschten aus bei
+\fIEnhancement to use\fP unter \fIWeb Page Settings\fP.
+.PP
+Klicken Sie \fIOK\fP.
+.PP
+Klicken Sie jetzt \fIAccept\fP.
+.PP
+Zum Schluss wählen Sie \fISave Options\fP im \fIOptions\fP Menü.
+.PP
+Starten Sie \fIRecord\fP im \fIFile\fP Menü. Bei jedem Überflug eines Satelliten
+werden nun die Bilder und Thumbnails erstellt und eine entsprechende Web-Seite
+wird generiert.
+.PP
+.B Wie kann ich die Qualität der Bilder auf meiner Web-Seite erhöhen?
+.br
+Unter \fIEnhancement to use\fP (\fIWeb Page Settings\fP, bei
+\fIRecord\fP im \fIFile\fP Menü), wählen Sie eine Option die sichtbares Licht
+verwendet (z. B. \fIMSA, MCIR, contrast\fP).
+.PP
+Setzen Sie die \fIMinimum solar elevation for visible images\fP Einstellung
+(nur in upgegradeten Versionen unter \fIRecord\fP im \fIFile\fP Menü) auf etwa
+\fI15\fP Grad.  Dies unterdrückt schlecht ausgeleuchtete Bilder von der
+Veröffentlichung auf der Web-Seite.
+.PP
+Haben Sie eine andere Projektion als \fINormal\fP ausgewählt, setzen Sie die
+\fIMinimum percent of projection filled\fP Einstellung (nur in upgegradeten
+Versionen unter \fIRecord\fP im \fIFile\fP Menü) auf etwa 66 Prozent.  Dies
+unterdrückt Bilder, die nur einen Bruchteil des Bildraums ausfüllen würden von
+der Veröffentlichung auf der Web-Seite.
+.PP
+Unter \fIRecording Options\fP im \fIOptions\fP Menü überprüfen Sie, ob \fIRecord
+only when selected active APT Satelliten are overhead\fP ausgewählt ist.  Setzen
+Sie \fIwith maximum elevation above (degrees)\fP auf etwa 30, um zu verhindern,
+dass Umläufe mit kleiner Elevation aufgezeichnet und auf der Web-Seite
+dargestellt werden.  Setzen Sie \fIrecord only when satellite is above
+(degrees)\fP auf etwa 15, um den verrauschten Anteil am oberen und unteren
+Bildrand zu entfernen.
+.PP
+.B Wie kann ich die lokale Uhrzeit auf der Web-Seite anzeigen lassen?
+.br
+Wenn Sie das Upgrade erworben haben, öffnen Sie \fIWeb Page Settings\fI im
+\fIRecord\fP Dialog im \fIFile\fP Menü.  Klicken Sie \fIBrowse\fP
+hinter \fIHTML Template\fP und wählen Sie \fItemplate2.html\fP.
+Klicken Sie \fIOK\fP und dann \fIAccept\fP.
+.PP
+Wird die Uhrzeit auch in den Bildern dargestellt (text overlay), öffnen Sie
+\fIText Options\fI im \fIOptions\fP Menü.  Ersetzen Sie \fIUTC\fP
+durch \fI%@%Z\fP oder \fI%@local\fP oder verwenden Sie \fI%@\fP gefolgt von
+Ihrer Zeitzone (z. B. \fI%@EST\fP).  Wählen Sie \fIOK\fP.
+.PP
+.B Kann ich das Aussehen der Web-Seite, die Anzahl der Bilder oder weiterer Informationen ändern?
+.br
+Ja, sofern Sie das Upgrade erworben haben.  Unter \fIWeb Page Settings\fP bei
+\fIRecord\fP im \fIFile\fP Menü finden Sie die Option für \fIHTML Template\fP.
+Dieses Template (Vorlage) wird zur Erstellung der Web-Seiten benutzt.  Sie
+können die weiteren bereitgestellten Vorlagen ausprobieren (beachten Sie, dass
+sich das Aussehen der Web-Seite erst nach dem nächsten Überflug ändert).
+.PP
+Oder Sie erstellen Ihr eigenes Template.  Benutzen Sie einfach das Standard-
+template (template1.html) als Anleitung.  Sie können diese Datei umkopieren und
+anpassen.
+.PP
+Die Web-Seite, \fIHTML filename\fP, wird aus dem \fIHTML Template\fP
+durch Ersetzen des Textes innerhalb des Templates generiert.
+.PP
+Der Text image\fIX\fP.jpg wird durch den Namen des von WXtoImg erzeugten Bildes
+ersetzt.  thumb\fIX\fP.jpg wird ersetzt durch den Namen des entsprechenden
+Thumbnails.  \fIX\fP muss eine Zahl grösser oder gleich 1 sein.
+Das aktuellste Bild erhält die 1.  Vermeiden Sie Lücken in der Nummerierung. 
+Wenn Sie 4 Bilder auf Ihrer Web-Seite darstellen wollen, sollten Sie folgende
+Verweise einpflegen \fIimage1.jpg\fP, \fIimage2.jpg\fP, \fIimage3.jpg\fP und
+\fIimage4.jpg\fP und demgemäß für die 4 zugehörigen Thumbnails: \fIthumb1.jpg\fP,
+\fIthumb2.jpg\fP, \fIthumb3.jpg\fP und \fIthumb4.jpg\fP.
+.PP
+ Informationen zum Satellitendurchgang und der Beobachtungsstation können
+ebenfalls hinzugefügt werden.   INFO(\fIX\fP,\fIY\fP) im Template wird ersetzt
+durch die betreffende Information zum Bild \fIX\fP (wie oben, hat das aktuellste
+Bild die Nummer 1).  \fIY\fP ist eine Zahl, die auf die gewünschte Information
+verweist (siehe hierzu die unten angehängte Liste).  Es dürfen dort keine
+Leerzeichen vorkommen.  Z. B. würde INFO(2, 4) nichts anzeigen.  Für Y=4 oder
+Y=44 kann ein optionales Argument, das das Datum/Uhrzeit-Format beschreibt
+hinzugefügt werden (z. B. INFO(1,44,%Y/%m/%d %H:%M %Z)).
+.nf
+     Y  Description = Beschreibung
+     0  width of image (in pixels) = Breite des Bildes
+     1  height of image (in pixels) = Höhe des Bildes
+     2  width of thumbnail (in pixels) = Breite des Thumbnails
+     3  height of thumbnail (in pixels) = Höhe des Thumbnails
+     4  time of satellite pass (UTC) = Uhrzeit des Satellitendurchgangs
+    44  time of satellite pass (local time)
+     5  satellite name (e.g. NOAA 17) = Name des Satelliten
+     6  maximum elevation of satellite pass = max. Elevation des Durchgangs
+     7  azimuth at maximum elevation (E oder W) = Azimut bei maximaler Elevation
+     8  direction of pass (northbound, southbound) = Richtung des Durchgangs
+     9  enhancement used (e.g. MSA) = benutzte Konvertierung
+    10  ground station location = Standort der Beobachtungsstation
+    11  latitude of ground station = Breitengrad der Beobachtungsstation
+    12  longitude of ground station = Längengrad der Beobachtungsstation
+    13  frequency in MHz (e.g. 137.62) = Frequenz in MHz
+    14  projection name (e.g. Mercator) = Name der Projektion
+    15  channel A (e.g. 3)
+    16  channel B (e.g. 4)
+    17  language (e.g. en)
+    18  character set (e.g. iso-8859-1)
+    19  wxtoimg version number (e.g. 2.4.15) = WXtoImg Versionsnummer
+    20  receiver (e.g. R2FX)
+    21  pass duration (e.g. 14:59)
+    22  solar elevation (e.g. 23.3)
+    23  antenna type
+    24  estimated time of publication (UTC) = geschätzte Zeit der Veröffentlichung
+    64  estimated time of publication (local time)
+.fi
+.PP
+Um Informationen zu künftigen Satellitendurchgängen zu präsentieren, können Sie
+X=-1,-2...  - mit X=-1 für den nächsten Durchgang - verwenden.  Y=24 und
+Y=64 finden ausschliesslich bei zukünftigen Durchgängen Anwendung.  Das
+optionale Datum/Uhrzeit-Formatierungs-Argument kann sowohl zusammen mit Y=24 und Y=64
+als auch mit Y=4 und Y=44 angewandt werden.
+.PP
+Folgende Möglichkeiten stehen zur Verfügung für das Datum/Uhrzeit-Format:
+.nf
+    %a  abbreviated weekday name = abgekürzter Name des Wochentags
+    %A  full  weekday  name = voller Name des Wochentags
+    %b  abbreviated month name = abgekürzter Name des Monats
+    %B  full  month  name = voller Name des Monats
+    %d  day of the month = Tag
+    %H  hour using a 24-hour  clock = 24-Stunden-Anzeige verwenden
+    %I  hour using a 12-hour clock = 12-Stunden-Anzeige verwenden
+    %j  day of the year (001-365) = Tag im Jahr
+    %m  month as a number = Monat als Zahl
+    %M  minute = Minute
+    %p  am/pm designation = Vormittag/Nachmittag 
+    %S  second = Sekunde
+    %y  year without a century = Jahr ohne Jahrhundertangabe
+    %Y  year including the century = komplette Jahresangabe
+    %Z  time zone name oder abbreviation = Name der Zeitzone oder Abkürzung
+    %%  a `%' character = Prozentzeichen
+.nf
+.PP
+.PP
+.PP
+.SH Copyright
+Copyright (c) 2001-2005 Central North Publishing Limited.  All rights reserved.
+

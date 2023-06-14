@@ -1,0 +1,530 @@
+.\" -*- nroff -*-
+.\" Copyright (c) 2001-2004 Central North Publishing Limited.
+.\" All rights reserved.
+.\"
+.\" Polskie t³umaczenie: Jakub SQ2WB 
+.\"
+.TH WXTOIMG FAQ  "version 2.7.3"
+.SH Rejestrowanie
+.B Dlaczego, gdy WXtoImg próbuje rozpocz±æ nagrywanie pojawia siê komunikat "Error: waveInOpen failed!"?
+.br
+Otwórz \fIRecord Options\fP z menu \fIOptions\fP oraz zmieñ kartê d¼wiêkow± (nawet je¶li posiadasz tylko jedn± kartê mo¿esz byæ zmuszony do tej zmiany, aby rejestracja sygna³u dzia³a³a).
+Kliknij OK oraz wprowad¼ ponownie program w tryb rejestracji. Wypróbuj ró¿ne ustawienia karty dopóki nie znajdziesz dzia³aj±cego.
+Je¶li ta procedura zawiedzie byæ mo¿e bêdziesz musia³ ponownie zainstalowaæ dotychczasowe, lub najnowsze sterowniki karty d¼wiêkowej.
+.PP
+.B Dlaczego nagrywanie nie jest nigdy rozpoczynane?
+.br
+Upewnij siê, ¿e kabel d¼wiêkowy ³±cz±cy odbiornik z wej¶ciem karty d¼wiêkowej jest pod³±czony oraz sprawny.
+Sprawd¼ czy u¿ywasz wyj¶cia g³o¶nikowego (a nie liniowego) w odbiorniku.
+Przeprowad¼ procedurê opisan± w sekcji \fIRequired Calibration...\fP dostêpn± w menu \fIHelp\fP.
+.PP
+.B Dlaczego obraz zosta³ podzielony?
+.br
+Obraz wygl±da w ten sposób poniewa¿ zosta³ uciêty poziomo oraz górna lub dolna czê¶æ zosta³a przesuniêta w lewo lub prawo. Sytuacja taka mo¿e zaistnieæ w jednym lub wielu miejscach obrazu.
+.PP
+Po pierwsze wa¿ne jest aby unikaæ u¿ywania pasków przewijania podczas nagrywania obrazu, lub uwa¿aæ aby nie przytrzymywaæ przycisku myszki na d³u¿ej ni¿ u³amek sekundy podczas przewijania.
+.PP
+Sytuacja taka mo¿e byæ spowodowana jest przez inne programy uruchomione wraz z nagrywaj±cym WxtoImg. Wygaszacz ekranu mo¿e powodowaæ problem, wiêc ustawienie opcji wygaszacza ekranu na brak mo¿e byæ dobrym pomys³em.
+Na s³abszych komputerach lub w sytuacji gdy inny program musi byæ uruchomiony wraz z WXtoImg funkcja wy¶wietlania podczas nagrywania mo¿e powodowaæ omawiany problem. Mo¿esz wtedy zdecydowaæ siê na wy³±czenie przetwarzania obrazu podczas nagrywania poprzez odznaczenie \fIShow image while recording\fP oraz zaznaczenie \fIDisable sat position during record\fP w oknie \fIGUI Options\fP wywo³ywanym z menu \fIOptions\fP.
+.PP
+.B Dlaczego program "zwiesza siê z wiadomo¶ci± "Status: opening soundcard..."?
+.br
+Karta d¼wiêkowa jest u¿ywana przez inny program (byæ mo¿e nawet mikser). Zamknij inne programy (tak¿e mikser).
+.PP
+.B Dlaczego nagrywanie rozpoczyna siê natychmiast oraz nigdy nie jest zatrzymywane podczas, gdy próbuje rejestrowaæ sygna³ z satelitów oko³obiegunowych.
+.br
+Najprawdopodobniej twój odbiornik nie posiada blokady szumów na wyj¶ciu. Zaznacz opcjê \fIRecord when 2400 Hz carrier present\fP lub \fIRecord only when selected active APT satellites are overhead\fP w oknie dialogowym otwieranym poprzez \fIRecording Options...\fP w menu \fIOptions\fP.
+.PP
+.B Dlaczego nagrywanie nigdy nie jest koñczone kiedy próbuje rejestrowaæ sygna³y satelitów geostacjonarnych?
+.br
+Musisz wybraæ tryb \fIRecord using WEFAX start/stop tones\fP z okna dialogowego
+\fIRecording Options...\fP otwieranego poprzez \fIRecording Options...\fP w menu \fIOptions\fP.
+.PP
+.B Dlaczego nagrywany jest co drugi obraz z satelity geostacjonarnego?
+.br
+Przetwa¿anie obrazu zajmuje zbyt du¿o czasu. Mo¿esz zredukowaæ czas przetwarzania poprzez wy³±czenie \fIOptions -> Despeckle\fP (lub ustawienie na \fInone\fP). Usuwanie drobnych zak³óceñ jest raczej nieodpowiednie dla obrazów WEFAX poniewa¿ niszczy cienkie linie na mapach. Ustawienie \fIOptions -> Sharpen\fP to \fInone\fP tylko nieznacznie przy¶pieszy przetwa¿anie.
+.PP
+Mo¿esz dalej zmniejszaæ czas dekodowania poprzez ustawienie \fIMaximum number of thumbnails\fP na \fI0\fP w \fIGUI Options\fP z menu \fIOptions\fP.
+.PP
+Upewnij siê tak¿e czy nie jest zaznaczona opcja \fIUse for audio recordings/maps too\fP w \fIFile Names and Locations\fP z menu \fIOptions\fP. Zmiana nazw plików wymaga dodatkowego czasu.
+.PP
+Na koniec mo¿esz zredukowaæ liczbê automatycznie przetwarzanych obrazów oraz kroków podejmowanych po nagraniu w oknie wywo³ywanym poprzez \fIRecord\fP z menu \fIFile\fP.
+.PP
+Je¶li twój komputer nadal nie jest wystarczaj±co szybki, aby skoñczyæ dekodowanie przed rejestracj± nastêpnego obrazu rozwa¿ jego ulepszenie. Mo¿esz tak¿e wybraæ opcjê \fIRecord only (show image if enabled)\fP w oknie \fIRecord\fP wywo³ywanym z menu \fIFile\fP. W tym trybie sygna³ zostanie zapisany w pliku d¼wiêkowych oraz, stopniowo w trakcie nagrywania, bêdzie wy¶wietlony nieprzetworzony obraz.
+.PP
+.B Program próbuje rejestrowaæ sygna³y z satelitów oko³obiegunowych w z³ym czasie. Co mogê na to poradziæ?
+.br
+Sprawd¼ ustawienie czasu i strefy czasowej systemu.
+W Windows otwórz panel Data/Czas z Panelu kontrolnego. Upewnij siê, ¿e strefa czasowa jest poprawnie ustawiona, zaznacz opcjê automatycznej zmiany czasu oraz sprawd¼ czas.
+.PP
+W Windows sprawd¼ czy plik \fIautoexec.bat\fP nie zawiera linii zaczynaj±cej siê \fISET TZ=\fP. Opcja taka zast±pi strefê czasow± ustawion± w panelu Data/Czas. Usuñ wspomnian± liniê lub oznacz j± jako komentarz.
+.PP
+.B Jak mogê automatycznie usun±æ starsze obrazy oraz nagrania?
+.br
+Wybierz \fIRecord\fP z menu \fIFile\fP. Tam znajduj± siê opcjê pozwalaj±ce na usuniêcie plików d¼wiêkowych, "surowych" obrazów, map oraz obrazów. Wybierz czas, po którym maj± zostaæ usuniête. Nastêpnie kliknij przycisk \fIAccept\fP oraz wybierz \fISave Options\fP z menu \fIOptions\fP.
+Zauwa¿, ¿e pliki bêd± usuniête tylko, gdy zosta³y automatycznie utworzone przez WXtoImg. Je¶li u¿ywasz komend \fISave Image as\fP lub \fISave Raw Image as\fP pliki nie zostan± automatycznie usuniête. Pliki d¼wiêkowe zarejestrowane innymi programami tak¿e nie zostan± usuniête.
+.PP
+U¿ycie  \fI-mtime 2\fP usunie pliki starsze ni¿ 48 godzin, \fI-mtime 3\fP usunie pliki maj±ce ponad 72 godziny.
+.PP
+.SH Pochylone obrazy
+.B Dlaczego obrazy s± pochylone?
+.br
+Byæ mo¿e bêdziesz musia³ ustawiæ czêstotliwo¶æ próbkowania. Informacje o procedurze korygowania czêstotliwo¶ci próbkowania znajduj± siê w dokumencie \fIRequired Calibration...\fP dostêpnym poprzez menu \fIHelp\fP.
+.PP
+.B Nie mogê znale¼æ pionowej krawêdzi na obrazie, która mog³aby zostaæ u¿yta do korekcji czêstotliwo¶ci próbkowania.
+.br
+Oznacza to, ¿e czêstotliwo¶æ próbkowania twojej karty d¼wiêkowej ró¿ni siê znacznie od oczekiwanej warto¶ci 11025 Hz.
+Nie jest to jednak problem. Otrzymany obraz posiada poziome pochy³e linie biegn±ce wzd³u¿ niego. Zamiast linii pionowej u¿yj jednej z tych linii do przeci±gniêcia z lewej strony do prawej.
+.PP
+Nastêpnie zaznacz \fIEstimate and set sampling frequencies for all satellites\fP oraz kliknij przycisk \fISet\fP.
+.PP
+Wybierz \fIDecode\fP z menu \fIFile\fP oraz powtórz procedurê. Tym razem krawêdzi powinny byæ prawie pionowe.
+.PP
+Pamiêtaj o sprawdzeniu, ¿e \fIDisable PLL\fP nie jest zaznaczone, a nastêpnie wybierz \fISave Options\fP z menu \fIOptions\fP, aby zapisaæ ustawienia korekcji czêstotliwo¶ci próbkowania.
+.PP
+.\" IMG=slantcor1.gif CAP=Przyk³ad linii przeci±gniêtej wzd³u¿ prawie poziomej, pochy³ej linii.
+.\" IMG=slantcor2.gif CAP=Wybierz Estimate and set sampling frequencies for all satellites oraz kliknij przycisk Set.
+.PP
+.SH Mapy - nak³adki
+.B Czy WXtoImg mo¿e stworzyæ nak³adki do plików d¼wiêkowych zarejestrowanych w innych programach?
+.br
+Tak. Jednak bêdzie to wymaga³o zmiany ustawienia \fIAudio file naming\fP na \fIOther\fP, w oknie dialogowym \fIFile Names and Locations\fP wywo³ywanego z menu \fIOptions\fP.
+Istnieje czêsto taka potrzeba, nawet kiedy nazwy plików s± zgodne ze schematem MMDDHHMM.wav (miesi±c, dzieñ, godzina, minuta) poniewa¿ WXtoImg wymaga, aby by³ zapisany czas rozpoczêcia nagrywania, a nie czas pojawienia siê satelity nad horyzontem.
+.PP
+.B Dlaczego nie widzê map - nak³adek oraz czêsto dostaje wiadomo¶æ, ¿e WXtoImg "could not find matching pass to build overlay map"?
+.br
+Upewnij siê, ¿e ustawi³e¶ poprawn± pozycjê geograficzn± w \fIGround Station Location...\fP z menu \fIOptions\fP.
+.PP
+Sprawd¼ tak¿e czy odpowiedni typ satelity jest zaznaczony w \fIActive APT Satellites\fP z menu \fIOptions\fP.
+.PP
+Mo¿e zegar twojego komputera nie pracuje poprawnie (ró¿nica 5 lub wiêcej minut).
+Zobacz poni¿ej: \fIWhy are the maps never aligned correctly\fP
+.PP
+Ostatecznie twoja strefa czasowa mo¿e byæ ustawiona niepoprawnie co spowoduje z³e obliczenie czasu UTC.
+W Windows otwórz panel \fIData/Godzina\fP (Start -> Ustawienia -> Panel sterowania -> Data/Godzina) i upewnij siê, ¿e Strefa czasowa jest poprawnie ustawiona, zaznaczona jest opcja \fIAutomatycznie uwzglêdniaj zmiany czasu\fP oraz, ¿e czas jest poprawny.
+.PP
+Zauwa¿ ¿e pozycja geograficzna stacji niezbêdna do tworzenia map nie jest u¿ywana do okre¶lenia czasu UTC.
+.PP
+.B Dlaczego mapy nie s± poprawnie dopasowane?
+.br
+Najbardziej prawdopodobn± przyczyn± jest niepoprawne ustawienie godziny. W celu poprawnego pozycjonowania map - nak³adek zegar komputera powinien byæ ustawiony z du¿± dok³adno¶ci±. Dostêpne s± programy do ustawiania czasu z wykorzystaniem serwerów internetowych. Rozszerzona wersja programu pozwala synchronizowaæ zegar z odbiornikiem GPS. Je¶li nagrywasz sygna³ na innym komputerze wtedy nale¿y zadbaæ o poprawne ustawienie zegara tego komputera.
+.PP
+.B Zegar mojego komputera jest poprawnie ustawiony. Czy mog± byæ jeszcze inne przyczyny?
+.br
+U¿ywanie nieaktualnych danych keplerowskich powoduje niepoprawne pozycjonowanie map. U¿yj funkcji \fIUpdate Keplers\fP z menu \fIFile\fP, aby pobraæ najbardziej aktualne dane z Internetu.
+.PP
+Sprawd¼ czy twój firewall jest skonfigurowany w sposób pozwalaj±cy na uaktualnienie danych z Internetu poprzez WXtoImg.
+.PP
+Je¶li u¿ywasz plików skopiowanych z innego miejsca ich czas powstania mo¿e zostaæ zmieniony co wp³ynie na niepoprawne ustawienie nak³adki. U¿yj programu kopiuj±cego, który zachowuje czas powstania pliku (w systemach *NIX u¿yj komendy  cp z opcj± -p , lub u¿yj mv zamiast niej).
+.PP
+.B Co mogê zrobiæ z nak³adkami, które s± niepoprawnie pozycjonowane lub nie s± nak³adane?
+.br
+U¿yj funkcje \fIMove Overlay...\fP z menu \fIImage\fP, aby przesun±æ niepoprawnie na³o¿on± mapê.
+.PP
+W Windows sprawd¼ plik \fIautoexec.bat\fP pod wzglêdem obecno¶ci ustawienia zaczynaj±cego siê od \fISET TZ=\fP. Ustawienie takie zmieni strefê czasow± obowi±zuj±c± oraz ustawion± w Windows co spowoduje problemy dla WXtoImg. Usuñ t± liniê lub uczyñ j± komentarzem.
+.PP
+.SH Dane keplerowskie
+.B Jak czêsto powinienem uaktualniaæ dane keplerowskie?
+.br
+Aby zapobiec niepoprawnemu pozycjonowaniu map - nak³adek nale¿y uaktualniaæ dane co kilka dni. Po³±cz siê z Internetem oraz wybierz \fIUpdate Keplers\fP z menu \fIFile\fP.
+.B Nie mogê zaktualizowaæ danych keplerowskich. Dlaczego?
+.br
+Sprawd¼ swoje po³±czenie internetowe. Je¶li po³±czenie pracuje poprawnie, a funkcja \fIUpdate keplers\fP zawodzi najprawdopodobniej twój firewall nie pozwala WXtoImg na po³±czenie do internetu (poprzez port HTTP - 80). Sprawd¼ ustawienie firewall'a.
+.PP
+.B Nie mam dostêpu do Internetu. Jak mogê zaktualizowaæ dane keplerowskie?
+.br
+Je¶li masz dostêp do poczty elektronicznej mo¿esz dostawaæ listy z danymi. Otrzymany przez e-mail lub na dyskietce plik z danymi w formacie 2 linii NASA skopiuj do katalogu \\Documents and Settings\\...your name...\Application Data\\WXtoImg\\weather.txt w Windows lub
+~/.wxtoimg/weather.txt w systemach *NIX.
+.PP
+.SH Ogólne
+.B Dlaczego pojawia siê komunikat ostrzegawczy: "enhancement ignored: could not find a NOAA sensor 2 (or 3) image"?
+.br
+Dzia³aj±ce satelity NOAA wysy³aj± obrazy z dwóch sensorów. W nocy wysy³ane s± obrazy z sensora 3 oraz 4. Podczas dnia wysy³any jest kana³ 2 (widoczny / bliska podczerwieñ) oraz 4. Ostrze¿enie mówi, ¿e wybrane zosta³o przekszta³cenie (z menu Enhancements), które wymaga obrazu z sensora, który w tym przypadku nie jest nadawany.
+W takim przypadku program zignoruje ustawione przekszta³cenie tworz±c normalny obraz.
+Je¶li mamy pewno¶æ, ¿e kana³y 2 oraz 4 powinny byæ zawarte w sygnale pomocne mo¿e okazaæ siê pominiêcie zaszumionych pocz±tkowych czê¶ci sygna³u poprzez \fIPartial Decode\fP.
+.PP
+.B Czy mogê zdekodowaæ stare pliki .WAV z sygna³ami satelitów, które ju¿ dawno nie nadaj±?
+.br
+Tak. Najpierw w³±cz tryb \fIexpert\fP w \fIGUI Options\fP z menu \fIOptions\fP. Uruchom WXtoImg ponownie.
+Teraz wybierz satelitê, której sygna³y chcesz zdekodowaæ z menu \fISatellite\fP.
+Otwórz plik .WAV u¿ywaj±c \fIOpen Audio File\fP z menu \fIFile\fP.
+Je¶li program nie utworzy mapy, bêdzie to najprawdopodobniej spowodowane z³± dat± zapisan± w pliku. Upewnij siê, ¿e nazwa pliku jest zgodna ze schematem RRRRMMDDGGMMSS.wav w czasie UTC (np. 19990928025912). Niedok³adno¶æ oko³o 5 minut mo¿e zostaæ skorygowana poprzez u¿ycie funkcji \fIMove Map Overlay\fP z menu \fIImage\fP.
+Otwórz \fIFile Names and Locations\fP z menu \fIOptions\fP oraz ustaw \fIAudio file naming\fP na \fIYYYYMMDDHHMMSS UTC time\fP. Otwórz ponownie plik .WAV.
+.PP
+.B Dlaczego niektóre opcje menu s± szare i niemo¿liwe jest ich wybranie?
+.br
+Funkcje lub opcje te dostêpne s± tylko w rozszerzonej wersji programu. Informacje o zakupie tych wersji mo¿na znale¼æ pod adresem:
+.nf
+    http://www.wxtoimg.com/reg/
+.fi
+.PP
+Zauwa¿, ¿e gdy program jest w trybie nagrywania lub dekodowania sygna³u wszystkie opcje menu oprócz \fIHelp\fP, \fIStop\fP oraz \fIExit\fP s± szare i niedostêpne.
+.PP
+.B Jak mogê ustawiæ wy¶wietlanie czasu lokalnego zamiast UTC?
+.br
+Jest to mo¿liwe tylko w zarejestrowanej wersji programu.
+Wy³±cz opcjê \fIShow time as UTC\fP w oknie \fIGUI Options\fP wywo³ywanym poprzez menu \fIOptions\fP.
+.PP
+Aby zmieniæ czas wy¶wietlany na mapie - nak³adce (tylko) otwórz \fIText Options\fI z menu \fIOptions\fP.  Zamieñ \fIUTC\fP na \fI%@%Z\fP lub \fI%@local\fP, mo¿esz  tak¿e u¿yæ \fI%@\fP wraz z nastêpuj±cym okre¶leniem strefy czasowej (np. \fI%@EST\fP). Kliknij przycisk \fIOK\fP.
+.PP
+.B Porady dotycz±ce poprawy jako¶ci obrazów.
+.br
+Je¶li u¿ywasz skanera lub odbiornika komunikacyjnego z w±skim filtrem po¶redniej czêstotliwo¶ci zakup klucz rozszerzaj±cy, otwórz \fIRecording Options\fP po czym ustaw typ odbiornika w polu \fIreceiver type\fP na \fIScanner\fP lub \fICommunications\fP.
+Dziêki temu program u¿yje specjalnej metody przetwarzania sygna³u, która znacznie poprawi jako¶æ obrazów. Je¶li posiadasz kabel do kontroli odbiornika, a typ odbiornika znajduje siê na li¶cie wybierz go. Jeszcze lepsze obrazu mog± powstaæ kiedy WXtoImg mo¿e kontrolowaæ odbiornik. Zakup klucz rozszerzaj±cy tylko, gdy otrzymujesz dobrze rozpoznawalne obrazy z u¿yciem przekszta³cenia \fIContrast enhance (NOAA ch B only)\fP.
+.PP
+Dla obrazów APT ustaw warto¶æ \fIDespeckle\fP na 2.0 w menu \fIOptions\fP, co pomo¿e usun±æ przypadkowe zak³ócenia.
+Dla obrazów WEFAX ustaw \fIDespeckle\fP na \fInone\fP.
+.br
+Ustaw \fIContrast\fP na \fILinear (variable)\fP w menu \fIOptions\fP, aby zredukowaæ ostry kontrast powodowany normalizacj± histogramow±.
+.PP
+Je¶li tworzysz obrazy dla druku ustaw \fIGamma\fP na \fInone\fP w menu \fIOptions\fP.
+.PP
+U¿ywaj±c przekszta³cenia trójwymiarowego (Anaglyph 3D) dla obrazów z przelotów NOAA o zmierzchu lub nocnych zaznacz opcjê \fIUse other sensor\fP w menu \fIOptions\fP. 
+Obrazy trójwymiarowe zapisuj w formacie \fIPNG\fP lub \fIBMP\fP (u¿yj rozszerzeñ \fI.png\fP lub \fI.bmp\fP). Jest to konieczne poniewa¿ stratna kompresja JPEG spowoduje przesuniêcia kolorów wp³ywaj±cych na efekt 3D.
+.PP
+Aby usun±æ zaszumione czê¶ci obrazu na jego szczycie lub dole otwórz okno dialogowe \fIRecording Options...\fP z menu \fIOptions\fP, wybierz \fIRecord only when selected active APT satellites are overhead\fP oraz ustaw \fIrecord only when satellite is above (degrees)\fP na oko³o 15.
+Zapewni to rejestrowanie sygna³u tylko w momencie kiedy elewacja satelity jest przynajmniej 15 stopni nad horyzontem.
+Zauwa¿, ¿e najlepsza warto¶æ zale¿y od ukszta³towania terenu oraz sprzêtu odbiorczego (warto¶ci miêdzy 8 a 18 s± typowe).
+.PP
+.B Jak stworzyæ obrazy, które bêdê móg³ zaimportowaæ do Digital Atmosphere?
+.br
+Jest to mo¿liwe tylko w rozszerzonej wersji programu.
+Ustaw \fIProjection\fP na \fIOrthographic\fP.
+Otwórz \fIProjection Options\fP z menu \fIOptions\fP. Ustaw \fIScale\fP na 640 (lub inny je¶li zmieni³e¶ szeroko¶æ twojej mapy DA. Patrz±c na mapê DA spróbuj najdok³adniej jak potrafisz zgadn±æ skrajne warto¶ci szeroko¶ci i d³ugo¶ci geograficznej (najbardziej na pó³noc, po³udnie, wschód, zachód). U¿yj tych warto¶ci do okre¶lenia granic. Ustaw \fIReference Longitude\fP na centrum mapy DA.
+.PP
+.B Jak wydrukowaæ obraz?
+.br
+Poniewa¿ WXtoImg nie obs³uguje drukowania bêdziesz zmuszony najpierw zapisaæ obraz do pliku (wybierz \fISave Image As\fP z menu \fIFile\fP) w formacie PNG lub BMP zamiast JPEG co poprawi jako¶æ wydruku.
+Mo¿esz tak¿e ustawiæ opcjê \fIGamma\fP z menu \fIOptions\fP na \fInone\fP zanim zapiszesz obraz.
+Zapisany obraz mo¿esz otworzyæ z dowolnym programie graficznym lub przegl±darce internetowej, która obs³uguje drukowanie.
+.PP
+.B Dlaczego kolory zmieniaj± siê na dziwne po uruchomieniu WXtoImg?
+.br
+Jest to spowodowane faktem, ¿e posiadasz kartê graficzn± w trybie 256 kolorów (8-bitów). WXtoImg przechwytuje wszystkie 256 kolorów dla w³asnego u¿ytku, co umo¿liwia wy¶wietlenie o wiele lepszych obrazów.
+Mo¿esz spróbowaæ zmieniæ tryb wy¶wietlania na True Color (24 lub 32 bity) lub High Color (15 lub 16 bitów). Je¶li twoja karta nie umo¿liwia wy¶wietlenia wiêcej ni¿ 256 kolorów, a przeszkadza tobie ta funkcja mo¿esz j± wy³±czyæ poprzez odznaczenie opcji \fIUse private colormap\fP, w oknie dialogowym \fIGUI Options\fP wywo³ywanym z menu \fIOptions\fP. Pamiêtaj o wybraniu \fISave Options\fP oraz uruchom ponownie program.
+.PP
+.B Co oznacza "northbound 51 W"?
+.br
+Jest to opis przelotu satelity. Southbound oraz northbound oznaczaj± kierunek, z którego nadlatuje satelita (odpowiednio po³udnie, pó³noc). 
+Nastêpnie jest podawana maksymalna elewacja (w tym przypadku 51 stopni).
+Zauwa¿, ¿e maksymalna elewacja zawiera siê pomiêdzy 0 a 90 stopni (90 oznacza przelot bezpo¶rednio nad g³ow±),
+Kolejn± informacj± jest kierunek do satelity w momencie w którym satelita znajdzie siê w punkcie o maksymalnej elewacji (E - wschód, W - zachód).
+.PP
+.B Chcia³bym otrzymaæ kolorowy obraz. Jak to zrobiæ?
+.br
+Analiza wielokana³owa oraz przekszta³cenia HVC i HVCT daj± dobre wyniki podczas letnich przelotów, kiedy ziemia jest dobrze o¶wietlana przez S³oñce.
+Wybierz jedno z tych przekszta³ceñ z menu \fIEnhancements\fP oraz zdekoduj obraz.
+.PP
+Podczas zimowych oraz letnich, dziennych lub nocnych przelotów dobre wyniki mo¿na otrzymaæ poprzez u¿ycie przekszta³ceñ MCIR oraz NO dla sygna³ów NOAA.
+.PP
+.B Co oznacza WXtoImg?
+.br
+WXtoImg jest skrótem od "WX to image" (weather satellite to image - satelita meteorologiczny do obrazu).
+.PP
+.SH Animacje AVI
+.B Czy mogê tworzyæ animacje z obrazów satelitów oko³obiegunowych?
+.br
+Je¶li posiadasz zarejestrowan± wersjê mo¿esz przeprowadziæ procedurê:
+.PP
+Najpierw otwórz okno dialogowe \fIRecording Options\fP poprzez menu \fIOptions\fP.  Wybierz \fIRecord only when selected active APT satellites are overhead\fP oraz kliknij \fIOK\fP.
+.PP
+Wybierz \fILinear (constant)\fP z podmenu \fIContrast\fP menu \fIOptions\fP. Umo¿liwi to zachowanie tego samego kontrastu oraz jasno¶ci w ka¿dej ramce animacji.
+.PP
+Wybierz \fIFull\fP z podmenu \fIIllumination Compensation\fP menu \fIOptions\fP.
+.PP
+Je¶li chcesz stworzyæ animacje z przekszta³ceniami HVC, HVCT, lub Anaglyph wybierz \fIUse other sensor\fP w menu \fIOptions\fP.
+.PP
+Otwórz okno dialogowe \fIImage and Movie Options...\fP poprzez menu \fIOptions\fP.  Zmieñ \fIAVI Scale\fP na \fI1.000\fP.  (je¶li chcesz zmieniæ rozmiar animacji u¿yj opcji \fIProjection Scale\fP w oknie dialogowym \fIMovie Settings\fP wywo³ywanym z okna \fIFile \ Record\fP.)
+Je¶li chcesz ogl±daæ animacje 3D stworzone z u¿yciem przekszta³ceñ Anaglyph mo¿esz zmieniæ \fIAVI Codec\fP na \fIRGB\fP.  (efektem bêdzie bardzo du¿y plik animacji, ale zachowane zostan± szczegó³y 3D). W innym przypadku u¿yj kodeka \fIMJPG\fP.
+Wybierz \fIOK\fP.
+.PP
+Otwórz okno dialogowe \fIRecord\fP z menu \fIFile\fP. Upewnij siê ¿e zaznaczono opcjê \fIRecord and auto process\fP. Sprawd¼ tak¿e czy zaznaczone jest \fICreate Movie(s)\fP. Nastêpnie kliknij przycisk \fIMovie Settings\fP.
+.PP
+Zmieñ schemat nazw - \fIMovie Filename Template\fP na \fI%g-%e\fP.
+.PP
+Wybierz przekszta³cenie, które ma zostaæ u¿yte do stworzenia animacji. Osobna animacja zostanie stworzona dla ka¿dego wybranego przekszta³cenia. Najlepszymi przekszta³ceniami dla animacji s±:
+\fIMCIR map colour IR (NOAA)\fP,
+\fIContrast enhance (NOAA ch B only)\fP,
+\fIDaylight sea surface temp\fP,
+\fIAnaglyph false 3-D\fP,
+\fIColour anaglyph false 3-D\fP,
+\fINO colour IR enhancement\fP, oraz
+\fIZA general IR enhancement\fP.
+Mo¿esz tak¿e osi±gn±æ dobre efekty z przekszta³ceniami \fIHVC false-colour\fP oraz \fIHVCT false-colour\fP.
+.PP
+Zmieñ projekcjê \fIProjection\fP na \fIMercator\fP (lub inn±, ale nie \fINormal\fP).
+Je¶li istnieje taka potrzeba mo¿esz zmieniæ \fICentre Longitude\fP na d³ugo¶æ geograficzn± blisk± twojej stacji lub zostawiæ pole puste. 
+Ustaw granice: North - pó³nocn±, South - po³udnow±, West - zachodni± oraz East wschodni±. Spróbuj ustawiæ je oko³o 10 stopni od twojej pozycji. Szeroko¶ci i d³ugo¶ci geograficzne musz± byæ wprowadzone jako stopnie oraz czê¶ci stopnia. Pozycje na pó³noc oraz wschód powinny zostaæ wpisane jako liczby dodatnie. Po³udnie oraz zachód reprezentowane s± poprzez liczby ujemne.
+Konieczne jest wpisanie warto¶ci dla wszystkich granic. Wybierz \fISet\fP.
+.PP
+Ustaw minimalny procent obrazu wype³nionego poprawnymi pikselami w polu \fIMinimum percent of projection filled\fP na 50.0 dziêki czemu ramki z mniejsz± ich liczb± nie zostan± u¿yte.
+.PP
+Kliknij przycisk \fIRecord\fP. Za ka¿dym przelotem satelity nowa ramka zostanie dodana do animacji.
+Mo¿esz zobaczyæ utworzon± animacje poprzez wybranie \fIView Movie\fP z menu \fIFile\fP.
+.PP
+.B Czy mogê stworzyæ animacje z du¿ej ilo¶ci starych obrazów, "surowych" obrazów lub plików d¼wiêkowych?
+.br
+Tak, je¶li posiadasz zarejestrowan± wersjê.
+Zauwa¿, ¿e nowe przekszta³cenia kontrastu s± dostêpne w wersji v2.3 oraz wy¿szych, dziêki czemu mo¿liwe jest zwiêkszenie podobieñstwa klatek.
+.PP
+Wybierz \fILinear (constant)\fP z podmenu \fIContrast\fP menu \fIOptions\fP. Umo¿liwi to zachowanie tego samego kontrastu oraz jasno¶ci w ka¿dej ramce animacji.
+.PP
+Wybierz \fIFull\fP z podmenu \fIIllumination Compensation\fP menu \fIOptions\fP.
+.PP
+Je¶li chcesz stworzyæ animacje z przekszta³ceniami HVC, HVCT, lub Anaglyph wybierz \fIUse other sensor\fP w menu \fIOptions\fP.
+.PP
+Otwórz okno dialogowe \fIImage and Movie Options...\fP poprzez menu \fIOptions\fP.  Zmieñ \fIAVI Scale\fP na \fI1.000\fP.  (je¶li chcesz zmieniæ rozmiar animacji u¿yj opcji \fIProjection Scale\fP w oknie dialogowym \fIMovie Settings\fP wywo³ywanym z okna \fIFile \ Record\fP.)
+Je¶li chcesz ogl±daæ animacje 3D stworzone z u¿yciem przekszta³ceñ Anaglyph mo¿esz zmieniæ \fIAVI Codec\fP na \fIRGB\fP.  (efektem bêdzie bardzo du¿y plik animacji, ale zachowane zostan± szczegó³y 3D). W innym przypadku u¿yj kodeka \fIMJPG\fP.
+Wybierz \fIOK\fP.
+.PP
+Zmieñ projekcjê \fIProjection\fP na \fIMercator\fP (lub inn±, ale nie \fINormal\fP).
+Je¶li istnieje taka potrzeba mo¿esz zmieniæ \fICentre Longitude\fP na d³ugo¶æ geograficzn± blisk± twojej stacji lub zostawiæ pole puste. 
+Ustaw granice: North - pó³nocn±, South - po³udniow±, West - zachodni± oraz East wschodni±. Spróbuj ustawiæ je oko³o 10 stopni od twojej pozycji. Szeroko¶ci i d³ugo¶ci geograficzne musz± byæ wprowadzone jako stopnie oraz czê¶ci stopnia. Pozycje na pó³noc oraz wschód powinny zostaæ wpisane jako liczby dodatnie. Po³udnie oraz zachód reprezentowane s± poprzez liczby ujemne.
+Konieczne jest wpisanie warto¶ci dla wszystkich granic. Wybierz \fISet\fP.
+.PP
+Wybierz przekszta³cenie, które ma zostaæ u¿yte do stworzenia animacji. Osobna animacja zostanie stworzona dla ka¿dego wybranego przekszta³cenia. Najlepszymi przekszta³ceniami dla animacji s±:
+\fIMCIR map colour IR (NOAA)\fP,
+\fIContrast enhance (NOAA ch B only)\fP,
+\fIDaylight sea surface temp\fP,
+\fIAnaglyph false 3-D\fP,
+\fIColour anaglyph false 3-D\fP,
+\fINO colour IR enhancement\fP, oraz
+\fIZA general IR enhancement\fP.
+Mo¿esz tak¿e osi±gn±æ dobre efekty z przekszta³ceniami \fIHVC false-colour\fP oraz \fIHVCT false-colour\fP.
+.PP
+Otwórz nowe nagranie poprzez \fIOpen Audio File\fP, lub "surowy" obraz poprzez \fIOpen Raw Image\fP, lub opracowany obraz poprzez \fIView Image\fP z menu \fIFile\fP.  Kiedy zakoñczy siê przetwarzanie wybierz \fISave Image\fP z menu \fIFile\fP. Zapisz obraz do pliku AVI poprzez dopisanie rozszerzenia \fI.avi\fP do nazwy pliku (np. \fInoaa-za.avi\fP).
+.PP
+Powtórz ostatnie kroki dla innych nagrañ, "surowych" obrazów lub filmów poprzez zapisywanie do tego samego pliku AVI. Gdy zostaniesz zapytany czy zast±piæ plik wybierz Tak. Animacja nie zostanie zast±piona, zamiast tego nowa ramka zostanie dodana do koñca sekwencji.
+.PP
+Kiedy dodasz wszystkie obrazy mo¿esz wybraæ \fIView Movie\fP z menu \fIFile\fP, aby zobaczyæ stworzon± animacjê.
+.PP
+.B OK, ale czy nie ma prostszego sposobu na stworzenie animacji ze starych plików?
+.br
+Tak, jest. Postêpuj zgodnie z instrukcjami do \fICzy mogê tworzyæ animacje z obrazów satelitów oko³obiegunowych?\fP, ale w ostatnim punkcie kliknij przycisk \fIAccept\fP zamiast \fIRecord\fP.
+.PP
+Teraz otwórz nagranie poprzez \fIOpen Audio File\fP, "surowy" obraz poprzez \fIOpen Raw Image\fP lub opracowany obraz poprzez \fIView Image\fP z menu \fIFile\fP.  Gdy przetwarzanie siê zakoñczy wybierz \fIAuto Process\fP z menu \fIFile\fP.  Powtórz.
+.PP
+.B Nie mogê wy¶wietliæ animacji z u¿yciem Windows Media Player.
+.br
+\fINiestety\fP, starsze wersje Windows Media Player nie obs³uguj± kompresji MJPG (Motion JPEG), która jest domy¶lnie stosowana przez WXtoImg od wersji 1.0. Specjalny kodek jest wymagany, aby umo¿liwiæ ogl±danie animacji. Mo¿esz go zainstalowaæ razem z wersj± 8.0 lub wy¿sza Microsoft DirectX.  Dostêpna z:
+.nf
+    http://www.microsoft.com/directx
+.fi
+.PP
+Zauwa¿, ¿e u¿ytkownicy Windows 95 musz± pobraæ inn± wersjê DirectX, a posiadacze Windows XP nie musz± nic instalowaæ.
+.PP
+Je¶li ca³y czas masz problem sprawd¼ ustawienia wy¶wietlania (Start -> Panel Sterowania -> Ekran -> Ustawienia) oraz ustaw liczbê kolorów na 32 lub 24 bity.
+.PP
+Mo¿esz tak¿e zainstalowaæ odtwarzacz Apple Quicktime dla Windows, który równie¿ pracuje dobrze.
+Jest dostêpny pod adresem:
+.nf
+    http://www.apple.com/quicktime/download/
+.fi
+.PP
+Ostatecznie mo¿esz otworzyæ \fIImage and Movie Options...\fP z menu \fIOptions\fP oraz ustawiæ \fIAVI Codec\fP na \fIRGB\fP.  Spowoduje to stworzenie bardzo du¿ych, nieskompresowanych plików, ale w formacie odtwarzanym przez prawie wszystkie programy.
+.PP
+Zauwa¿, ¿e w systemach Linux/*NIX kompresjê MJPG obs³uguje odtwarzacz xanim.
+.PP
+.SH Kompozycje obrazów
+.B Czy mogê automatycznie tworzyæ kompozycje obrazów z kilku przelotów?
+.br
+Tak, je¶li posiadasz zarejestrowan± wersjê programu. Oto procedura:
+.PP
+Otwórz okno dialogowe \fIRecording Options\fP poprzez menu \fIOptions\fP. Zaznacz opcjê \fIRecord only when selected active APT satellites are overhead\fP.  Wci¶nij przycisk \fIOK\fP.
+.PP
+Wybierz \fILinear (constant)\fP z podmenu \fIContrast\fP menu \fIOptions\fP. Pomo¿e to zapewniæ jednakow± jasno¶æ oraz kontrast komponowanych obrazów.
+.PP
+Wybierz \fIFull\fP z podmenu \fIIllumination Compensation\fP menu \fIOptions\fP. S³u¿y to tak¿e zapewnieniu podobieñstwa ró¿nych obrazów sk³adanych w kompozycjê.
+.PP
+Otwórz okno dialogowe \fIRecord\fP z menu \fIFile\fP. Upewnij siê, ¿e wybrano \fIRecord and auto process\fP.  Sprawd¼ czy opcja \fICreate composite image(s)\fP jest zaznaczona. Kliknij przycisk \fIComposite Image Settings\fP.
+.PP
+Ustaw schemat nazwy \fIComposite Image Filename Template\fP na \fI%g-%@%Y%m%d-%p-%e\fP. Mo¿esz tak¿e zastosowaæ inne schematy dla osi±gniêcia okre¶lonych rezultatów (przyk³ady: \fI%s-%e\fP, \fI%g-%k-%e\fP, \fI%s-%k-%e\fP, \fI%g-%k-%p-%e\fP, \fI%s-%k-%p-%e\fP).  Zobacz sekcjê \fIFilename Template\fP w pliku \fIGraphic User Interface\fP otwieranym poprzez menu \fIHelp\fP.
+.PP
+Wybierz przekszta³cenie, które ma zostaæ u¿yte do stworzenia komponowanego obrazu.
+.PP
+Zmieñ \fIProjection\fP na \fIMercator\fP (lub inn± projekcjê).
+Je¶li istnieje taka potrzeba mo¿esz zmieniæ \fICentre Longitude\fP na d³ugo¶æ geograficzn± blisk± twojej stacji lub zostawiæ pole puste. 
+Ustaw granice: North - pó³nocn±, South - po³udniow±, West - zachodni± oraz East wschodni±. Spróbuj ustawiæ je oko³o 30 stopni od twojej pozycji. Szeroko¶ci i d³ugo¶ci geograficzne musz± byæ wprowadzone jako stopnie oraz czê¶ci stopnia. Pozycje na pó³noc oraz wschód powinny zostaæ wpisane jako liczby dodatnie. Po³udnie oraz zachód reprezentowane s± poprzez liczby ujemne.
+Konieczne jest wpisanie warto¶ci dla wszystkich granic. Wybierz \fISet\fP.
+.PP
+Zauwa¿, ¿e warto¶æ \fIMinimum percent of projection filled\fP (minimalnego wype³nionego procentu) nie ma znaczenia przy tworzeniu kompozycji obrazów.
+.PP
+Kliknij przycisk \fIRecord\fP. Za ka¿dym przelotem satelity nowy obraz zostanie dodany do kompozycji. Mo¿esz obejrzeæ skomponowany obraz poprzez funkcjê \fIView Image\fP z menu \fIFile\fP.
+.PP
+.B Czy mogê rêcznie stworzyæ kompozycje obrazów?
+.br
+Tak, je¶li posiadasz zarejestrowan± wersjê.
+.PP
+Wybierz \fILinear (constant)\fP z podmenu \fIContrast\fP menu \fIOptions\fP. Pomo¿e to zapewniæ jednakow± jasno¶æ oraz kontrast komponowanych obrazów.
+.PP
+Wybierz \fIFull\fP z podmenu \fIIllumination Compensation\fP menu \fIOptions\fP. S³u¿y to tak¿e zapewnieniu podobieñstwa ró¿nych obrazów sk³adanych w kompozycjê.
+.PP
+Je¶li chcesz stworzyæ kompozycje z obrazów w przekszta³ceniach HVC, HVCT, lub Anaglyph 3D mo¿esz wybraæ opcjê \fIUse other sensor\fP z menu \fIOptions\fP.
+.PP
+Zmieñ \fIProjection\fP na \fIMercator\fP (lub inn± projekcjê).
+Je¶li istnieje taka potrzeba mo¿esz zmieniæ \fICentre Longitude\fP na d³ugo¶æ geograficzn± blisk± twojej stacji lub zostawiæ pole puste. 
+Ustaw granice: North - pó³nocn±, South - po³udniow±, West - zachodni± oraz East wschodni±. Spróbuj ustawiæ je oko³o 30 stopni od twojej pozycji. Szeroko¶ci i d³ugo¶ci geograficzne musz± byæ wprowadzone jako stopnie oraz czê¶ci stopnia. Pozycje na pó³noc oraz wschód powinny zostaæ wpisane jako liczby dodatnie. Po³udnie oraz zachód reprezentowane s± poprzez liczby ujemne.
+Konieczne jest wpisanie warto¶ci dla wszystkich granic. Wybierz \fISet\fP.
+.PP
+Wybierz przekszta³cenie, które ma zostaæ u¿yte do stworzenia komponowanego obrazu.
+.PP
+Otwórz nagranie poprzez \fIOpen Audio File\fP, lub "surowy" obraz poprzez \fIOpen Raw Image\fP, lub opracowany obraz poprzez \fIView Image\fP z menu \fIFile\fP. Kiedy zakoñczy siê przetwarzanie wybierz \fIComposite Image to\fP z menu \fIFile\fP. Lepsze rezultatu osi±gniesz poprzez zachowanie w formacie PNG lub BMP (dodaj rozszerzenie pliku \fI.png\fP lub \fI.bmp\fP (np. \fInoaa-2401.png\fP).
+.PP
+Powtórz poprzedni krok dla innych nagrañ, "surowych" obrazów oraz zapisuj±c je do tego samego pliku. Gdy zostaniesz zapytany czy zast±piæ plik wybierz Tak. Obraz nie zostanie zast±piony - nowy obraz zostanie wkomponowany do poprzedniego.
+.PP
+Najlepsze rezultaty osi±ga siê poprzez zapisywanie obrazów z przelotów o niskiej maksymalnej elewacji przed obrazem o najwy¿szej elewacji. Zapewnia to zajêcie najwiêkszego obszaru komponowanego obrazu poprzez obraz z najlepszego przelotu, co zapewni najwy¿sz± jako¶æ.
+.PP
+Kiedy dodasz wszystkie obrazy wywo³aj funkcjê \fIView Image\fP z menu \fIFile\fP oraz wybierz plik, który w³a¶nie stworzy³e¶.
+.PP
+.SH Tworzenie stron WWW
+.B Czy mogê automatycznie stworzyæ strony internetowe oraz opublikowaæ je?
+.br
+Tak. Oto procedura:
+.PP
+Otwórz okno dialogowe \fIRecord\fP poprzez menu \fIFile\fP. Upewnij siê ¿e zaznaczono \fIRecord and auto process\fP.  Zaznacz opcjê \fIAdd images to web page\fP.  Kliknij przycisk \fIWeb Page Settings\fP.
+.PP
+Je¶li zakupi³e¶ rozszerzon± wersjê pozostaw pole \fIHTML Template\fP bez zmian.
+.PP
+Wybierz przekszta³cenie, które ma zostaæ u¿yte na stronie. Je¶li wybierzesz kilka przekszta³ceñ zostanie u¿yte pierwsze z nich. Je¶li zaznaczysz MSA, MCIR, lub contrast oraz przekszta³cenie MSA jest dostêpne zostanie ono utworzone. W innym przypadku zostanie utworzony obraz MCIR lub je¶li stworzenie MCIR nie powiedzie siê tylko kontrast obrazu zostanie poprawiony.
+.PP
+Wybierz rozmiar miniaturki obrazu. Polecane jest u¿ycie warto¶ci 20.0%, ale w niektórych przypadkach wiêksze miniatury (np. 25%) mog± wygl±daæ lepiej.
+.PP
+Ustawienie \fIHTML Filename\fP odpowiada za nazwê tworzonego pliku HTML. Je¶li nie jeste¶ pewien pozostaw domy¶ln± warto¶æ \fIindex.html\fP.
+.PP
+Wiêkszo¶æ firm dostarczaj±cych us³ugi internetowe umo¿liwia darmowe opublikowanie strony internetowej. Sprawd¼ to u swojego operatora.
+Operator powinien przekazaæ tobie nastêpuj±ce informacje:
+nazwê hosta umo¿liwiaj±cego po³±czenie FTP do twojej strony - (\fIHostname\fP),
+nazwê u¿ytkownika lub login - (\fIUser\fP),
+has³o dostêpu do FTP - (\fIPassword\fP).  
+Wpisz te dane do odpowiednich pól.
+.PP
+W polu \fIDirectory\fP wpisz ¶cie¿kê do katalogu, w którym powinny byæ zapisywane strony. Je¶li katalog nie istnieje WXtoImg spróbuje go utworzyæ. W wyborze nazwy katalogu do u¿ytku z FTP mo¿e pomóc ci operator internetowy..
+.PP
+Je¶li posiadasz sta³e po³±czenie do Internetu zaznacz opcjê \fIAutomatically FTP as images are added\fP, która spowoduje automatyczne uaktualnianie strony na serwerze po ka¿dym zdekodowanym przelocie. Je¶li nie zaznaczy³e¶ tej opcji mo¿esz w dowolnym czasie rêcznie opublikowaæ strony poprzez funkcjê \fIUpdate Web Page\fP z menu \fIFile\fP.
+Mo¿esz odznaczyæ opcjê \fIPlace web page into folder\fP, ale nie ma takiej konieczno¶ci.
+.PP
+Chocia¿ zmienia siê to w przypadku operatorów twoja strona internetowa najprawdopodobniej bêdzie dostêpna pod adresem podobnym do (zamieniaj±c \fIHostname\fP, \fIUser\fP, oraz \fIDirectory\fP):
+.nf
+    http://www.Hostname/User/Directory/index.html
+.fi
+.br
+lub
+.nf
+    http://www.Hostname/~User/Directory/index.html
+.fi
+.PP
+Skontaktuj siê z operatorem, aby otrzymaæ wiêcej informacji o u¿ywaniu protoko³u FTP do zapisania twojej strony na serwerze.
+.PP
+Je¶li nie chcesz publikowaæ strony w Internecie mo¿esz j± zapisywaæ na dysku komputera.
+.PP
+Upewnij siê, ¿e zaznaczono opcjê \fIPlace web page into folder\fP.
+.PP
+Wpisz ¶cie¿kê do katalogu, w którym zostanie stworzona strona. Mo¿esz tak¿e wcisn±æ przycisk \fIBrowse\fP i wybraæ odpowiedni katalog. Plik o nazwie zgodnej ze schematem \fIHTML Filename\fP bêdzie umieszczony w tym katalogu (domy¶lnie \fIindex.html\fP).
+.PP
+Po ustawieniu opcji FTP oraz katalogu lokalnego naci¶nij przycisk \fIOK\fP.
+.PP
+Powiniene¶ znale¼æ siê w oknie dialogowym \fIRecord\fP. Upewnij siê, ¿e zaznaczono "Create Image(s)".  Teraz kliknij \fIImage Settings\fP. W sekcji przekszta³ceñ (enhancements) powiniene¶ wybraæ przekszta³cenia, które zosta³y wybrane w \fIEnhancement to use\fP ustawieñ \fIWeb Page Settings\fP.
+.PP
+Kliknij \fIOK\fP.
+.PP
+Nastêpnie kliknij \fIAccept\fP.
+.PP
+Ostatecznie \fISave Options\fP z menu \fIOptions\fP.
+.PP
+Wejd¼ w tryb rejestrowania poprzez \fIRecord\fP z menu \fIFile\fP . Dla ka¿dego przelotu zostanie utworzony obraz, miniaturka oraz strona internetowa.
+.PP
+.B Jak mogê poprawiæ jako¶æ obrazów na mojej stronie?
+.br
+W sekcji \fIEnhancement to use\fP (\fIFile\fP -> \fIRecord\fP -> \fIWeb Page Settings\fP), wybierz przekszta³cenia u¿ywaj±ce obrazów w ¶wietle widzialnym (np. \fIMSA, MCIR, contrast\fP).
+.PP
+Ustaw \fIMinimum solar elevation for visible images\fP (minimaln± elewacjê S³oñca dla obrazów wykorzystuj±cych widmo widzialne - tylko w zarejestrowanej wersji \fIRecord\fP z menu \fIFile\fP) na oko³o \fI15\fP stopni. Wyeliminuje to s³abo na¶wietlone obrazy.
+.PP
+Je¶li wybrana zosta³a projekcja inna ni¿ \fINormal\fP, ustaw warto¶æ
+\fIMinimum percent of projection filled\fP (tylko zarejestrowane wersje - \fIRecord\fP w menu \fIFile\fP) na oko³o 66 procent. Zapobiegnie to publikowaniu obrazów z mniejsz± ilo¶ci± poprawnych pikseli.
+.PP
+W \fIRecording Options\fP menu \fIOptions\fP sprawd¼ czy zaznaczono \fIRecord only when selected active APT satellites are overhead\fP. Ustaw \fIwith maximum elevation above (degrees)\fP na oko³o 30, aby zapobiec rejestrowaniu przelotów o niskiej maksymalnej elewacji. Ustaw tak¿e \fIrecord only when satellite is above (degrees)\fP na warto¶æ oko³o 15, aby nie rejestrowaæ zaszumionych, pocz±tkowych oraz koñcowych czê¶ci sygna³u.
+.PP
+.B Jak mogê umie¶ciæ czas lokalny na moich stronach?
+.br
+Je¶li posiadasz zarejestrowan± wersjê otwórz okno \fIWeb Page Settings\fI poprzez \fIRecord\fP z menu \fIFile\fP.  Kliknij przycisk \fIBrowse\fP za polem \fIHTML Template\fP oraz wybierz \fItemplate2.html\fP.
+Kliknij \fIOK\fP oraz \fIAccept\fP.
+.PP
+Je¶li czas jest wy¶wietlany tak¿e na obrazach (text overlay), otwórz okno \fIText Options\fI z menu \fIOptions\fP. Zamieñ \fIUTC\fP na \fI%@%Z\fP lub \fI%@local\fP albo u¿yj \fI%@\fP z do³±czon± nazw± strefy czasowej (np. \fI%@EST\fP). Wybierz \fIOK\fP.
+.PP
+.B Czy mogê zmieniæ uk³ad strony, liczbê obrazów, lub informacje dostêpne na stronie?
+.br
+Tak, je¶li posiadasz zarejestrowan± wersjê.
+W oknie \fIWeb Page Settings\fP wywo³ywanym przez \fIRecord\fP z menu \fIFile\fP znajdziesz opcjê \fIHTML Template\fP.  Schemat wybrany w tym polu bêdzie u¿yty do stworzenia strony. Mo¿esz wypróbowaæ inne dostarczone schematy (zauwa¿, ¿e strona nie zostanie zmieniona przed nastêpnym przelotem).
+.PP
+Mo¿esz stworzyæ tak¿e w³asny schemat. Potraktuj domy¶lny schemat (template1.html) jako przyk³ad.
+Skopiuj lub edytuj bezpo¶rednio ten plik.
+.PP
+Strona internetowe o nazwie \fIHTML filename\fP, jest tworzona z u¿yciem \fIHMTL Template\fP poprzez zast±pienie tekstu w schemacie.
+.PP
+Tekst image\fIX\fP.jpg zostanie zast±piony przez nazwê utworzonego przez WXtoImg obrazu. 
+thumb\fIX\fP.jpg zostanie zast±piony nazw± odpowiedniej miniaturki.
+\fIX\fP powinno byæ numerem 1 lub wiêkszym.
+Najbardziej aktualny obraz bêdzie posiada³ \fIX\fP równy 1. Nie powiniene¶ zostawiaæ ¿adnych przerw w numerach obrazów. Je¶li chcesz umie¶ciæ na stronie 4 obrazy powiniene¶ odwo³aæ siê do \fIimage1.jpg\fP, \fIimage2.jpg\fP, \fIimage3.jpg\fP i \fIimage4.jpg\fP oraz podobnie dla miniaturek: \fIthumb1.jpg\fP, \fIthumb2.jpg\fP, \fIthumb3.jpg\fP, oraz \fIthumb4.jpg\fP.
+.PP
+Do strony mog± zostaæ dodane informacje o przelocie satelity oraz stacji odbiorczej.
+Tekst INFO(\fIX\fP,\fIY\fP) w schemacie zostanie zast±piony odpowiednimi informacjami dla danego obrazu \fIX\fP (numeracja zgodna z poprzedni± - od 1).
+\fIY\fP to numer informacji, która ma zostaæ wstawiona. (wybrana z poni¿szej listy). Nie mo¿na u¿ywaæ odstêpów w tych wyra¿eniach np. INFO(2, 4) nie zostanie zast±piony.  Dla Y=4 lub Y=44 mo¿e zostaæ u¿yty opcjonalny argument, który okre¶la format daty/czasu (np. INFO(1,44,%Y/%m/%d %H:%M %Z)).
+.nf
+     Y  Opis
+     0  szeroko¶æ obrazu (w pikselach)
+     1  wysoko¶æ obrazu (w pikselach)
+     2  szeroko¶æ miniatury (w pikselach)
+     3  wysoko¶æ miniatury (w pikselach)
+     4  czas przelotu (UTC)
+    44  czas przelotu (lokalny)
+     5  nazwa satelity (np. NOAA 17)
+     6  maksymalna elewacja dla przelotu
+     7  azymut podczas osi±gniêcia maksymalnej elewacji (E lub W)
+     8  kierunek przelotu (northbound, southbound)
+     9  u¿yte przekszta³cenie (np. MSA)
+    10  pozycja stacji
+    11  szeroko¶æ geograficzna stacji
+    12  d³ugo¶æ geograficzna stacji
+    12  czêstotliwo¶æ w MHz (np. 137.62)
+    14  nazwa u¿ytej projekcji (np. Mercator)
+    15  channel A (e.g. 3)
+    16  channel B (e.g. 4)
+    17  language (e.g. en)
+    18  character set (e.g. iso-8859-1)
+    19  wersja programu WxtoImg
+    20  receiver (e.g. R2FX)
+    21  pass duration (e.g. 14:59)
+    22  solar elevation (e.g. 23.3)
+    23  antenna type
+    24  szacunkowy czas publikacji (UTC)
+    64  szacunkowy czas publikacji (lokalny)
+.fi
+.PP
+Aby wy¶wietliæ informacje o przysz³ych przelotach satelitów na stronie internetowej mo¿esz u¿yæ X=-1,-2...  z X=-1 oznaczaj±cym nastêpny przelot. Y=24 oraz Y=64 stosuj± siê tylko do przysz³ych przelotów satelitów. Opcjonalny argument formatu daty/czasu mo¿e zostaæ u¿yty zarówno z Y=24 i Y=64 jak i z Y=4 oraz Y=44.
+.PP
+Ka¿da z nastêpuj±cych opcji mo¿e zostaæ dodana do okre¶lenia formatu czasu:
+.nf
+    %a  skrót nazwy dnia tygodnia
+    %A  nazwa dnia tygodnia
+    %b  skrót nazwy miesi±ca
+    %B  nazwa miesi±ca
+    %d  dzieñ miesi±ca
+    %H  godzina w formacie 24-godzinnym
+    %I  godzina w formacie 12-godzinnym
+    %j  dzieñ roku (001-365)
+    %m  miesi±c jako liczba
+    %M  minuta
+    %p  okre¶lenie pory - am/pm
+    %S  sekunda
+    %y  rok bez stulecia
+    %Y  rok ze stuleciem
+    %Z  strefa czasowa lub jej skrót
+    %%  znak '%'
+.nf
+.PP
+.PP
+.PP
+.SH Prawa autorskie
+Copyright (c) 2001-2004 Central North Publishing Limited.  All rights reserved.
+.PP
+Polskie t³umaczenie: Jakub  SQ2WB

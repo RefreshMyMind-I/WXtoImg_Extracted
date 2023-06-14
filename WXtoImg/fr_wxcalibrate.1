@@ -1,0 +1,75 @@
+.\" -*- nroff -*-
+.\" Copyright (c) 2001-2004 Central North Publishing Limited.
+.\" All rights reserved.
+.\"
+.\".hla fr
+.TH Calibrage "versión 2.7.3"
+.SH Calibrage
+\fIWXtoImg\fP doit être installé et calibré pour obtenir des résultats utiles. L'installation exige le paramétrage de l'emplacement de votre récepteur et le téléchargement des derniers képlers. L'étalonnage doit être exécuté dans deux secteurs: le premier est le volume de l'enregistrement, le deuxième doit correspondre à la fréquence d'échantillonnage de la carte-son. Vous avez besoin d'exécuter ce calibrage seulement une fois.
+.PP
+.B Avant que vous ne commenciez
+.br
+Connectez simplement la sortie audio de votre récepteur à l'entrée \fIligne \fPde votre carte-son en utilisant un câble approprié. Si vous avez un récepteur ICOM PCR1000, assurez vous que vous suivez les instructions dans le manuel pour le réglage du cavalier interne pour la sortie du niveau ligne.
+.PP
+Les satellites à orbite polaire transmettent sur 137.30, 137.40, 137.50, 137.62, 137.80, ou 137.85 (50kHz ou NFM) et chaque satellite passera deux fois par jour (environ distant de 12 heures) aux mêmes heures environ chaque jour. Vous devez pouvoir attraper auparavant l'élévation inférieure du passage et obtenir ensuite le meilleur passage environ 1h30 à 2 heures après le premier passage. Notez que tous les satellites ne transmettront pas à certaines périodes de l'année, dû à la proximité d'autres satellites. Un bon passage dure approximativement 15 minutes. Quand WXtoImg est en mode enregistrement il indiquera le passage suivant du satellite et la fréquence sur laquelle il transmettra.
+.PP
+.B Réglage de l'emplacement de la station au sol
+.br
+Choisissez \fIGround Station Location \fPdu menu \fIOptions\fP. Entrez le nom de votre ville et pays. Si la ville dans laquelle vous vivez a une population d'environ 100,000 alors cliquez sur le bouton \fILookup Lat/Lon\fP. Si vous êtes en mer, vous pouvez entrer n'importe quelle description que vous aimez pour la ville et le pays.
+.PP
+Si vous ne pourriez pas consulter la latitude et la longitude dans la liste, alors vous devrez entrer la latitude et la longitude de votre emplacement. La latitude et la longitude doivent être entrées en degrés et fractions de degrés (par exemple 52.500, non pas 52:30, ni 52:30:00, ni 52:30.00). Le nord et l'est doivent être entrés comme nombres positifs, le sud et l'ouest doivent être entrés comme nombres négatifs. Si vous ne savez pas la latitude et la longitude de votre emplacement, essayez donc la plus proche grande ville (population > 100,000) et clic sur \fILookup Lat/Lon\fP.. Si vous ne savez pas l'altitude entrer juste 0.0.
+.PP
+.B Mise à jour des képlers
+.br
+Connectez vous à Internet, choisissez ensuite\fI Update Keplers \fPdu menu\fI File \fP(pour télécharger les derniers éléments orbitaux pour les satellites météorologiques). Si vous n'avez pas de connexion Internet, alors ignorez ceci et à la place choisissez \fI Disable Map Overlay \fPdu menu\fI Options\fP.
+.PP
+\fBVérification des passages du satellite à votre emplacement\fP
+.br
+Choisissez \fISatellite Pass List \fPdu menu \fIFile\fP. Ceci montrera une liste de passages de satellites pour votre emplacement au temps actuel jusqu'à 7 jours en avant. On donne l'heure dans les deux temps local et UTC.
+.PP
+.B Ajustement du volume
+.br
+Placez la commande de volume de votre récepteur à un niveau modérément bas, choisissez ensuite\fI Mixer Control...\fPdu menu\fI File\fP. Configurez le mixer pour prendre la source d'entrée du récepteur qui est branchée (normalement à l'entrée ligne), mettez les niveaux Enregistrement (cassette) et PCM (Linux seulement) entièrement en haut. Mettez le niveau ligne (Linux et Windows) au milieu. Placez igain (Linux seulement) au milieu. Il vaut mieux pour commencer que le volume et le niveau ligne soient trop bas que trop haut.
+.PP
+Sous Windows 95 vous devriez choisir sur les commandes du mixer \fIPropriétés\fP du menu \fIOptions\fP et vérifier que le bouton \fIEnregistrement\fP est choisi ainsi que la commande du volume \fILigne, \fPavant que vous ne puissiez ajuster les commandes comme ci-dessus.
+.PP
+Sélectionnez \fIRecord\fP du menu \fIFile\fP et cliquez sur \fIRecord.
+.PP
+Attendez l'arrivée d'un satellite. WXtoImg indiquera quand on attend le satellite (en UTC) et sur quelle fréquence le satellite transmet dans la barre de statut.
+.PP
+WXtoImg enregistrera le passage -- pendant le passage on peut montrer l'image, ne vous préoccupez pas de la brillance ou de l'obscurité ou d'autres problèmes étant donné que l'image consiste seulement de lignes diagonales. En mettant le volume n'employez jamais cette image comme guide -- employez uniquement le réglage volume discuté ci-dessous. Après que l'enregistrement soit complet WXtoImg construira une carte et décodera l'image. Il fait ceci pour produire les meilleurs résultats possibles.
+.PP
+Évitez d'employer la barre de défilement pour faire défiler l'image en enregistrant -- ceci peut provoquer une image fendue.
+.PP
+Le volume du programme (vol) sera montré quand le signal est enregistré. Si un satellite passe au-dessus la ligne de statut indique que le programme attend toujours la porteuse ou attend le signal, alors le volume du récepteur peut être trop bas ou le niveau d'entrée du mixer peut être mis trop bas. Augmentez lentement l'un ou l'autre ou tous les deux jusqu'à ce que la ligne de statut indique que le signal est enregistré. Le volume sur le récepteur (ou le niveau d'enregistrement sur le mixer) peut alors être facilement ajusté pendant le passage pour mettre un vol entre 50.0 et 75.0. Si le récepteur n'a aucun réglage de volume ou le réglage de volume n'affecte pas la sortie du speaker, ajustez alors les réglages du mixer (enregistrement, igain, ou le niveau de l'entrée ligne) jusqu'à ce que le vol montré soit entre 50.0 et 75.0 environ. La barre de volume doit être verte quand un signal est reçu, rouge ou jaune indique que le volume est trop haut ou trop bas.
+.PP
+L'image sera re-décodée après que le satellite soit passé. Quand le décodage est complet, le volume global sera montré du côté droit de la ligne de statut au-dessous de l'image.
+.PP
+Le volume global doit être entre 40.0 et 85.0 environ. Plus haut les valeurs numériques de vol (par exemple 90.2) indiquent que le volume doit être diminué, baisser les valeurs numériques de vol (par exemple 24.7) indiquent que le volume doit être augmenté.
+.PP
+Si le volume est mis trop haut, la coupure arrivera et le détail sera perdu dans les secteurs blancs de l'image. Si le volume est mis trop bas, certains détails seront perdus partout dans l'image.
+.PP
+À part ce calibrage, évitez d'ajuster le volume quand le satellite passe au-dessus. Le réglage du volume pendant un passage produira des bandes dans l'image finale et affectera défavorablement l'étalonnage de température.
+.PP
+Ajustez le volume convenablement et répétez.
+.PP
+.B Ajustement de la fréquence d'échantillonnage (Correction de pente)
+.br
+Commencez en choisissant \fIDisable PLL \fPdu menu \fIOptions\fP. La mise hors service du PLL nous permet plus précisément de régler le taux d'échantillonnage.
+.PP
+Ensuite, choisissez un enregistrement à décoder. Sélectionnez \fIOpen Audio File... \fPdu menu \fIFile\fP et choisissez un enregistrement. L'idéal serait d'avoir un enregistrement d'un satellite NOAA (deux images côte à côte) sur un haut passage aérien.
+.PP
+Maintenant, attendez l'image pour qu'elle soit décodée et montrée. L'image sera pliée légèrement de haut en bas en raison de l'effet doppler. C'est normal quand le PLL est mis hors service.
+.PP
+Choisissez \fISlant Correction...\fP du menu \fIImage\fP. Faîtes défiler le haut de l'image et cliquez sur un bord vertical dans l'image. Continuez de maintenir le bouton et traîner une ligne en bas de l'image. Permettez à l'image de défiler avant que vous n'alliez jusqu'en bas de l'image. Assurez vous que l'indicateur est sur le même bord sur lequel vous avez à l'origine cliqué dessus ensuite libérez le bouton.
+.PP
+Une boîte de dialogue surgira et montrera le taux d'échantillonnage suggéré. Le programme WxtoImg peut estimer le taux d'échantillonnage pour tous les autres satellites. Vous devez choisir l'option \fIEstimate and set sampling frequencies for all satellites\fP si elle n'est pas déjà choisie, alors cliquez sur \fISet\fP.
+.PP
+Désélectionner \fIDisable PLL \fP du menu \fIOptions\fP. L'image sera re-décodée et doit être complètement droite. S'il elle est pliée, vérifiez que vous avez non sélectionner \fIDisablePLL \fPdans\fI \fPle menu\fI Options\fP. Si c'est incliné, essayez donc de répéter le processus, prêtant une attention particulière à ces instructions.
+.PP
+Tandis que les options sont (par défaut) sauvegardées en sortant du programme, vous devriez vérifier que les fréquences d'échantillonnage sont sauvegardées en choisissant \fISave Options \fPdu menu\fI Options\fP.
+.PP
+Vous pouvez obtenir des résultats améliorés en répétant ce processus pour d'autres types de satellites, mais en choisissant l'option \fISet only XXX sampling frequency\fP. Ceci devra probablement être fait pour les satellites Meteosat et Okean car ceux-ci exigent des réglages très précis.
+.SH Droit d'auteur
+Droit d'auteur (c) 2001-2004 Central North Publishing Limited. Tous droits réservés.
+

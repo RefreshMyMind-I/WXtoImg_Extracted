@@ -1,0 +1,1064 @@
+.\" -*- nroff -*-
+.\" Copyright (c) 2001-2004 Central North Publishing Limited.
+.\" All rights reserved.
+.\"
+.\" Polskie t³umaczenie: Jakub SQ2WB 
+.\"
+.TH WXTOIMG GUI  "version 2.7.3"
+.SH Wprowadzenie
+.I WXtoImg 
+jest w pe³ni zautomatyzowanym programem rejestruj±cym, dekoduj±cym i  umo¿liwiaj±cym edycjê oraz przegl±danie obrazów meteorologicznych z satelitów.
+.PP
+.I WxtoImg
+obs³uguje mapy - nak³adki, zaawansowane przekszta³cenia kolorystyczne, obrazy trójwymiarowe, animacje, obrazy z kilku przelotów, transformacje projekcji geograficznych (np. Mercator), nak³adki tekstowe, automatyczne tworzenie stron internetowych, wy¶wietlanie temperatury, kontrolê nad wieloma odbiornikami satelitarnymi, komunikacyjnymi oraz skanerami.
+.PP
+.I WXtoImg
+konwertuje pliki d¼wiêkowe z nagranymi sygna³ami satelitów meteorologicznych na obrazy, które te sygna³y reprezentuj±.
+.PP
+.I WXtoImg
+udostêpnia tak¿e du¿± liczbê przekszta³ceñ oraz filtrów kontrastu dla satelitarnych zdjêæ meteorologicznych.
+.PP
+.I WXtoImg
+obs³uguje zarówno transmisjê APT z satelitów oko³obiegunowych jak i transmisje WEFAX z satelitów geostacjonarnych.
+.PP
+.I WXtoImg
+dysponuje du¿± liczb± funkcji obróbki graficznej, jednak mo¿e zachowaæ obraz w "czystej" nie zmienionej formie. Zachowuje pliki w formatach JPEG, PNG, BMP,
+PBM (PGM/PPM/PNM), lub AVI.
+.PP
+.I WXtoImg
+podejmuje próby stworzenia jak najlepszych obrazów z sygna³u pochodz±cego z odbiorników, które maj± zbyt w±skie pasmo przenoszenia po¶redniej czêstotliwo¶ci (w±ski, standardowy FM). Istniej± jednak ograniczenia, które nie pozwalaj± uzyskaæ w ten sposób najlepszej jako¶ci obrazów.
+.PP
+.I WXtoImg
+u¿ywa danych telemetrycznych umieszczonych na obrazach NOAA APT do dok³adnego skalibrowania obrazu oraz zrównania nierównomiernego poziomu sygna³u dla ca³ego przelotu. Dane telemetryczne s± tak¿e u¿ywane do dok³adnego odczytu temperatury.
+.PP
+Na obrazach z satelitów GOES skala szaro¶ci jest u¿ywana do skorygowania nieliniowo¶ci w sile sygna³u oraz normalizowaniu obrazu. Jest tak¿e przeprowadzana dok³adna kalibracja temperaturowa.
+.PP
+Dla innych satelitów skala szaro¶ci oraz czarno-bia³e paski s± u¿ywane do skorygowania poziomu wzmocnienia.
+.PP
+.I WXtoImg
+u¿ywa techniki PLL do skorygowania przesuniêcia dopplera oraz tworzenia prostych obrazów z satelitów NOAA nawet, gdy pojawiaj± siê zak³ócenia lub sygna³ jest niskiej jako¶ci.
+.SH Linie informacyjne
+Na szczycie okna WXtoImg, powy¿ej obrazu, znajduje siê kilka zak³adek (Image, Audio Files, Raw Images, and Saved Images). Rozszerzona wersja posiada dodatkowo zak³adki Composites i Animations.
+Pierwsza zak³adka (Image - obraz) to g³ówne miejsce, w którym wy¶wietlane s± obrazy. Jest to miejsce, w którym pojawi± siê zdekodowane obrazy oraz gdzie bêdzie pokazywany obraz dekodowany podczas trwania przelotu.
+Wszystkie kolejne zak³adki pokazuj± miniaturki plików d¼wiêkowych, nieprzetworzonych obrazów (RAW), zapisanych obrazów lub animacji stworzonych przez WXtoImg. Nale¿y zauwa¿yæ, ¿e obrazy lub pliki d¼wiêkowe skopiowane rêcznie do folderów nie zostan± pokazane na zak³adkach.
+Klikniêcie na miniaturce otworzy powi±zany plik. Daje to ³atwy dostêp do obrazów z dnia (lub tygodnia, miesi±ca).
+
+Pod zak³adkami znajduje siê linia informacyjna. Kiedy obraz zostaje wy¶wietlony linia informacyjna wy¶wietla nazwê satelity, jego typ oraz datê i czas rozpoczêcia odbioru obrazu. Dla obrazów APT tak¿e kierunek podró¿y, maksymaln± elewacjê (w stopniach nad horyzontem), azymut do satelity, kiedy znajdzie siê on w najwy¿szym punkcie oraz numery dwóch transmitowanych kana³ów. Dla obrazów WEFAX w nawiasach zostanie podana zawarto¶æ cyfrowego nag³ówka (je¶li jest dostêpny).
+.PP
+Na dole okna WXtoImg, poni¿ej obrazu, znajduj± siê dwie linie statusu. Dolna linia oznajmia o procesie jaki ma miejsce, przekazuje ostrze¿enia oraz porady. Górna linia jest podzielona na wiele sekcji. Sekcja z lewej pokazuje aktualny czas UTC.
+Na prawo znajduje siê sekcja informacji, która przewa¿nie pokazuje azymut oraz elewacjê do satelity w miejscu obrazu, które wskazujemy, podczas nagrywania sekcja ta pokazuje jednak informacje na temat po³o¿enia satelity. W specjalnych wypadkach mog± tu siê pojawiaæ inne informacje.
+Kolejna sekcja wy¶wietla pozycjê geograficzn± (WGS84) miejsca wskazywanego kursorem na obrazie z na³o¿on± nak³adk±.
+Dalej wy¶wietlana jest odleg³o¶æ wskazanego punktu od stacji.
+Nastêpna sekcja wskazuje temperaturê. Jednostki (C, F lub K) mog± zostaæ ustawione po wybraniu \fIGUI Options\fP w menu \fIOptions\fP.
+Na prawo od temperatury pokazywana jest liczba sekund jaka minê³a od pocz±tku nagrania. Jest to u¿yteczna informacja w po³±czeniu z funkcj± \fIPartial Decode\fP. Dziêki niej mo¿emy okre¶liæ czê¶æ sygna³u, któr± chcemy zdekodowaæ.
+Opcja przy prawej krawêdzi pokazuje g³o¶no¶æ nagrywanego sygna³u. G³o¶no¶æ odbiornika powinna zostaæ dostosowana do poziomu przy którym ta warto¶æ bêdzie zawieraæ siê miêdzy 50 a 75 (zobacz \fIRequired Calibration\fP w menu \fIHelp\fP aby uzyskaæ wiêcej informacji).
+.SH Menu File 
+Menu to jest u¿ywane do wybrania pliku, który ma zostaæ zdekodowany oraz do zapisywania obrazów pod wybran± nazw±. Uruchamia tak¿e proces dekodowania.
+.TP 10
+\fIOpen Audio File...\fP (otwórz plik d¼wiêkowy)
+Wybiera plik d¼wiêkowy z zarejestrowanym przelotem do dekodowania. Proces dekodowania rozpocznie siê automatycznie chyba, ¿e zaznaczono opcjê \fBDisable auto-decode\fP w menu \fBOptions\fP.
+Pliki d¼wiêkowe mog± byæ w formacie AU (\fI.au\fP), WAVE (\fI.wav\fP), lub surowym RAW (8-bit unsigned lub 16-bit signed LSB). Pliki musz± byæ kodowane liniowo (PCM) z 11025 próbkami na sekundê.
+Dozwolone s± pliki 8, 16 oraz 32 bitowe, ale nagrania 8 bitowe NIE zawieraj± wystarczaj±cej ilo¶ci informacji do zdekodowania obrazu w pe³nej jako¶ci. Preferowanie jest próbkowanie 16 bitowe.
+Powinno siê u¿ywaæ plików monofonicznych. Je¶li zostanie wybrany plik stereo tylko jeden kana³ zostanie zdekodowany. Pliki mono s± mocno preferowane.
+.TP 10
+\fIOpen Raw Image...\fP (Otwórzy "surowy" obraz)
+.I WXtoImg
+mo¿e odczytywaæ "surowe" obrazy zachowane w formatach \fIPNG\fP, \fIPBM\fP (PGM), \fINOA\fP. U¿ywanie takich, nie przetworzonych obrazów przy¶piesza obróbkê w porównaniu z plikami d¼wiêkowymi.
+Proces dekodowania rozpocznie siê automatycznie chyba, ¿e zaznaczono opcjê \fBDisable auto-decode\fP w menu \fBOptions\fP.
+Niektóre programy tworz± pliki \fINOA\fP. Powinny to byæ 16 bitowe obrazy w skali szaro¶ci. Obrazy te nie mog± byæ odczytywane je¶li zosta³y zapisane w formatach \fIJPEG\fP, \fIBMP\fP, \fIAVI\fP.
+Zauwa¿, ¿e opcje \fBResync\fP, \fBInterpolate\fP oraz \fBDisable PLL\fP nie maj± znaczenia przy otwieraniu plików obrazu. Ustawienia te maj± znaczenie tylko przy dekodowaniu plików d¼wiêkowych.
+.TP 10
+\fISave Image as...\fP (Zapisz obraz jako...)
+Zapisuje aktualnie wy¶wietlany obraz. Format pliku graficznego (JPEG, PNG, BMP, PNM, AVI) zostaje okre¶lony poprzez rozszerzenie. Je¶li nie dopiszesz rozszerzenia, lub u¿yjesz nieobs³ugiwane obraz zostanie zapisany w formacie domy¶lnym ustawionym poprzez \fBImage and Movie Options...\fP z menu \fBOptions\fP.
+.TP 10
+\fIComposite Image to...\fP (Komponuj obraz do...)
+Zapisuje aktualnie wy¶wietlany obraz do podanego pliku. Je¶li plik ju¿ istnieje i zdecydujesz siê na jego nadpisanie zostanie on uaktualniony tylko w tych miejscach, gdzie nowy obraz zawiera poprawne dane.
+Poprzez wybranie projekcji innej ni¿ \fINormal\fP oraz ustawienie opcji \fIProjection Options\fP na du¿y obszar mo¿liwe jest stworzenie du¿ego obrazu z kilku przelotów.
+.TP 10
+\fISave Raw Image as...\fP (Zapisz "surowy" obraz do...)
+Zapisuje obraz w 16 bitowym formacie PNG. "Surowe" obrazy mog± zostaæ otworzone poprze opcjê \fBOpen Raw Image...\fP i przetwarzane z wykorzystaniem wielu przekszta³ceñ.
+Zauwa¿, ¿e opcje \fBResync\fP, \fBInterpolate\fP oraz \fBDisable PLL\fP nie maj± znaczenia przy otwieraniu plików obrazu. Ustawienia te maj± znaczenie tylko przy dekodowaniu plików d¼wiêkowych.
+.TP 10
+\fIMixer Control...\fP (Mikser)
+Uruchamia mikser u¿ywany do wybrania ¼ród³a d¼wiêku oraz dostosowania g³o¶no¶ci nagrywania. 
+.TP 10
+\fIRecord...\fP (Rejestruj)
+Rozpoczyna proces rejestracji sygna³u z satelity. Umo¿liwia podjêcie decyzji czy sygna³ ma zostaæ zdekodowany oraz czy nale¿y zachowaæ tak¿e pliki audio oraz "surowe" obrazy.
+Umo¿liwia tak¿e stworzenie serii obrazów lub filmów. Ustawienia te s± tak¿e wykorzystywane przez funkcjê \fIAuto Process\fP.
+Poprzez klikniêcie przycisku ustawieñ mo¿emy zdecydowaæ, które przekszta³cenia maj± zostaæ wygenerowane oraz jakie nazwy zostan± nadane plikom.
+Przeczytaj sekcjê \fIFilename Template\fP aby dowiedzieæ siê wiêcej o okre¶laniu nazw plików.
+Metoda okre¶lenia momentu rozpoczêcia nagrywania (blokada lub czas przelotu) oraz inne aspekty rejestracji (np. liczba bitów na próbkê) mog± zostaæ ustawione poprzez \fBRecording Options...\fP w menu \fBOptions\fP.
+Proces rejestracji (oraz dekodowania) jest powtarzany dla kolejnych przelotów, a¿ do momentu wybrania \fBStop\fP z menu \fBFile\fP.
+
+Ustawienie \fIMinimum percent of projection filled\fP, czyli minimalny udzia³ procentowy dobrych pikseli w obrazie (dostêpne tylko w rozszerzonej wersji) zapobiega zapisywaniu obrazów z mniejsz± ilo¶ci± u¿ytecznych informacji.
+Zauwa¿, ¿e obrazy nigdy nie s± zapisywane je¶li nie zawieraj± ¿adnego wype³nionego piksela. Warto¶ci± domy¶ln± opcji jest 0.1%.
+
+Ustawienie \fIMinimum solar elevation for visible images\fP czyli minimalna elewacja S³oñca nad horyzontem dla obrazów z zakresie widzialnym (dostêpne tylko w rozszerzonej wersji) zapobiega zapisywaniu obrazów widzialnych je¶li elewacja S³oñca w ¶rodku przelotu jest mniejsza. Domy¶ln± warto¶ci± jest 0 co oznacza ka¿dorazowe zapisanie obrazu.
+.TP 20
+          \fIRecord only (show image if enabled)\fP (tylko rejestruj (poka¿ obraz podczas nagrywania je¶li uaktywniono odpowiedni± opcjê))
+Rejestruje przelot w pliku d¼wiêkowym zgodnie z ustawieniami w \fIRecording Options\fP w menu \fIOptions\fP.  Nie przetworzony obraz bêdzie wy¶wietlany podczas nagrywania je¶li zaznaczono tak± opcjê w oknie \fIGUI Options\fP. Nie rozpoczyna procesu dekodowania. Nagrania mog± zostaæ zdekodowane przy u¿yciu funkcji \fIOpen Audio File\fP z menu \fIFile\fP.
+.TP 20
+          \fIRecord and auto process\fP  (Rejestruj i dekoduj)
+Rejestruje przelot w pliku d¼wiêkowym zgodnie z ustawieniami w \fIRecording Options\fP w menu \fIOptions\fP nastêpnie rozpoczyna proces dekodowania. Obraz zostaje wy¶wietlony zgodnie z ustawieniami \fIEnhancements\fP, \fIOptions\fP oraz \fIProjection\fP. Wiele opcji mo¿e zostaæ ustawionych w celu stworzenia zbioru obrazów, klatek animacji, kompozycji z obrazów oraz stron internetowych (wiêcej informacji o tworzeniu stron internetowych w FAQ). Opcje te s± tak¿e wykorzystywane przez funkcjê \fIAuto Process\fP z menu \fIFile\fP.
+Plik d¼wiêkowy oraz plik mapy (generowany dla mapy-nak³adki) mo¿e zostaæ usuniêty po zakoñczeniu przetwarzania.
+.TP 10
+\fIDecode\fP (Dekoduj)
+Rozpoczyna proces dekodowania. Dekodowanie jest uruchamiane automatycznie po wybraniu pliku, kierunku podró¿y satelity lub przekszta³cenia. Automatyczne dekodowanie mo¿e zostaæ wy³±czone poprzez zaznaczenie \fBDisable auto-decode\fP w menu \fBOptions\fP. Rêczne rozpoczêcie dekodowania jest wymagane po zmianie ustawieñ w menu \fBOptions\fP lub zmianie satelity.
+.TP 10
+\fIPartial Decode\fP (Czê¶ciowe dekodowanie)
+Podobne do \fBDecode\fP, ale umo¿liwia zdecydowanie, od której sekundy nagrania rozpocz±æ dekodowanie oraz ile sekund nagrania ma zostaæ przetworzone.
+Jest to u¿yteczna opcja je¶li nagranie zawiera sygna³y dwóch lub wiêkszej ilo¶ci satelitów. Umo¿liwia tak¿e przyciêcie obrazu poprzez zdekodowanie tylko warto¶ciowej czê¶ci.
+Je¶li tworzenie nak³adki jest w³±czone funkcja ta jest bardziej u¿yteczna od komendy \fICrop\fP z menu \fIImage\fP poniewa¿ mapa zostanie poprawnie pozycjonowana.
+.TP 10
+\fIAuto Process\fP (Automatyczne przetwarzanie)
+Buduje oraz zapisuje obrazy, dodaje klatki do animacji zgodnie z ustawieniami w \fIRecord\fP z menu \fIFile\fP. 
+Zauwa¿, ¿e automatyczne przetwarzanie nie usunie plików d¼wiêkowych lub map nawet je¶li zaznaczona jest odpowiednia opcja.
+.TP 10
+\fIView Image...\fP (Obejrzyj obraz)
+Umo¿liwia obejrzenie obrazów. Otwiera pliki w formatach PNG, JPEG, BMP or PBM (PGM/PPM). Funkcje umieszczone w menu \fIImage\fP mog± zostaæ u¿yte do edycji obrazów. 
+Przekszta³cenia nie maj± w tym przypadku zastosowania (nale¿y u¿yæ funkcji \fIOpen Raw Image\fP ).
+Obrazy mog± zostaæ zachowane poprzez okno dialogowe \fISave Image as...\fP z menu \fIFile\fP. Dodatkowo obrazy stworzone przez WXtoImg mog± zostaæ przekszta³cone geometrycznie z u¿yciem funkcji z menu \fIProjection\fP.
+.TP 10
+\fIView Movie...\fP (Obejrzyj animacjê)
+Umo¿liwia odtworzenie animacji AVI. W Windows wymagany jest DirectX (wersja 8.0 lub wy¿sza, u¿ytkownicy XP maj± zainstalowany DirectX), dostêpny do pobrania z:
+.nf
+    http://www.microsoft.com/directx
+.fi
+.PP
+Pod *NIX zainstalowany musi byæ xanim, dostêpny pod adresem:
+.nf
+    http://xanim.va.pubnix.com/home.html
+.fi
+.PP
+.TP 10
+\fIUpdate Web Page\fP
+Rêcznie publikuje (poprzez FTP) obecn± stronê internetow±. Funkcja ta nie dodaje nowego obrazu do strony. Jest ona u¿yteczne gdy opcja automatycznego publikowania - \fIAutomatically FTP as images are added\fP jest wy³±czona w oknie \fIWeb Page Settings\fP dostêpnym poprzez \fIRecord\fP z menu \fIFile\fP. Mo¿e ona zostaæ u¿yta do rêcznego uaktualnienia strony z u¿yciem po³±czenia telefonicznego dial-up.
+.TP 10
+\fIImage Properties...\fP (W³a¶ciwo¶ci obrazu)
+Wy¶wietla okno z w³a¶ciwo¶ciami wy¶wietlanego obrazu.
+.TP 10
+\fIProcessing Info...\fP (Informacje o przetwarzaniu)
+Wy¶wietla okno zawieraj±ce wszystkie wiadomo¶ci jakie zosta³y pokazane w linii statusu podczas przetwarzania sygna³u.
+.TP 10
+\fIUpdate Keplers\fP (Zaktualizuj dane keplerowskie)
+U¿ywa po³±czenia internetowego do pobrania aktualnych danych keplerowskich dla satelitów meteorologicznych (z serwera www.celestrak.com). Dane te powinny byæ uaktualniane regularnie, aby istnia³a mo¿liwo¶æ u¿ywania map-nak³adek oraz rejestrowania opartego na przewidywaniu przelotu.
+Nieaktualne dane s± przyczyn± przesuniêcia nak³adek wzglêdem obrazu.
+Zalecane jest cotygodniowe uaktualnianie danych je¶li u¿ywane s± nak³adki. Dla bardzo dok³adnego pozycjonowania nak³adki zalecane s± codzienne uaktualnienia.
+.TP 10
+\fIPass List...\fP (Lista przelotów)
+Wy¶wietla listê przelotów satelitów meteorologicznych. Lista obejmuje okres ustawiany w polu \fILook ahead\fP, oraz tylko te satelity, które zosta³y zaznaczone w oknie dialogowym wywo³ywanym przez \fIActive APT Satellites\fP z menu \fIOptions\fP.  Wp³yw maj± tak¿e opcje z \fIRecording Options\fP.
+.TP 10
+\fIClear\fP (Wyczy¶æ)
+Zamyka ka¿dy otwarty obraz oraz czy¶ci ekran.
+Zauwa¿ ¿e WXtoImg nie bêdzie monitowa³ o zapisanie obrazu poniewa¿ mo¿e on zostaæ ponownie stworzony z wykorzystanie zapisanego pliku d¼wiêkowego lub "surowego" obrazu.
+.TP 10
+\fIStop\fP
+Zatrzymuje rejestrowanie lub dekodowanie (zanim proces zostanie zakoñczony)
+.TP 10
+\fIExit\fP,\fIQuit\fP
+Zamyka program. W MacOS X znajdziesz polecenie \fIQuit\fP w menu \fIWXtoImg\fP.
+.SH Menu Direction
+Menu to jest dostêpne tylko w trybie eksperta (Options -> GUI Options).
+Umo¿liwia ustawienie kierunku z którego nadlatuje satelita oko³obiegunowy dla danego przelotu. Ustawienie jest ignorowane przy przetwarzaniu sygna³ów WEFAX oraz je¶li w³±czone jest tworzenie nak³adek (w oknie dialogowym \fIGUI Options\fP wywo³ywanym poprzez menu \fIOptions\fP) poniewa¿ program sam okre¶li kierunek.
+.TP 15
+\fIAutodetect\fP (Wybierz automatycznie)
+U¿ywa daty oraz czasu ostatniej modyfikacji pliku do okre¶lenia kierunku. Funkcja nie zadzia³a poprawnie je¶li strefa czasowa nie jest ustawiona poprawnie, zegar nie jest ustawiony dok³adnie lub je¶li stacja znajduje siê bardzo blisko bieguna. Wymagana jest tak¿e zgodno¶æ czasu z w³a¶ciwo¶ci pliku z czasem przelotu.
+.TP 15
+\fISouth->North\fP (Po³udnie - Pó³noc)
+Przelot zd±¿aj±cy na pó³noc (wstêpuj±cy). Satelita porusza siê z po³udnia na pó³noc. W tym przypadku obraz jest obracany o 180 stopni. Kana³y widzialny i podczerwony obrazów APT z satelitów NOAA s± zamieniane tak, aby by³y po tych samych stronach.
+.TP 15
+\fINorth->South\fP (Pó³noc - Po³udnie)
+Przelot zd±¿aj±cy na po³udnie (zstêpuj±cy). Satelita porusza siê z pó³nocy na po³udnie.
+.SH Menu Satellite
+Umo¿liwia wybór dekodowanego satelity (opcje dostêpne s± tylko w trybie eksperta).
+W normalnych przypadkach dla satelitów oko³obiegunowych funkcja autodetekcji powinna byæ ustawiona na \fIAutodetect\fP lub \fIAutodetect APT only\fP. Dla satelitów geostacjonarnych wybierz \fIGOES\fP lub \fIMeteosat\fP.
+Powinni¶my wybraæ okre¶lonego satelitê tylko w szczególnych przypadkach np. podczas bardzo niskich przelotów, gdy poziom zak³óceñ jest du¿y lub gdy nie dysponujemy kontrol± nad odbiornikiem i dlatego podczas nak³adaj±cych siê przelotów zosta³ zarejestrowany sygna³ z innego satelity ni¿ okre¶lony przez program. Problemy mog± wyst±piæ podczas u¿ywania plików stworzonych przez inne programy, które ¼le zapisa³y datê lub czas rejestracji sygna³u.
+.PP
+Je¶li u¿ywamy przekszta³cenia temperatury powierzchni morza (sea surface temperature enhancement) musimy dok³adnie wskazaæ satelitê, aby pomiar temperatury by³ dok³adny
+.TP 10
+\fIAutodetect APT \fP (Wykryj automatycznie satelity APT)
+Autodetekcja przyjmuje, ¿e sygna³ pochodzi z satelitów oko³obiegunowych APT, co przy¶piesza wykrywanie poprzez pominiêcie wykrywania sygna³ów WEFAX.
+.TP 10
+.TP 10
+\fIMeteosat\fP
+Dekoduje sygna³y WEFAX z satelitów geostacjonarnych Meteosat.
+.TP 10
+\fIGOES\fP
+Dekoduje sygna³y WEFAX z nale¿±cych do NOAA satelitów geostacjonarnych GOES.
+.TP 10
+\fIGMS\fP
+Dekoduje sygna³y WEFAX z satelitów geostacjonarnych GMS.
+.PP
+Dalsze opcje s± dostêpne tylko w trybie eksperta.
+.TP 10
+\fIAutodetect\fP (Autodetekcja)
+Funkcja ta próbuje okre¶liæ satelitê poprzez analizê sygna³u oraz otrzymanego obrazu.
+.TP 10
+\fIAutodetect WEFAX\fP 
+Autodetekcja sprawdza tylko obecno¶æ sygna³u WEFAX z satelitów geostacjonarnych.
+Poprawia to wykrywanie s³abego sygna³u.
+O wiele lepiej jest wybraæ okre¶lonego satelitê geostacjonarnego (Meteosat, GOES) zamiast tej opcji.
+.TP 10
+\fINOAA\fP
+Dekoduje obrazy APT z satelitów oko³obiegunowych NOAA.
+.TP 10
+\fIMeteor (series 3)\fP
+Dekoduje obrazy APT rosyjskich satelitów oko³obiegunowych Meteor z serii 3.
+.TP 10
+\fIMeteor (series 2)\fP
+Dekoduje obrazy APT rosyjskich satelitów oko³obiegunowych Meteor z serii 2.
+.TP 10
+\fIResurs\fP
+Dekoduje obrazy APT rosyjskich satelitów oko³obiegunowych Resurs.
+.TP 10
+\fIOkean\fP
+Dekoduje obrazy APT rosyjskich satelitów oko³obiegunowych Okean.
+.TP 10
+\fISICH\fP
+Dekoduje obrazy APT rosyjskich satelitów oko³obiegunowych SICH.
+.TP 10
+\fINOAA 12\fP
+Dekoduje obrazy APT z satelitów oko³obiegunowych NOAA ustawiaj±c kalibracjê temperatury oceanu w³a¶ciw± dla NOAA 12.
+Je¶li przekszta³cenia temperatury powierzchni morza nie jest u¿ywane ta opcja jest równowa¿na z \fINOAA\fP.
+.TP 10
+\fINOAA 14\fP
+Dekoduje obrazy APT z satelitów oko³obiegunowych NOAA ustawiaj±c kalibracjê temperatury oceanu w³a¶ciw± dla NOAA 14.
+Je¶li przekszta³cenia temperatury powierzchni morza nie jest u¿ywane ta opcja jest równowa¿na z \fINOAA\fP.
+.TP 10
+\fINOAA 15\fP
+Dekoduje obrazy APT z satelitów oko³obiegunowych NOAA ustawiaj±c kalibracjê temperatury oceanu w³a¶ciw± dla NOAA 15.
+Je¶li przekszta³cenia temperatury powierzchni morza nie jest u¿ywane ta opcja jest równowa¿na z \fINOAA\fP.
+.TP 10
+\fINOAA 16\fP
+Dekoduje obrazy APT z satelitów oko³obiegunowych NOAA ustawiaj±c kalibracjê temperatury oceanu w³a¶ciw± dla NOAA 16.
+Je¶li przekszta³cenia temperatury powierzchni morza nie jest u¿ywane ta opcja jest równowa¿na z \fINOAA\fP.
+.TP 10
+\fINOAA 17\fP
+Dekoduje obrazy APT z satelitów oko³obiegunowych NOAA ustawiaj±c kalibracjê temperatury oceanu w³a¶ciw± dla NOAA 17.
+Je¶li przekszta³cenia temperatury powierzchni morza nie jest u¿ywane ta opcja jest równowa¿na z \fINOAA\fP.
+.SH Menu Enhancements
+Menu \fBEnhancements\fP udostêpnia szeroki wybór przekszta³ceñ nadawanych przy dekodowaniu sygna³ów (np. kolorowanie). Wybór przekszta³cenia rozpocznie automatycznie dekodowanie sygna³u, chyba ¿e zaznaczono \fBDisable auto-decode\fP
+w menu \fBOptions\fP.
+.TP 15
+\fINormal\fP (Normalne)
+Tworzy normalny obraz, koryguj±c jasno¶æ, wyostrzaj±c oraz usuwaj±c drobne zak³ócenia.
+.TP 15
+\fIPristine\fP (Niezmieniony)
+Tworzy obraz w niezmienionym stanie. U¿ywane do stworzenia obrazów poddawanych dalszej obróbce w innych programach. Obrazy te nie s± przekszta³cane, jednak w odró¿nieniu od "surowych" obrazów zostaj± poddane normalizacji, aby efekt najlepiej reprezentowa³ oryginalne dane.
+Nie jest podejmowana próba normalizacji temperaturowej obrazów w podczerwieni. Wy³±czane s±: korekcja jasno¶ci, wyostrzanie, obrót, usuwanie zak³óceñ oraz inne przekszta³cenia.
+.TP 15
+\fIContrast enhance\fP
+Wykonywane jest rozszerzenie kontrastu zgodnie z ustawieniem \fIContrast\fP z menu \fIOptions\fP.
+.TP 15
+\fIBlack and white\fP
+Tworzy czarno-bia³y obraz ustawiaj±c ciemniejsze piksele czarnymi, a ja¶niejsze bia³ymi.
+.TP 15
+\fIContrast enhance (NOAA ch A only)\fP (Zwiêkszenie kontrastu (tylko kana³ A))
+Kontrast jest zwiêkszany tylko na kanale A obrazu z satelity NOAA zgodnie z ustawieniami \fIContrast\fP z menu \fIOptions\fP. Drugi kana³ nie jest wy¶wietlany.
+.TP 15
+\fIContrast enhance (NOAA ch B only)\fP (Zwiêkszenie kontrastu (tylko kana³ B))
+Kontrast jest zwiêkszany tylko na kanale B obrazu z satelity NOAA zgodnie z ustawieniami \fIContrast\fP z menu \fIOptions\fP. Drugi kana³ nie jest wy¶wietlany.
+.TP 15
+\fIMCIR map colour IR (NOAA)\fP 
+Koloruje obrazy z kana³u 4, podczerwonego u¿ywaj±c mapy do okre¶lenia obszarów morza oraz l±du. Wysokie chmury s± przedstawiane jako bia³e, ni¿sze chmury s± szare. L±d jest kolorowany w taki sposób, ¿e chmury s± ja¶niejsze, ale rozró¿nienie pomiêdzy l±dem/morzem a niskimi chmurami mo¿e byæ trudne. Ciemniejsze regiony oznaczaj± cieplejsze regiony.
+.TP 15
+\fIMSA Multispectral analysis (NOAA-# 2-4)\fP (Analiza wielokana³owa)
+U¿ywaj±c kana³ów 2 oraz 4 z obrazów NOAA przewiduje, które regiony najprawdopodobniej przedstawiaj± chmury, l±d lub morze.
+Tworzy jaskrawe, kolorowane obrazy.
+Kilka opcji z okna \fIImage and Movie Options...\fP w menu \fIOptions\fP wp³ywa na dzia³anie tego przekszta³cenia
+Przekszta³cenie to nie u¿ywa ¿adnej palety kolorów ani nie jest normalizowane temperaturowo.
+.TP 15
+\fIMSA with precipitation (NOAA-# 2-4)\fP (MSA z opadami atmosferycznymi)
+Podobne do analizy wielokana³owej, ale wysokie, zimne chmury s± kolorowane w sposób dostêpny w przekszta³ceniu NO tak, aby przedstawiæ prawdopodobieñstwo oraz intensywno¶æ opadów atmosferycznych.
+.TP 15
+\fIMSA anaglyph false 3-D (NOAA-# 2-4)\fP
+Podobne do analizy wielokana³owej, ale tworzy obrazy trójwymiarowe (3-D anaglyph), które musz± byæ ogl±dane z wykorzystaniem czerwono-niebieskich okularów. Przekszta³cenie jest dostêpne po rozszerzeniu wersji programu.
+.TP 15
+\fIHVCT false-colour (NOAA 2-4)\fP
+Podobne do HVC (poni¿ej), ale z niebiesk± wod± i kolorami bardziej wyró¿niaj±cymi temperaturê l±du.
+\fIHVCT false-colour z opadami(NOAA 2-4)\fP
+Podobne do HVCT false colour, ale wysokie szczyty chmur s± kolorowane podobnie jak w przekszta³ceniu NO, aby daæ wskazanie przybli¿onego prawdopodobieñstwa oraz intensywno¶ci opadów.
+.TP 15
+\fIHVC false-colour (NOAA 2-4)\fP
+Tworzy kolorowane obrazy z sygna³ów APT satelitów NOAA z wykorzystaniem temperatury oraz modelu kolorów HVC.
+U¿ywa temperatury odczytanej z 4 kana³u do okre¶lenia barwy oraz jasno¶ci (znormalizowanego histogramowo) kana³u A (lub kana³u B je¶li zaznaczono \fIUse other sensor\fP). 
+Model kolorów HVC próbuje uczyniæ ró¿ne kolory o tej samej warto¶ci widoczne dla oka jako tak samo jasne oraz odleg³o¶ci pomiêdzy kolorami dla ka¿dego stopnia podobnymi. Jasne obszary pozostaj± nienasycone.
+.TP 15
+\fISea surface temp (NOAA-# 3-4)\fP (Temperatura powierzchni morza)
+Tworzy kolorowany obraz z sygna³ów NOAA APT bazuj±c na temperaturze powierzchni morza. Temperatura ta jest okre¶lana z kana³ów 3 oraz 4.
+Nie jest podejmowana próba rozró¿nienia chmur, l±du oraz morza. Przekszta³cenie mo¿e byæ niepoprawne z powodu obecno¶ci cienkich lub ma³ych chmur oraz zak³óceñ w ocenianych pikselach.
+Kalibracja temperatury morza wymaga znajomo¶ci nie tylko typu, ale tak¿e modelu satelity. Powiniene¶ wiêc wybraæ satelitê z menu \fBSatellite\fP.
+Temperatura pokazywana na pasku statusu bêdzie wyznaczona algorytmem temperatury morza tylko je¶li bêdzie u¿yte to przekszta³cenie.
+.TP 15
+\fIDaylight sea surface temp (NOAA)\fP (Dzienna temperatura morza)
+Tworzy kolorowane obrazy z sygna³ów NOAA APT bazuj±c na temperaturze powierzchni morza. Okre¶la temperaturê przy u¿yciu 4 kana³u podczerwieni. Jest to mniej dok³adna metoda od \fISea surface temp (NOAA-# 3-4)\fP, która u¿ywa kana³ów 3 i 4, ale mo¿liwe jest stworzenie obrazu, gdy kana³ 3 jest niedostêpny.
+Nie jest podejmowana próba rozró¿nienia l±du od morza. Przekszta³cenie mo¿e byæ niepoprawne z powodu obecno¶ci cienkich lub ma³ych chmur oraz zak³óceñ w ocenianych pikselach. 
+.TP 15
+\fIVegetation (NOAA 1-2)\fP (Wegetacja)
+Wymaga rzadko nadawanych razem kana³ów 1 oraz 2 (u¿ywanych podczas fazy testów). tworzony jest wska¼nik wegetacji, a za jego pomoc± l±d jest kolorowany na zielono, woda na niebiesko, a chmury na bia³o. Przekszta³cenie to nie u¿ywa ¿adnej palety kolorów ani nie jest normalizowane temperaturowo.
+.TP 15
+\fIAnaglyph false 3-D (GOES/NOAA)\fP
+Tworzy obrazy trójwymiarowe poprzez szacowanie wysoko¶ci chmur. Obrazy musz± byæ ogl±dane z wykorzystaniem czerwono-niebieskich okularów. 
+Przekszta³cenie jest dostêpne po rozszerzeniu wersji programu.
+.TP 15
+\fIColour anaglyph false 3-D (NOAA)\fP
+Tworzy kolorowane obrazy trójwymiarowe bazuj±c na przekszta³ceniu HVCT z wykorzystaniem dwóch kana³ów (lub tylko jednego kana³u B je¶li zaznaczono \fIUse other sensor\fP). Obrazy musz± byæ ogl±dane z wykorzystaniem czerwono-niebieskich okularów.
+Przekszta³cenie jest dostêpne po rozszerzeniu wersji programu.
+.TP 15
+\fIClass enhancement (NOAA)\fP
+Nienadzorowana klasyfikacja obrazów NOAA APT z u¿yciem iteracyjnego, klastrowego algorytmu optymalizuj±cego. U¿ywa punktów ¶rodkowych 27 pocz±tkowych klastrów, rozmieszczonych równomiernie wzd³u¿ dwuwymiarowych przek±tnych. Klasyfikacja jest u¿ywana do kolorowania normalizowanego histogramowo kana³u A.
+.TP 15
+\fINO colour IR enhancement (GOES/NOAA)\fP
+Przekszta³cenie kolorów NOAA zwiêkszaj±ce kontrast kana³u podczerwieni. Znacz±co zwiêksza kontrast w ciemniejszych rejonach l±du/morza oraz koloruje chmury. Pozwala na zobaczenie szczegó³ów na l±dzie i morzu oraz dostarcza bardzo czytelnego wskazania temperatury górnych warstw chmur.
+Przekszta³cenie jest normalizowane temperaturowo.
+.TP 15
+\fIZA general IR enhancement (GOES/NOAA)\fP
+Przekszta³cenie podczerwieni ogólnego przeznaczenia NOAA. Zwiêksza kontrast poprzez nasycenie obszarów bardzo niskiej oraz bardzo wysokiej temperatury, gdzie znajduje siê przewa¿nie ma³o szczegó³ów.
+Przekszta³cenie jest normalizowane temperaturowo.
+.TP 15
+\fIMB thunderstorm (GOES/NOAA)\fP (Burza)
+Przekszta³cenie NOAA dla górnych warstw zimnych chmur. U¿yteczne do zobrazowania najwiêkszych opadów w obszarach burzowych.
+Przekszta³cenie jest normalizowane temperaturowo.
+.TP 15
+\fIMD warm season MB (GOES/NOAA)\fP (Ciep³y sezon)
+Przekszta³cenie NOAA - modyfikacja popularnego przekszta³cenia MB ogólnego przeznaczenia. Jest ono przeznaczone do u¿ytku podczas ciep³ego sezonu oraz zapewnia ulepszone obrazowanie wewn±trz skali szaro¶ci poprzez przedstawienie konwekcji ciep³ych, górnych warstw. Dodatkowe ulepszenie polega na lepszym nakre¶leniu ciep³ych, niskich chmur (30 do 7C). Warstwa ¶rodkowa chmur jest troszkê szersza ni¿ w przekszta³ceniu MB a zwiêkszenie szczegó³owo¶ci jest minimalizowane. W innym przypadku by³oby to zwyk³em przekszta³cenie MB. 
+Przekszta³cenie jest normalizowane temperaturowo.
+.TP 15
+\fIBD hurricane (GOES/NOAA)\fP (Huragan)
+Przekszta³cenie huraganu NOAA. Wyró¿nia temperatury w oku oraz ¶cianie systemu huraganowego, które s± zwi±zane z intensywno¶ci± zjawiska.
+Przekszta³cenie jest normalizowane temperaturowo.
+.TP 15
+\fICC enhancement (GOES/NOAA)\fP
+Przekszta³cenie NOAA CC. Przekszta³cenie jest normalizowane temperaturowo.
+Opcja jest dostêpna tylko w trybie eksperta.
+.TP 15
+\fIEC enhancement (GOES/NOAA)\fP
+Przekszta³cenie krzyw± NOAA EC.  Przekszta³cenie jest normalizowane temperaturowo.
+Opcja jest dostêpna tylko w trybie eksperta.
+.TP 15
+\fIHE western US (GOES/NOAA)\fP (Zachodnie USA)
+Przekszta³cenie NOAA HE jest g³ównie u¿ywane przez biura meteorologiczne z zachodnich stanów. Przedstawia szerok± gamê typów chmur, ale jest trochê skomplikowane przez co pocz±tkowo mo¿e byæ trudne do odczytania. Wyró¿nia chmury
+niskiego oraz ¶redniego poziomu wzd³u¿ wybrze¿a Pacyfiku w dwóch ró¿nych odcieniach szaro¶ci. Poziom zamarzania mo¿e zostaæ ³atwo odczytany co przydaje siê w lotnictwie. 
+Stopniowanie co 5 stopni (do -60C) pokazuje bardzo zimne szczyty chmur powi±zanych z huraganami oraz systemami frontalnymi. Dwa dodatkowe segmenty "powtórzonej szaro¶ci" definiuj± temperatury szczytów chmur zimniejszych ni¿ -60C.
+Przekszta³cenie jest normalizowane temperaturowo.
+Opcja jest dostêpna tylko w trybie eksperta.
+.TP 15
+\fIHF new western US (GOES/NOAA)\fP (nowe dla zachodnich stanów)
+Najbardziej aktualne przekszta³cenie z serii "H". Jest u¿ywane g³ównie przez biura meteorologiczne z zachodnich stanów. 
+Przedstawia szerok± gamê typów chmur, ale jest trochê skomplikowane przez co pocz±tkowo mo¿e byæ trudne do odczytania. Wyró¿nia chmury niskiego oraz ¶redniego poziomu wzd³u¿ wybrze¿a Pacyfiku w dwóch ró¿nych odcieniach szaro¶ci. Poziom zamarzania mo¿e zostaæ ³atwo odczytany co przydaje siê w lotnictwie. Stopniowanie co 5 stopni (do -60C) pokazuje bardzo zimne szczyty chmur powi±zanych z huraganami oraz systemami frontalnymi. Dwa dodatkowe segmenty "powtórzonej szaro¶ci" definiuj± temperatury szczytów chmur zimniejszych ni¿ -60C.
+Przekszta³cenie jest normalizowane temperaturowo.
+Opcja jest dostêpna tylko w trybie eksperta.
+.TP 15
+\fIJF simple sea surface/cold cloud (GOES/NOAA)\fP (proste powierzchni morza/zimnych chmur)
+Przekszta³cenie NOAA JF jest po³±czeniem schematów u¿ywanych do wyró¿nienia temperatury powierzchni morza oraz zimnych szczytów chmur powi±zanych z huraganami. Jest prostsze do odczytania od kolejnego przekszta³cenia JJ.
+Najzimniejsze partie (mniej ni¿ -33C) s± prawie identyczne z MB. Maksymalne wyró¿nienie jest uzyskiwane przy ciep³ej (25 do 10C) powierzchni morza oraz ciep³ych chmurach w obszarach tropikalnych oraz subtropikalnych. 
+Przekszta³cenie jest normalizowane temperaturowo.
+Opcja jest dostêpna tylko w trybie eksperta.
+.TP 15
+\fIJJ sea surface/cold cloud (GOES/NOAA)\fP (powierznia morza/zimne chmury)
+Przekszta³cenie NOAA JJ jest po³±czeniem schematów u¿ywanych do wyró¿nienia temperatury powierzchni morza oraz zimnych szczytów chmur powi±zanych z huraganami. Maksymalne wyró¿nienie jest uzyskiwane przy ciep³ej (23 do 0C) powierzchni morza. Obecno¶æ poziomu zamarzania ma du¿e znaczenie dla lotnictwa.
+Wiele gwa³townych obszarów wyró¿nienia dostarcza znacznego poziom detali w obszarach szczytów zimnych chmur. Trudno jest jednak okre¶liæ faktyczn± temperaturê z jak±kolwiek dok³adno¶ci±.
+Przekszta³cenie jest normalizowane temperaturowo.
+Opcja jest dostêpna tylko w trybie eksperta.
+.TP 15
+\fILC fog/low cloud/precip (GOES)\fP (mg³a/niskie chmury/opady)
+
+Przekszta³cenie NOAA LC u¿ywane dla obrazów GOES z kana³u podczerwieni 3.9 mikrona (CH2). Dostarcza maksymalne wyró¿nienie zakresu temperatur (36 do -9C), gdzie przewa¿nie pojawiaj± siê mg³y oraz niskie chmury. Inny wyró¿niany przedzia³ to -10 do -29C, czyli region tworzenia siê opadów w systemach ¶redniej wysoko¶ci. Poniewa¿ kana³ 2 jest wra¿liwy na "gor±ce punkty" przy temperaturach pomiêdzy 68 a 50C nastêpuje gwa³towna zmiana koloru na bia³y, co umo¿liwia obrazowanie po¿arów. Bardzo niskie temperatury (-30 do -67C) nie s± wyró¿niane w zwi±zku z obecnymi w tym przedziale du¿ymi szumami instrumentów.
+Przekszta³cenie jest normalizowane temperaturowo.
+.TP 15
+\fITA enhancement (GOES/NOAA)\fP
+Przekszta³cenie NOAA krzyw± TA. Przekszta³cenie jest normalizowane temperaturowo. 
+Opcja jest dostêpna tylko w trybie eksperta.
+.TP 15
+\fIWV water vapour (GOES)\fP (para wodna)
+Zmodyfikowana krzywa WV jest u¿ywana dla kana³u 6.7 mikrona (CH3) satelitów GOES.  Wyró¿niany jest tylko przedzia³ temperatur pomiêdzy -5 a -90C. Temperatury ni¿sze od -90 s± przedstawiane jako bia³e, a wy¿sze od -5 jako czarne.
+Przekszta³cenie jest normalizowane temperaturowo.
+(zobacz tak¿e \fIWV-old\fP.)
+Opcja jest dostêpna tylko w trybie eksperta.
+.TP 15
+\fIWV-old water vapour (GOES/NOAA)\fP (para wodna)
+Oryginalna krzywa NOAA WV jest u¿ywana dla kana³u 6.7 mikrona (CH3) satelitów GOES. Wyró¿niany jest tylko przedzia³ temperatur pomiêdzy -10 a -60C. Jest to najwa¿niejszy przedzia³, poniewa¿ pokazuje ¶rodkowe oraz wy¿sze uk³ady wilgoci troposferycznej, które s± powi±zane ze znacz±cymi zjawiskami: strumieniami, klinami, suchymi oknami oraz strefami deformacji.
+Temperatury ni¿sze od -60 s± przedstawiane jako bia³e, a wy¿sze od -10 jako czarne. Warunki te s± bardzo rzadkie i wystêpuj± g³ównie w subtropikach.
+Przekszta³cenie jest normalizowane temperaturowo.
+(zobacz tak¿e \fIWV-old\fP.)
+Opcja jest dostêpna tylko w trybie eksperta.
+.SH Menu Options
+Umo¿liwia ustawienie wielu opcji. Ustawieniem domy¶lnym dla wszystkich opcji w³±czony/wy³±czony jest wy³±czony. Dla ustawieñ Gamma, Sharpen, and Despeckle ustawienie domy¶lne jest oznaczane gwiazdk±. Plus oznacza alternatywne, polecane ustawienie.
+.TP 10
+\fIDisable auto-decode\fP
+Zaznaczona opcja zapobiega automatycznemu rozpoczêciu dekowania po wybraniu przekszta³cenia lub kierunku przelotu.
+.TP 10
+\fIInterpolate\fP
+Zaznaczona opcja w³±cza interpolacje oraz nadmiarowe próbkowanie (obraz wiêkszy o 50%). Tworzy wiêksze obrazy poprzez zwiêkszenie czêsto¶ci próbkowania w poziomie oraz interpolacjê w pionie. W przypadku obrazów NOAA kana³ B jest przesuwany w dó³ w celu skompensowania ruchu satelity oraz metody próbkowania. Poprawia to jako¶æ przekszta³ceñ wielokana³owych.
+.TP 10
+\fIUse other sensor\fP
+Opcja ta powoduje u¿ycie drugiego kana³u (B zamiast normalnie A) dla informacji widocznej w obrazach wielokana³owych. Opcja dzia³a dla przekszta³ceñ wielokana³owych, HVC, HVCT oraz 3D.
+.TP 10
+\fIDisable PLL\fP
+Zaznaczona opcja wy³±cza pêtlê synchronizacji fazowej u¿ywan± do zapewnienia prostego obrazu pomimo obecno¶ci efektu dopplera oraz ma³ych niestabilno¶ci czêstotliwo¶ci próbkowania. Przy rejestrowaniu sygna³u ze skanerów pomocne jest wy³±czenie PLL dla satelitów Meteor oraz Resurs, które mog± sprawiaæ problemy je¶li odbierany sygna³ jest s³abej jako¶ci.
+.TP 10
+\fIShow All\fP
+Zaznaczona opcja wy³±cza normalnie przeprowadzane przyciêcie obrazu o zaszumione czê¶ci.
+.TP 10
+\fICrop telemetry\fP
+Zaznaczona opcja usuwa (wycina) paski telemetryczne z boków obrazów.
+.TP 10
+\fIResync\fP
+Zaznaczona opcja pozwala na próby ponownego synchronizowania obrazu. \fIWXtoImg\fP próbuje skorygowaæ brakuj±cy czas w przetwarzanym pliku d¼wiêkowym, ale przy niskim stosunku sygna³u do szumu lub sygnale pochodz±cym ze zbyt w±sko pracuj±cego odbiornika mo¿e prowadziæ do bardzo poszarpanych obrazów.
+Opcja ta spowoduje problemy w du¿ym procencie dobrych sygna³ów, wiêc nie powinna byæ w³±czona domy¶lnie.
+Opcja jest dostêpna tylko w trybie eksperta (Options -> GUI Options).
+.TP 10
+\fIDisable Map Overlay\fP
+Zaznaczona opcja wy³±cza tworzenie map-nak³adek. Tworzenie dopasowanych nak³adek wymaga aktualnych danych keplerowskich. Zobacz funkcjê \fIUpdate Keplers\fP z menu \fIFile\fP oraz \fIEnable map and projection support\fP w oknie \fIGUI Options\fP.
+.TP 10
+\fINoise filter\fP
+W³±cza filtr szumu (5x5, zachowuj±cy brzegi). Powoduje znacz±ce rozmycie obrazu.
+Opcja jest dostêpna tylko w trybie eksperta (Options -> GUI Options).
+.TP 10
+\fIContrast\fP
+Umo¿liwia wybór metody zwiêkszenia kontrastu stosowanej przy przekszta³ceniach HVC, HVCT, MSA oraz wegetacji.
+Wybór jest mo¿liwy dopiero po zarejestrowaniu programu.
+Wybierz \fIHist Eq\fP dla normalizacji histogramowej, \fILinear (constant)\fP dla sta³ego zwiêkszania liniowego, które ró¿ni siê tylko dla sensorów satelity, \fILinear (variable)\fP dla zmiennego zwiêkszania liniowego, które jest dostosowane do ka¿dego obrazu oraz \fINone\fP dla wy³±czenie zwiêkszania kontrastu.
+Je¶li obrazy bêd± pó¼niej porównywane lub komponowane nale¿y u¿yæ opcji \fILinear (constant)\fP lub \fINone\fP, jako ¿e wtedy wszystkie obrazy zostan± potraktowane w ten sam sposób.
+.TP 10
+\fIIllumination Compensation\fP
+Kompensacja o¶wietlenia poprawia nierówne o¶wietlenie powierzchni ziemi poprzez s³oñce. Pe³na kompensacja poprawia ka¿dy obraz, wiêc powierzchnia ziemi wydaje siê byæ o¶wietlana dok³adnie nad g³ow±. Opcje \fIHigh\fP, \fIMed\fP oraz \fILow\fP wprowadzaj± tylko trochê poprawek. Wybór \fINone\fP oznacza brak kompensacji.
+Zauwa¿ ¿e wraz z niskimi elewacjami s³oñca kompensacja mo¿e bardzo zwiêkszyæ efekty obecno¶ci szumu w sygnale.
+.TP 10
+\fIGamma\fP
+Korekcja jasno¶ci, która jest wykorzystywana domy¶lnie. Typowo zawiera siê pomiêdzy 1.00 a 2.50. Warto¶æ 1.00 wy³±cza korekcjê jasno¶ci. Dla wy¶wietlania na komputerach PC jasno¶æ 1.40 wydaje siê byæ optymaln±, dla systemów Macintosh -1.15, SGI - 1.10, NeXT - 1.00, a dla stacji Sun oraz innych polecana jest warto¶æ 1.40.
+.TP 10
+\fISharpen\fP
+Wspó³czynnik wyostrzenia. Domy¶la warto¶æ to 0.6.
+.TP 10
+\fIDespeckle\fP
+Ustawia próg usuwania drobnych zak³óceñ. Je¶li w³±czony jest tryb eksperta (Options -> GUI Options) mo¿liwe jest wybranie progu filtrowania. Wybór \fBnone\fP wy³±cza funkcjê. Próg to liczba standardowych dewiacji, o któr± piksel mo¿e siê ró¿niæ od ¶redniej innych pikseli w obszarze 5x5 otaczaj±cym ten piksel, zanim zostanie uznany za szum i zast±piony poprzez warto¶æ ¶redni±.
+Zwiêkszanie progu zmniejsza liczbê pikseli, które zostan± zast±pione, zmniejszenie progu zwiêksza t± liczbê. Warto¶ci± domy¶ln± jest \fBnone\fP.
+Próg o warto¶ci 2.0 jest u¿ywany po zaznaczeniu \fIDespeckle\fP poza trybem eksperta. Jest to warto¶æ polecana w wiêkszo¶ci przypadków. Ni¿sze warto¶ci spowoduj± znaczne rozmycie obrazu.
+.TP 10
+\fIActive APT Satellites\fP
+Umo¿liwia wybór aktywnych satelitów APT. Kontroluje, które mapy dla satelity mog± byæ tworzone oraz które satelity bêd± rejestrowane je¶li zaznaczona jest opcja \fIRecord only when selected active APT satellites are overhead\fP (rejestruj tylko je¶li wybrany satelita jest ponad horyzontem) w oknie dialogowym \fIRecording Options\fP.
+Umo¿liwia tak¿e ustawienie czêstotliwo¶ci satelity, który zostanie ustawiony je¶li automatyczna kontrola odbiornika jest w³±czona. Mo¿e zostaæ ustawiony tak¿e priorytet kana³ów. Je¶li pojawiaj± siê dwa (lub wiêcej) satelity zostanie zarejestrowany ten z najwy¿szym ustawionym priorytetem (1 - najwy¿szy, 5 - najni¿szy). Je¶li satelity maj± ten sam priorytet zostanie zarejestrowany satelita, którego przelot ma najwy¿sz± maksymaln± elewacjê. Priorytety nie maj± znaczenia je¶li nie w³±czono kontroli odbiornika w \fIRecording Options\fP.
+Je¶li opcja \fIUpdate this table when updating Keplers\fP jest zaznaczona program wybierze aktywne satelity oraz ustawi ich czêstotliwo¶ci (priorytety nie zostan± zmienione) zgodnie z informacj± o aktualnie pracuj±cych satelitach pobran± z Internetu.
+W³±czenie trybu eksperta (\fIExpert mode\fP w \fIGUI Options\fP) umo¿liwi wybór nie dzia³aj±cych ju¿ satelitów.
+.TP 10
+\fIGround Station Location\fP
+Umo¿liwia ustawienie pozycji stacji odbiorczej. Szeroko¶æ i d³ugo¶æ geograficzna powinna byæ wprowadzona w stopniach oraz czê¶ciach stopnia, a nie w stopniach, minutach i sekundach (pó³noc i wschód jako liczby dodatnie, po³udnie i zachód jako ujemne).
+Je¶li wpiszesz nazwê du¿ego miasta (100 000 mieszkañców) oraz kraj bêdziesz móg³ odszukaæ pozycjê w bazie poprzez klikniêcie przycisku \fILookup Lat/Lon\fP.
+Opcje te s± niezbêdne do wy¶wietlania nak³adek oraz je¶li u¿ywana jest opcja 
+\fIRecord only when active APT satellites are overhead\fP w oknie dialogowym \fIRecording Options\fP.
+Ewentualnie mo¿esz zaznaczyæ opcjê \fIUse GPS\fP oraz ustawiæ port szeregowy, do którego jest pod³±czony odbiornik GPS. Konieczne jest tak¿e ustawienie szybko¶ci transmisji (ustaw 4800 je¶li nie jeste¶ pewny). W odbiorniku GPS nale¿y ustawiæ dane wyj¶ciowe w formacie NMEA, je¶li nie jest to ustawienie domy¶lne. Zajrzyj do instrukcji odbiornika w razie problemów.
+Je¶li opcja ta jest zaznaczona WXtoImg bêdzie w razie potrzeby sprawdza³ pozycjê geograficzn±. Opcja GPS jest dostêpna tylko w zarejestrowanej wersji.
+Mo¿esz tak¿e ustawiæ dok³adnie zegar komputera z u¿yciem odbiornika GPS poprzez zaznaczenie \fISet PC clock from GPS\fP. Aby by³o to mo¿liwe odbiornik musi obs³ugiwaæ format NMEA 2.x.
+Zauwa¿, ¿e WXtoImg u¿ywa WGS84 dla pozycji, projekcji oraz map-nak³adek. W systemie Linux bêdziesz musia³ wykonaæ \fI/usr/sbin/visudo\fP jako root oraz dodaæ liniê na koñcu podobn± do \fImyusername   myhostname = NOPASSWD: /bin/date\fP. Gdzie myusername jest nazw± u¿ytkownika, a myhostname to nazwa hosta (wykonaj \fIhostname\fP, aby odczytaæ nazwê hosta).
+.TP 10
+\fIRecording Options...\fP
+Umo¿liwia wybór trybu nagrywania oraz opcji z tym zwi±zanych.
+.TP 20
+          \fIRecord using WEFAX start/stop tones\fP
+Zaznaczona  opcja powoduje rozpoczêcie nagrywania po rozpoznaniu w sygnale WEFAX z satelitów geostacjonarnych tonu startu. Nagrywanie zostaje zatrzymane po odebraniu tonu stop.
+.TP 20
+          \fIRecord only when active APT satellites are overhead\fP
+Zaznaczona opcja powoduje rozpoczêcie nagrywania tylko je¶li wybrany w \fI Active APT Satellites\fP satelita jest nad horyzontem oraz przelot spe³nia warunki okre¶lone poni¿ej.
+Opcja ta jest w³±czona domy¶lnie, oraz jest najbardziej efektywn± poprzez minimalne u¿ycie procesora dziêki zlikwidowaniu potrzeby sprawdzania sygna³u.
+.TP 20
+          \fIwith maximum elevation above (degrees)\fP
+Tylko przeloty, podczas których maksymalna elewacja jest równa lub wiêksza od ustawionej warto¶ci bêd± rejestrowane. 
+Warto¶ci± domy¶ln± jest 20.
+.TP 20
+          \fIrecord only when satellite is above (degrees)\fP
+Czeka, a¿ satelita osi±gnie ustawion± w stopniach elewacjê zanim rozpocznie rejestrowanie oraz zatrzymuje rejestracje, gdy satelita zejdzie poni¿ej tego poziomu.
+Warto¶ci± domy¶ln± jest 8.
+.TP 20
+          \fIand require\fP
+Umo¿liwa ustawienie dodatkowego warunku rozpoczêcia nagrywania. 
+Je¶li wybrano tutaj \fIsquelch break\fP program czeka na wzrost g³o¶no¶ci do okre¶lonego w \fIsound trigger level\fP poziomu.
+Opcja \fI2400Hz carrier\fP powoduje oczekiwanie na no¶n± 2400 Hz.
+Wybranie którejkolwiek opcji spowoduje u¿ycie warto¶ci \fIfinish recording delay\fP do zakoñczenia chyba, ¿e satelita zejdzie poni¿ej ustawionej elewacji.
+Je¶li wybrano \fInothing\fP rejestracja rozpocznie siê, gdy satelita znajdzie siê nad horyzontem bez wzglêdu na to czy obecny jest sygna³ z odbiornika.
+Opcj± domy¶ln± jest \fI2400Hz carrier\fP.
+.TP 20
+          \fIsoundcard\fP
+Umo¿liwia wybór karty d¼wiêkowej, która ma zostaæ u¿yta. W systemie Linux domy¶lna jest "/dev/dsp" (dodatkowe s± nazywane "/dev/dsp1", "/dev/dsp2", itd.).  
+W systemach DOS oraz Windows domy¶ln± kart± jest karta o numerze 0 (dodatkowe s± oznaczane kolejnymi numerami).
+.TP 20
+          \fIantenna type\fP
+Antenna type.
+.TP 20
+          \fIreceiver type\fP
+Ustawienia dotycz±ce kontroli odbiornika poprzez komputer. Ustaw \fInone\fP je¶li odbiornik nie mo¿e byæ obs³ugiwany komputerem lub nie jest pod³±czony.
+Kontrola wystêpuje tylko gdy wybrany jest tryb rejestracji: \fIRecord only when active APT satellites are overhead\fP.
+\fP Je¶li u¿ywasz PCR100 lub PCR1000 upewnij siê, ¿e ustawi³e¶ wyj¶cie odbiornika na poziom line out.\fP
+Odbiorniki Kenwood, AOR oraz AR3000, AR5000 s± obs³ugiwane przy prêdko¶ci 4800 bodów. 
+BC245XLT, BC895XLT and BC780XLT s± kontrolowane przy prêdko¶ci 9600 bodów. 
+IC-R8500 oraz IC-R10 u¿ywaj± 9600 bodów oraz adresów odpowiednio 4A i 52.
+U¿yj ustawienia \fIExternal\fP do uruchomienia zewnêtrznego programu (wxctl, wxctl.com, wxctl.exe, wxctl.bat) komunikuj±cego siê z odbiornikiem (WXtoImg przeka¿e nazwê satelity w pierwszym argumencie, czêstotliwo¶æ w drugim oraz port odbiornika w trzecim argumencie. Nazwa satelity bêdzie pustym ³añcuchem tekstowym oraz czêstotliwo¶æ bêdzie wynosiæ 0.00 je¶li ¿aden kana³ nie zostanie wybrany - generalnie program kontroli powinien wtedy wej¶æ w tryb skanowania, ale jest to zachowanie opcjonalne.
+.TP 20
+          \fIreceiver port\fP
+Port RS-232 u¿ywany do kontroli odbiornika. Je¶li kontrola nie jest przeprowadzana przez port szeregowy (a np. przez port gier) ustawienie jest ignorowane.
+.TP 20
+          \fIreceiver baud\fP
+Ustawienie prêdko¶ci transmisji z odbiornikiem. Je¶li prêdko¶æ nie mo¿e zostaæ zmieniona to ustawienie nie bêdzie mia³o efektu. U¿yj \fIreceiver
+default\fP aby wybraæ domy¶ln± prêdko¶æ dla danego odbiornika.
+.TP 10
+\fIMap Overlay Options...\fP
+Umo¿liwia wybór obiektów, które bêdzie zawiera³a mapa oraz jakie bêd± ich kolory.
+.TP 10
+\fIText Options...\fP
+Umo¿liwia wy¶wietlanie tekstu na obrazie.
+Opcja jest dostêpna tylko w zarejestrowanej wersji.
+W oknie dialogowym s± dwa pola tekstowe. Aby w³±czyæ wy¶wietlanie tekstu zaznacz opcjê \fIEnable\fP dla odpowiedniego pola.  
+Tekst mo¿e zawieraæ sekwencje procentowe, które zostan± zamienione zgodnie z opisem w sekcji \fIFilename Template\fP.
+Kolor oraz domy¶lny rozmiar mo¿e zostaæ wybrany z listy. 
+Pozycja tekstu na obrazie mo¿e zostaæ podana w polach X: i Y:.
+Warto¶ci± mo¿e byæ \fIc\fP dla centralnego umieszczenia, lub dodatnia liczba pikseli od lewej lub górnej krawêdzi. 
+Tekst mo¿e mieæ kilka lini. Linia mo¿e siê rozpoczynaæ wyra¿eniem: \fBfontsize=\fP\fI##\fP\fB,\fP, które zmieni czcionkê dla tej oraz nastêpnych linii.
+Pole TrueType umo¿liwia wybór alternatywnej czcionki TrueType. Pozostaw pole puste, aby u¿yæ do³±czonej czcionki. Alternatywna czcionka mo¿e zostaæ u¿yta w nak³adkach zawieraj±cych europejskie lub azjatyckie znaki diakrytyczne (dostarczona czcionka zawiera tylko znaki ASCII).
+.TP 10
+\fIProjection Options...\fP
+Umo¿liwia kontrolê projekcji geograficznych. Opcje s± dostêpne w zarejestrowanej wersji.
+.TP 20
+           \fIReference Latitude\fP
+Projekcja bêdzie wy¶rodkowana na tej szeroko¶ci geograficznej. U¿yj ujemnych warto¶ci dla szeroko¶ci po³udniowej, dodatnich dla pó³nocnej.
+Zauwa¿, ¿e nie oznacza to ¶rodka obrazu, ale ¶rodek projekcji (je¶li masz w±tpliwo¶ci pozostaw puste pole)
+.TP 20
+          \fIReference Longitude\fP
+Projekcja mapy bêdzie wy¶rodkowana na tej d³ugo¶ci geograficznej. U¿yj ujemnych warto¶ci dla d³ugo¶ci zachodniej, dodatnich dla wschodniej.
+Zauwa¿, ¿e nie oznacza to ¶rodka obrazu, ale ¶rodek projekcji (je¶li masz w±tpliwo¶ci pozostaw puste pole)
+.TP 20
+          \fINorth Boundary (latitude)\fP
+.TP 20
+          \fISouth Boundary (latitude)\fP
+Je¶li granice s± okre¶lone obraz wynikowy bêdzie przyciêty zgodnie z nimi i nie bêd± widoczne punkty spoza ograniczonego obszaru. Funkcja nie bêdzie aktywna je¶li nie wyznaczysz wszystkich czterech granic.
+U¿yj ujemnych warto¶ci dla po³udniowej pó³kuli. Warto¶ci musz± zawieraæ siê pomiêdzy -90.0 a 90.0.
+.TP 20
+          \fIWest Boundary (longitude)\fP
+.TP 20
+          \fIEast Boundary (longitude)\fP
+Je¶li granice s± okre¶lone obraz wynikowy bêdzie przyciêty zgodnie z nimi i nie bêd± widoczne punkty spoza ograniczonego obszaru. Funkcja nie bêdzie aktywna je¶li nie wyznaczysz wszystkich czterech granic.
+U¿yj ujemnych warto¶ci dla zachodu, dodatnich dla wschodu. Warto¶ci musz± zawieraæ siê pomiêdzy -180.0 a 180.0.
+.TP 20
+          \fIScale (norm 1.0)\fP
+Umo¿liwia ustawienie skali dla projekcji. Skala jest wzglêdn± warto¶ci±, która domy¶lnie wynosi 1.0. Warto¶æ 0.5 spowoduje utworzenie obrazu o po³owie d³ugo¶ci oraz po³owie szeroko¶ci orygina³u. Warto¶æ 2.0 da w rezultacie obraz o 2 razy wiêkszej szeroko¶ci i d³ugo¶ci. Nie ma najlepszej warto¶ci, ale wiêksze lub mniejsze skale bêd± pogarsza³y jako¶æ obrazu. Warto¶ci powy¿ej 50 s± interpretowane jako po¿±dana szeroko¶æ obrazu (WXtoImg wybierze odpowiedni± skalê). Warto¶ci pomiêdzy 2.0 a 50 nie s± obs³ugiwane.
+.TP 10
+\fISampling Frequency...\fP
+Opcja dostêpna tylko w trybie eksperta (Options -> GUI Options).
+Czêstotliwo¶æ próbkowania mo¿e zostaæ ustawiona pro¶ciej i bardziej dok³adnie poprzez funkcjê \fISlant Correction\fP z menu \fIImage\fP.
+Opcja umo¿liwia rêczn± modyfikacjê czêstotliwo¶æ próbkowania. Umo¿liwia poprawienie czêstotliwo¶ci próbkowania karty d¼wiêkowej, która ró¿ni siê znacznie (+/- 0.05%) dla poprawienia dzia³ania kodu PLL oraz zapewnienia prostych obrazów je¶li PLL jest niedostêpne.
+Spróbuj modyfikowaæ czêstotliwo¶æ z normalnej warto¶ci w krokach 5 próbek/sekundê, a¿ do uzyskania rozs±dnie pionowych obrazów. Nastêpnie zmieniaj warto¶æ o 1 lub 2 próbki/sekundê do momentu w którym zadzia³a PLL, a obraz stanie siê dok³adnie pionowy.
+Jest wymagane tylko jednorazowe ustawienie dla danej karty. 
+Ustawienie 0.0 oznacza, ¿e powinna zostaæ zastosowana domy¶lna czêstotliwo¶æ.
+.TP 10
+\fIImage and Movie Options...\fP
+U¿ywane do ustawienia wielu opcji zwi±zanych z obrazami oraz animacjami AVI.
+.TP 20
+          \fIDefault Image Format\fP
+Umo¿liwia ustawienie domy¶lnego formatu graficznego zapisywanych plików na jeden z listy: JPEG, PNG, BMP, PBM (PGM/PPM/PNM) lub AVI. Ustawienie jest u¿ywane podczas automatycznego przetwarzania.
+Normalnie \fIWXtoImg\fP u¿ywa rozszerzeñ plików (.png, .bmp, .pbm, .pgm, .ppm, .pnm, .jpg, .jpeg lub .avi) do okre¶lenia formatu wyj¶ciowego, kiedy zosta³a wybrana komenda \fBSave Image as...\fP z menu \fBFile\fP.
+Je¶li rozszerzenie nie jest wpisane lub wybrano nie obs³ugiwany format plik zostanie zapisany w formacie domy¶lnym.
+.TP 20
+          \fIDefault for Anaglyphs\fP
+Umo¿liwia ustawienie domy¶lnego formatu dla zachowywania obrazów stworzonych przez przekszta³cenia trójwymiarowe (3D anaglyph). Ustawienie jest u¿ywane podczas automatycznego przetwarzania.
+Zauwa¿, ¿e obrazy trójwymiarowe najlepiej jest zachowywaæ w formacie bezstratnym takim jak PNG, BMP lub PBM, poniewa¿ przekszta³cenie kolorów przez kompresjê JPEG mo¿e wp³yn±æ na wygl±d obrazu trójwymiarowego.
+.TP 20
+          \fIDefault for Composites\fP
+Umo¿liwia ustawienie domy¶lnego formatu dla zachowywania kompozycji. Ustawienie jest u¿ywane podczas automatycznego przetwarzania.
+Zauwa¿, ¿e kompozycje najlepiej jest zachowywaæ w formacie bezstratnym takim jak PNG, BMP lub PBM, poniewa¿ kolejne nadpisywanie pliku JPEG pogarsza znacz±co jako¶æ obrazu.
+.TP 20
+          \fIJPEG Quality\fP
+Ustawia jako¶æ obrazu JPEG. Domy¶ln± warto¶ci± jest 65. Poprawne warto¶ci zawieraj± siê pomiêdzy 0 a 100. 
+Zobacz tak¿e \fBImage Output Formats\fP.
+.TP 20
+          \fIHVC Palette\fP
+Umo¿liwia wybór palety dla przekszta³cenia HVC. Obs³ugiwane s± palety w formacie PNG, BMP oraz PPM
+Zobacz opis opcji -P w podrêczniku argumentów tekstowych wywo³ania wxtoimg. 
+Puste pole oznacza domy¶ln± paletê.
+.TP 20
+          \fISea Surface Temp Palette\fP
+Umo¿liwia wybór palety dla przekszta³cenia \fISea Surface Temperature\fP. Obs³ugiwane s± palety w formacie PNG, BMP oraz PPM
+Zobacz opis opcji -P w podrêczniku argumentów tekstowych wywo³ania wxtoimg. 
+Puste pole oznacza domy¶ln± paletê.
+.TP 20
+          \fIMSA Sea to Land\fP
+Regulacja analizy wielokana³owej l±d-morze. Domy¶ln± warto¶ci± jest 50.
+Warto¶æ powinna zostaæ zmniejszona je¶li l±d w analizie wielokana³owej jest zabarwiony na niebiesko, lub zwiêkszona je¶li woda jest zielona. Poprawne warto¶ci zawieraj± siê pomiêdzy 0 a 100.
+Opcja dostêpna tylko w trybie eksperta (Options -> GUI Options) i nie powinna zachodziæ potrzeba jej czêstej zmiany. 
+.TP 20
+          \fIMSA Land to Cloud\fP
+Regulacja analizy wielokana³owej l±d-chmury. Domy¶ln± warto¶ci± jest 50.
+Warto¶æ powinna zostaæ zmniejszona je¶li chmury w analizie wielokana³owej s± zabarwione na zielono, lub zwiêkszona je¶li l±d jest szary lub bia³y. Poprawne warto¶ci zawieraj± siê pomiêdzy 0 a 100.
+Opcja dostêpna tylko w trybie eksperta (Options -> GUI Options) i nie powinna zachodziæ potrzeba jej czêstej zmiany. 
+.TP 20
+          \fIAVI Codec\fP
+Umo¿liwia wybór metody kompresji animacji AVI. Dostêpne typy: \fIMJPG\fP, \fIJPEG\fP, oraz \fIRGB\fP. 
+MJPG (Motion JPEG) zapewnia doskona³± kompresjê, JPEG troszkê mniejsz± (oraz jest mniej rozpowszechniony), RGB nie zapewnia ¿adnej kompresji.
+W systemie BeOS polecana jest kompresja JPEG (jako, ¿e nie s± dostêpne kodeki MJPG). We wszystkich innych systemach polecane jest wykorzystanie MJPG (kodeki MJPG dla Windows s± dostêpne wraz z DirectX). Kompresje \fIJPGQ\fP oraz \fIlJPGS\fP s± dostarczane dla zachowania wstecznej kompatybilno¶ci i zostan± wkrótce porzucone w przysz³ych wersjach.
+.TP 20
+          \fIAVI Transparency\fP
+Opcja w³±cza przezroczysto¶æ w animacjach AVI, dziêki czemu je¶li piksele w aktualnej ramce nie zawieraj± informacji zostan± u¿yte piksele z poprzedniej ramki. Lepsze rezultatu mo¿na uzyskaæ poprzez zwiêkszenie jako¶ci - \fIAVI Quality\fP lub poprzez u¿ycie \fIRGB\fP \fIAVI Codec\fP. Opcja jest domy¶lnie w³±czona.
+.TP 20
+          \fIAVI Quality\fP
+Umo¿liwia ustawienie jako¶ci animacji AVI. Domy¶ln± warto¶ci± jest 20. 
+Poprawne warto¶ci zawieraj± siê pomiêdzy 0 a 100.
+Zobacz tak¿e \fBImage Output Formats\fP.
+.TP 20
+          \fIAVI Max Frames\fP
+Ustala maksymaln± liczbê ramek w animacji. Je¶li, po dodaniu nowego obrazu, maksymalna liczba ramek przekracza tê warto¶æ, pocz±tkowa ramka zostanie usuniêta.
+.TP 20
+          \fIAVI Frame Rate\fP
+Ustawia czêsto¶æ z jak± maj± byæ wy¶wietlane ramki animacji (ramki/sekundê). Normalnie 0.2 (czyli 1 ramka na 5 sekund) oraz 8.0 (8 ramek na sekundê).
+Warto¶ci± domy¶ln± jest 1.0.
+.TP 20
+          \fIAVI Scale\fP
+Redukuje wielko¶æ tworzonych animacji o czynnik \fIfact\fP. Czynnik powinien zawieraæ siê pomiêdzy 0.0 a 1.0.  Domy¶ln± warto¶ci± jest 0.5.
+.TP 10
+\fIFile Names and Locations...\fP
+Umo¿liwia ustawienie po³o¿enia plików zapisywanych oraz odczytywanych.
+.TP 20
+           \fIAudio file naming\fP 
+Nazwy plików d¼wiêkowych oznaczaj± czas nagrywania. Mo¿esz zmieniæ schemat nazywania plików d¼wiêkowych. B±d¼ ¶wiadomy, ¿e ustawienie to ma wp³yw na to jak WXtoImg ocenia kiedy sygna³ zosta³ zarejestrowany. Wybór \fIOther\fP powstrzyma program przed interpretowaniem czasu rejestracji za pomoc± nazwy pliku (pliki zostan± zarejestrowane pod nazw± o schemacie \fIMMDDHHMM UTC time\fP).
+.TP 20
+          \fIFilename Template\fP
+Ustawia domy¶lny format nazwy pliku obrazu oraz plików stosowanych podczas rejestrowania i dekodowania. Je¶li pole jest puste stosowany jest domy¶lny schemat nazw (\fB%T\fP).  Zobacz: \fBFilename Template\fP
+.TP 20
+          \fIUse for audio recordings/maps too\fP
+Zaznaczona opcja spowoduje zmianê nazwy wed³ug schematu tak¿e plików d¼wiêkowych i nak³adek. 
+Zauwa¿, ¿e je¶li zaznaczona jest opcja \fINo decode\fP nazwy plików d¼wiêkowych oraz nak³adek nie zostan± zmienione.
+Domy¶lnym schematem dla plików audio oraz nak³adek jest \fB%T\fP.
+.TP 20
+          \fIInterpret audio file names as\fP
+Normalnie pliki audio s± zapisywane pod nazw±, która jest dat± rozpoczêcia nagrywania. (MMDDHHMM w czasie UTC). Je¶li jednak tak nie jest powiniene¶ ustawiæ opcjê \fInot useful\fP lub inn± odpowiedni±. 
+Zauwa¿, ¿e nazwa pliku musi siê zaczynaæ dok³adnie odpowiedni± liczb± cyfr (nie mniej, nie wiêcej) gdy¿ w innym przypadku interpretacja nazwy jako daty nie jest przeprowadzana.
+.TP 20
+          \fIAudio/Map File Location\fP
+Okre¶la katalog, w którym pliki d¼wiêkowe oraz nak³adek powinny byæ zapisywane podczas rejestracji i dekodowania. Jest to tak¿e domy¶lny katalog przy otwieraniu plików audio.
+.TP 20
+          \fIRaw Image Location\fP
+Okre¶la katalog, w którym "surowe" obrazy powinny byæ zapisywane podczas dekodowania. Jest to tak¿e domy¶lny katalog przy otwieraniu "surowych" obrazów.
+.TP 20
+          \fISave Image Location\fP
+Okre¶la katalog, w którym powinny byæ zapisywane obrazy po zdekodowaniu oraz z u¿yciem polecenia \fBSave Image as...\fP z menu \fBFile\fP.
+Jest to tak¿e domy¶lny katalog przy otwieraniu obrazów.
+ .TP 20
+           \fIMap File Location\fP
+Okre¶la katalog, w którym zostan± zachowane pliki map - nak³adek podczas przetwarzania.
+.TP 20
+           \fIThumbnail Location\fP
+Okre¶la katalog, w którym zostan± zachowane miniaturki obrazów.
+.TP 10
+\fIGUI Options...\fP
+Umo¿liwia ustawienie opcji dotycz±cych graficznego interfejsu u¿ytkownika (GUI).
+.TP 20
+          \fITemperature units\fP
+Ustawia w jakich jednostkach powinna byæ wy¶wietlana temperatura (do wyboru: Celsjusz, Fahrenheit lub Kelvin) . Jednostk± domy¶ln± jest stopieñ Celsjusza.
+.TP 20
+.TP 20
+           \fIDistance units\fP
+Umo¿liwia wybór jednostek (mi - mile, nm - mile morskie, km - kilometry), w których WXtoImg okre¶la odleg³o¶æ. Domy¶ln± warto¶ci± jest km.
+          \fIHelp Language\fP
+Umo¿liwia wybór jêzyka w jakim wy¶wietlane s± pliki pomocy. Wybierz PL (Polski), EN (Angielski), ES (Hiszpañski), DE (Niemiecki) lub JA (Japoñski).
+Wiele t³umaczeñ nie jest jeszcze dostêpnych, wiêc je¶li mo¿esz pomóc w t³umaczeniu napisz na adres: http://www.wxtoimg.com/email.html.
+.TP 20
+          \fIHelp Font Size\fP
+Umo¿liwia zmianê rozmiaru czcionki wy¶wietlanej w oknie pomocy. Domy¶lny rozmiar oznaczany jest przez 0, warto¶ci ujemne spowoduj± zmniejszenie czcionki, dodatnie jej zwiêkszenie.
+.TP 20
+           \fIDate/time format\fP
+Umo¿liwia wybór formatu daty i czasu u¿ywanych przez WXtoImg. Opcja dostêpna tylko w rozszerzonej wersji programu.
+.TP 20
+          \fIShow time as UTC\fP
+Zaznaczenie opcji spowoduje wy¶wietlanie czasu UTC. Wy³±czenie spowoduje podawanie czasu lokalnego. Opcja dostêpna po zarejestrowaniu.
+.TP 20
+          \fIEnable map and projection support\fP
+W³±cza obs³ugê map - nak³adek oraz projekcji. Opcja jest w³±czona domy¶lnie, ale na bardzo wolnych komputerach wy³±czenie tworzenia nak³adek, projekcji, przekszta³ceñ MSA lub MCIR oraz kompensacji o¶wietlenia mo¿e bardzo przy¶pieszyæ tworzenie obrazów. Poniewa¿ wy³±czenie opcji bêdzie mia³o du¿y wp³yw na tworzenie przekszta³ceñ MSA i MCIR nie zaleca siê jej wy³±czania.
+Opcja dostêpna tylko w trybie eksperta (Options -> GUI Options). 
+.TP 20
+          \fIFlip Meteor series 3 images\fP
+Zaznaczona opcja automatycznie odwraca obrazy z satelitów Meteor serii 3. Jest to u¿yteczna opcja, gdy nie wykorzystujemy nak³adek oraz satelita Meteor 3 jest w fazie, podczas której wszystkie obrazy s± prezentowane do góry nogami. Domy¶lnie opcja jest wy³±czona.
+Opcja dostêpna tylko w trybie eksperta (Options -> GUI Options).
+.TP 20
+          \fIUse private colormap\fP
+Je¶li ekran wy¶wietla tylko 256 kolorów (8 bitów) opcja ta instaluje now± mapê kolorów. To pozwala na u¿ycie wszystkich 256 kolorów przez WXtoImg (zamiast dzielenia siê z innymi aplikacjami). Opcja nie przynosi ¿adnych efektów dla kart graficznych High Color (15 lub 16 bitów) lub True Color (24 lub 32 bity). 
+Konfiguracja programu musi zostaæ zapisana, a program restartowany, aby zmiany przynios³y efekt.
+Opcja dostêpna tylko w trybie eksperta (Options -> GUI Options).
+.TP 20
+          \fITear off menus\fP
+Zaznaczona opcja, po restarcie programu, pozwoli na "wyrwanie" menu z aplikacji (poprzez wybranie kreskowanej linii na szczycie danego menu). Menu zostanie umieszczone w oddzielnym oknie, które mo¿e byæ przesuwane po ekranie. Umo¿liwia to ³atwiejszy wybór przekszta³ceñ lub opcji.
+Funkcja jest dostêpna tylko w systemach Windows oraz Linux w zarejestrowanej wersji programu.
+.TP 20
+          \fIAutomatically enter record mode\fP
+Zaznaczona opcja powoduje automatyczne wej¶cie programu w tryb nagrywania po uruchomieniu (tak samo jak po wybraniu \fIRecord\fP z menu \fIFile\fP oraz klikniêciu przycisku \fIRecord\fP).  
+Dla satelitów APT tryb rejestrowania jest w³±czany na kilka minut przez nastêpnym przelotem oraz wy³±czany po zakoñczeniu ca³ego procesu.
+Opcja ta jest u¿yteczna do automatyzowania rejestracji / dekodowania obrazów po starcie programu.
+Funkcja jest dostêpna tylko w zarejestrowanej wersji programu.
+.TP 20
+           \fIDisable sat position during record\fP
+Wy³±cza obliczanie i wy¶wietlanie pozycji satelity podczas nagrywania. Opcja mo¿e byæ u¿yteczna na wolnych komputerach zapobiegaj±c przerwom w zarejestrowanym sygnale.
+.TP 20
+          \fIAutomatically update Keplers\fP
+Zaznaczona opcja spowoduje automatyczne pobieranie aktualnych danych keplerowskich z Internetu co oko³o 24 godziny. Funkcja wymaga sta³ego lub automatycznie nawi±zywanego po³±czenia z Internetem oraz jest dostêpna tylko w zarejestrowanej wersji programu.
+.TP 20
+          \fIAuto-save options on exit\fP
+Zaznaczona opcja spowoduje automatyczne zapisanie konfiguracji programu przy jego zamykaniu (w sposób identyczny jak po wybraniu \fISave Options\fP z menu \fIOptions\fP.
+.TP 20
+           \fIMaximum number of thumbnails\fP
+Okre¶la maksymaln± liczbê miniaturek pokazywanych na którejkolwiek zak³adce. Pokazywane s± najnowsze miniaturki.
+.TP 20
+           \fIEnable Expert Mode\fP
+W³±cza zbiór historycznych ustawieñ, które s± ju¿ rzadko u¿ywane. Przed wej¶ciem w ¿ycie zmiany nale¿y zachowaæ opcje oraz uruchomiæ program ponownie.
+.TP 10
+\fISave Options\fP
+Zapisuje wszystkie ustawienia z menu \fIOptions\fP oraz okien dialogowych wywo³ywanych poprzez to menu z wyj±tkiem opcji Interpolate, Show All, Resync,
+oraz Disable PLL.  
+Funkcja zapisuje tak¿e po³o¿enie i rozmiar okna, tryb rejestracji oraz ustawienia obrazów i animacji.
+Je¶li nie zastosowano tej funkcji zmiany w opcjach nie zostan± przywrócone podczas nastêpnego uruchomienia (chyba, ¿e zaznaczono opcjê \fIAuto-save options on exit\fP w oknie dialogowym \fIGUI Options\fP).
+.SH Menu Projection
+Menu \fBProjection\fP umo¿liwia zmianê projekcji geograficznej u¿ywanej do wy¶wietlania obrazów APT. Domy¶ln± projekcj± jest \fInormal\fP.  Jest to niezmieniona projekcja nadawana przez satelitê.
+.TP 10
+\fINormal\fP
+Niezmieniona projekcja nadawana przez satelitê. 
+.TP 10
+\fIMercator\fP
+Klasyczna projekcja Mercator. Linie w sta³ym kierunku ukazuj± siê proste. Ta cylindryczna projekcja nie sprawdza siê na biegunach oraz blisko nich, oraz cechuje siê znacznym zniekszta³ceniem powierzchni z dala od równików.
+.TP 10
+\fIEquidistant Cylindrical\fP
+Równoodleg³o¶ciowa cylindryczna projekcja, na której po³udniki oraz równole¿niki s± równoleg³e oraz równomiernie rozmieszczone. Cechuje siê znacznym zniekszta³ceniem powierzchni z dala od równika.
+.TP 10
+\fIEqual-Area Cylindrical\fP
+Projekcja cylindryczna, na której obszary l±du równej powierzchni maj± t± sam± powierzchnie. Cechuje siê znacznym zniekszta³ceniem kszta³tu w obszarach podbiegunowych.
+.TP 10
+\fIEckert IV\fP
+Projekcja równopowierzchniowa z pó³okr±g³ymi po³udnikami u¿ywana na mapach ¶wiata.
+.TP 10
+\fIEckert VI\fP
+Projekcja równopowierzchniowa z sinusoidalnymi po³udnikami u¿ywana na mapach ¶wiata.
+.TP 10
+\fIMollweide\fP
+Projekcja równopowierzchniowa czêsto u¿ywana na mapach ¶wiata.
+.TP 10
+\fIMiller\fP
+Projekcja cylindryczna bêd±ca kompromisem, któr± cechuj± mniejsze zniekszta³cenia ni¿ w projekcji Mercator, ale nie pokazuj±ca linii w sta³ym kierunku jako prostych.
+.TP 10
+\fIPolar Lambert Equal-Area\fP
+Projekcja polarna, azymutalna podobna do Polar Stereographic, ale  równopowierzchniowa.
+TP 10
+\fIPolar Stereographic\fP
+Projekcja azymutalna, w której po³udniki zbiegaj± siê na biegunach.
+TP 10
+\fIPolar Azimuthal Equidistant\fP
+Projekcja równopowierzchniowa wy¶rodkowana nad biegunami.
+.TP 10
+\fIOrthographic\fP
+Projekcja perspektywiczna z nieskoñczonej odleg³o¶ci.
+.SH Menu Image
+Opcje, które u¿ywaj± obrazu lub pozwalaj± na jego modyfikacjê po zakoñczeniu dekodowania.
+.TP 10
+\fISlant Correction...\fP
+Po wybraniu tej komendy mo¿liwe jest przeci±gniêcie linii wzd³u¿ pionowej krawêdzi na obrazie, dziêki czemu ustawia siê poprawn± czêstotliwo¶æ próbkowania. Zobacz dokument \fIRequired Calibration...\fP dostêpny z menu \fIHelp\fP.
+.TP 10
+\fIMove Map Overlay...\fP
+Funkcja umo¿liwia przeci±gniêcie linii pomiêdzy punktem nale¿±cym do mapy-nak³adki a odpowiednim punktem obrazu i w rezultacie poprawienie pozycji nak³adki, aby zgadza³a siê np. z zarysem l±du.
+.TP 10
+\fIColour Negative\fP
+Tworzy kolorowy negatyw obrazu. W przypadku obrazów w odcieniach szaro¶ci czarny piksel staje siê bia³y i odwrotnie.
+.TP 10
+\fIWarmer Colours\fP
+Czyni kolory ciep³ymi poprzez przesuniêcie kolorów obrazu ku czerwonemu koñcowi widma. Efekty mog± byæ bardzo subtelne, wiêc mo¿e zajdzie potrzeba kilkukrotnego jej powtórzenia.
+.TP 10
+\fIColder Colours\fP
+Czyni kolory zimnymi poprzez przesuniêcie kolorów obrazu ku niebieskiemu koñcowi widma. Efekty mog± byæ bardzo subtelne, wiêc mo¿e zajdzie potrzeba kilkukrotnego jej powtórzenia.
+.TP 10
+\fIConvert to Grayscale\fP
+Konwertuje kolorowy obraz do odcieni szaro¶ci.
+.TP 10
+\fIHistogram Equalise Image\fP
+ Obraz jest normalizowany histogramowo. Zauwa¿, ¿e ta operacja jest przeprowadzana na ca³ym, 8-bitowym, wy¶wietlanym obrazie przez co efekty s± gorsze od wyników przekszta³cenia z menu /fIEnhancements/fP, które operuje na 16 bitach. Jakkolwiek normalizowanie mo¿e byæ u¿yteczne do poprawienia przyciêtych lub powiêkszony obrazów.
+.TP 10
+\fIIncrease Contrast\fP
+Poprawia kontrast obrazu. U¿yj wielokrotnie, aby bardziej zwiêkszyæ kontrast.
+.TP 10
+\fIFlip Image\fP
+ Obraca obraz o 180 stopni.
+.TP 10
+\fIWhite Background...\fP
+Ustawia t³o obrazu, który zosta³ przekszt³cony geometrycznie (projekcja inna ni¿ Normal) z czarnego na bia³y. Opcja nie dzia³a na obrazach JPEG ogl±danych przy u¿yciu \fIView Image\fP.
+Sprawd¼ tak¿e opcjê \fIWhite background on projections\fP w oknie \fIImage Settings \fP wybieranego poprzez \fIRecord\fP z menu \fIFile\fP, która ustawia t³o dla automatycznie zapisywanych obrazów.
+.TP 10
+\fIShift Image...\fP
+Funkcja umo¿liwia wybranie punktu obrazu, który po jej wykonaniu bêdzie siê znajdowa³ na lewej krawêdzi.
+.TP 10
+\fICrop Image...\fP
+Poprzez przeci±gniêcie prostok±tnego obszaru mo¿emy przyci±æ obraz. Klikniêcie wewn±trz zaznaczonego obrazu przytnie go, natomiast klikniêcie poza tym obszarem anuluje operacje.
+.TP 10
+\fIRotate Image...\fP
+Umo¿liwia obrót obrazu. Po wybraniu funkcji przeci±gnij liniê z lewej do prawej. Linia ta bêdzie pozioma po wykonaniu obrotu.
+.TP 10
+\fIResize Image...\fP
+Podmenu umo¿liwia wybór nowego rozmiaru obrazu (jako procent orygina³u). Mo¿na tylko zredukowaæ rozmiar obrazu. Kilkukrotne u¿ycie pozwala na wykonanie bardzo ma³ych obrazów.
+.TP 10
+\fIMagnify Area...\fP
+Podmenu umo¿liwia wybór stopnia powiêkszenia (jako procent orygina³u). Po dokonaniu wyboru poprzez przeci±gniêcie mysz± mo¿e zostaæ zaznaczony prostok±tny obszar do powiêkszenia. Klikniêcie wewn±trz zaznaczonego obrazu powiêkszy wybrany obszar, natomiast klikniêcie poza zaznaczeniem anuluje operacje. Funkcja powiêkszenia u¿ywa interpolacji do zminimalizowania pikselizacji.
+.TP 10
+\fIView Enhancement Curve\fP
+Pokazuje aktywn± krzyw± przekszta³cenia lub paletê dla wybranego przekszta³cenia. Je¶li wybrano przekszta³cenie normalizacji histogramowej pokazany zostanie histogram normalizacji dla danego obrazu.
+.TP 10
+\fIUndo All (Decode)\fP
+Rozpoczyna ponowne dekodowanie co w efekcie cofnie wszystkie modyfikacje.
+.SH Schematy nazw
+Schemat nazwy pliku okre¶la domy¶ln± nazwê obrazu dla danego przelotu. Opcja ta mo¿e zostaæ ustawiona poprzez \fBFile Names and Locations...\fP w menu \fBOptions\fP.
+Je¶li pole schematu jest puste stosowany jest schemat domy¶lny. Sekwencje % w schemacie s± zastêpowane odpowiednimi danymi na temat przelotu:
+.PP
+Na przyk³ad schemat \fIFilename Template\fP:
+.nf
+    %s-%T-%e
+.fi
+.PP
+spowoduje nazwanie plików w nastêpuj±cy sposób:
+.nf
+    meteor3-01061123-norm.jpg
+    noaa-12-01062348-msa.bmp
+    noaa-01062352-mcir-precip.png
+    noaa-01062350-raw.png
+    met7-01022603-norm.png
+.fi
+.PP
+Schematy mog± tak¿e tworzyæ katalogi. Na przyk³ad:
+.nf
+!     %Y/%m/%d/%s-%e
+!     %Y\\%m\\%d\\%s-%e
+.fi
+.PP
+odpowiednio dla systemów Linux/Unix/MacOS X oraz Windows/DOS.
+.PP
+.TP 10
+\fB%@\fP
+Powoduje zamianê sekwencji daty lub czasu na dane w czasie lokalnym zamiast UTC.
+.TP 10
+\fB%s\fP
+Nazwa satelity (do 8 ma³ych liter np. \fBmet7\fP, \fBnoaa-14\fP, \fBmeteor3\fP).
+.TP 10
+\fB%N\fP
+Nazwa satelity z wielkimi literami oraz odstêpami (\fBMET7\fP, \fBNOAA 17\fP, \fBMeteor 3-5\fP).
+.TP 10
+\fB%g\fP
+Typ satelity (ma³e litery np. \fBmet\fP, \fBnoaa\fP, \fBmeteor3\fP).
+.TP 10
+\fB%D\fP
+Kierunek przelotu satelity: \fBnorthbound\fP lub
+\fBsouthbound\fP.
+.TP 10
+\fB%p\fP
+Jedna litera oznaczaj±c± kierunek przelotu \fBN\fP lub \fBS\fP.
+.TP 10
+\fB%E\fP
+Maksymalna elewacja w stopniach dla przelotu.
+ (\fB0\fP-\fB90\fP).
+.TP 10
+\fB%^\fP
+Azymut (stopnie) podczas, gdy satelita znajduje siê w najwy¿szym punkcie nad horyzontem (\fB0\fP-\fB360\fP).
+.TP 10
+\fB%z\fP
+Jedna litera - \fBE\fP lub \fBW\fP, która okre¶la czy w najwy¿szym punkcie przelotu azymut do satelity jest na wschód lub na zachód od obserwatora.
+.TP 10
+\fB%:\fP
+Zastêpowane przez \fBeast\fP lub \fBwest\fP co okre¶la czy w najwy¿szym punkcie przelotu azymut do satelity jest na wschód lub na zachód od obserwatora.
+.TP 10
+\fB%f\fP
+Oryginalna nazwa pliku d¼wiêkowego, ale bez nazwy katalogu oraz rozszerzeñ (np. je¶li plik d¼wiêkowy jest dostêpny poprzez ¶cie¿kê /tmp/03042215.wav parametr %f jest zamieniany na 03042215).
+.TP 10
+\fB%F\fP
+Format (\fBapt\fP lub \fBwefax\fP).
+.TP 10
+\fB%C\fP
+Nazwa kana³u widmowego WEFAX (\fBvis\fP, \fBir\fP, \fBnir\fP)lub numer kana³u dla APT (\fB2-4\fP, \fB3-4\fP). Informacja zawiera nie wiêcej ni¿ 3 znaki oraz jest pomijana je¶li nie mo¿na okre¶liæ kana³u.
+.TP 10
+\fB%e\fP
+Nazwa u¿ytego przekszta³cenia (np. \fBza\fP, \fBhvc\fP lub
+\fBraw\fP dla "surowych", \fBpris\fP dla nieprzetworzonych, oraz \fBnorm\fP dla nie przekszta³canych).
+Je¶li u¿yto normalizacji histogramowej dla jednego kana³u, jego nazwa zostaje dodana do "histeq" (np. histeqb, contrasta, norma).
+.TP 10
+\fB%l\fP
+Sektor okre¶lony w cyfrowym nag³ówku WEFAX. Dla APT parametr zostanie pominiêty.
+.TP 10
+\fB%8,9,10,11%\fP
+jest zamieniane na dziewi±t±, dziesi±t±, jedenast± I dwunast± literê z nag³ówka cyfrowego WEFAX (numerowanie rozpoczyna siê od 0).
+Poprawne warto¶ci zawieraj± siê pomiêdzy 0 - 49, które oznaczaj± 50 liter nag³ówka. 
+Numery rozpoczynaj± siê od 0, s± rozdzielane przecinkami, sekwencja zakoñczona jest znakiem %. Je¶li wybran± liter± jest odstêp nie zostanie on dodany do sekwencji wynikowej (wynik nie zawiera odstêpów).
+.TP 10
+\fB%r\fP
+Czêstotliwo¶æ satelity w MHz (np. 137.50).
+.TP 10
+\fB%k\fP
+Data w formacie RRMMDD. Dla obrazów WEFAX jest to data zapisana w nag³ówku cyfrowym. Obrazy APT otrzymuj± aktualn± datê w UTC (równowa¿ne \fB%y%m%d\fP).
+.TP 10
+\fB%K\fP
+Data w formacie DDMMRR (równowa¿ne \fB%d%m%y\fP)
+.TP 10
+\fB%L\fP
+Data w formacie MMDDYY (równowa¿ne \fB%m%d%y\fP)
+.TP 10
+\fB%d\fP
+2 cyfry dnia miesi±ca (\fB01\fP-\fB31\fP)
+.TP 10
+\fB%m\fP
+2 cyfry miesi±ca (\fB01\fP-\fB12\fP).
+.TP 10
+\fB%y\fP
+Rok bez stulecia (np. 01\fP).
+.TP 10
+\fB%Y\fP
+Rok ze stuleciem (np. \fB2001\fP).
+.TP 10
+\fB%T\fP
+Data oraz czas w formacie MMDDHHMM. Dla obrazów WEFAX jest to data oraz czas zawarty w nag³ówku cyfrowym, a dla APT aktualna data i czas UTC.
+(równowa¿ne \fB%m%d%H%M\fP).
+.TP 10
+\fB%t\fP
+Czas w formacie HHMM. Dla obrazów WEFAX jest to czas zawarty w nag³ówku cyfrowym, a dla APT aktualny czas UTC.
+(równowa¿ne \fB%H%M\fP).
+.TP 10
+\fB%H\fP
+2 cyfry godziny (format 24-godzinny, \fB00\fP-\fB23\fP).
+.TP 10
+\fB%I\fP
+2 cyfry godziny (format 12-godzinny, \fB0\fP-\fB12\fP).
+.TP 10
+\fB%P\fP
+Okre¶lenie pory dnia AM/PM.
+.TP 10
+\fB%M\fP
+2 cyfry godziny i 2 cyfry minuty (\fB00\fP-\fB59\fP).
+.TP 10
+\fB%Z\fP
+Nazwa lub skrót strefy czasowej.
+.TP 10
+\fB%%\fP
+zamieniane na jeden znak %.
+.SH Formaty zapisu.
+ Obrazy mog± byæ zapisywane w formatach \fIJPEG\fP, \fIPNG\fP, \fIBMP\fP,
+\fIPBM\fP (PGM/PPM/PNM), lub \fIAVI\fP.
+.PP
+Format zapisu - JPEG (.jpg), PNG (.png), BMP (.bmp), PNM (.pnm) lub
+AVI (.avi) jest okre¶lony poprzez podanie rozszerzenia pliku. Je¶li nie zostanie okre¶lone rozszerzenie plik zostanie wybrany format domy¶lny ustawiony w oknie \fBImage and Movie Options...\fP wywo³ywanym poprzez menu \fBOptions\fP.
+.PP
+\fIJPEG\fP
+Kompresja stratna. Jako¶æ (opcja -Q) mo¿e zostaæ dostosowana do zachowania odpowiedniej liczby szczegó³ów oraz wspó³czynnika kompresji. Poprawne ustawienie jako¶ci zawiera siê pomiêdzy 0 - 100. Przedzia³em u¿ytecznym jest 30 do 95. Obrazy kompresowane z jako¶ci± 30 s± mocno skompresowane, ale nie s± zachowywane wszystkie detale oraz mog± wyst±piæ artefakty. Jako¶æ 95 pozwala na zapisanie bardzo dobrego obrazu, ale kompresja jest ma³a. JPEG nie obs³uguj± 16-bitowej skali szaro¶ci, mog± natomiast zawieraæ komentarze.
+.PP
+\fIPNG\fP 
+Kompresja bezstratna. Jest to preferowany format z powodu dobrego wspó³czynnika kompresji oraz bezstratno¶ci. PNG obs³uguje 16-bitowe odcienie szaro¶ci, komentarze oraz zapisuje warto¶æ gamma.
+.PP
+\fIBMP\fP
+Format szeroko u¿ywany na systemach PC. Pliki BMP tworzone przez \fIWXtoImg\fP nie s± kompresowane. BMP nie obs³uguje 16-bitowej skali szaro¶ci, ani komentarzy.
+.PP
+\fIPBM\fP
+Format nieskompresowany, ale bardzo dobrze dostosowany do dalszego przetwarzania i wy¶wietlania w systemach *NIX.  Pliki PBM (bitmap) s± tak¿e nazywane PPM (kolor), PGM (skala szaro¶ci), oraz PNM (ka¿dy rodzaj). Obs³uguj± 16-bitowe odcienie szaro¶ci oraz komentarze
+.PP
+\fIAVI\fP
+Format zapisywania animowanej sekwencji obrazów. AVI obs³uguje ró¿ne rodzaje kompresji: nieskompresowany RGB, kompresjê JPEG oraz MJPG (Motion JPEG), czyli specjaln±, skrócon± formê kompresji JPEG. Typ kompresji jest kontrolowany poprzez parametr w pliku konfiguracyjnym.
+\fIAVI Codec\fP.
+Dla kompresji JPEG oraz MJPG ustawienie jako¶ci obrazu (opcja -Q lub parametr \fIAVI Quality\fP w pliku konfiguracyjnym) bêdzie kontrolowa³a jako¶æ oraz stopieñ kompresji animacji.
+Pliki AVI u¿ywaj± niskiej jako¶ci dla znacznego zmniejszenia rozmiaru pliku. Z powodu ruchu potrzebna jest ni¿sza jako¶æ obrazu. Je¶li wybierzesz istniej±cy plik AVI podczas zapisywania nowy obraz zostanie dodany na koñcu sekwencji, w innym przypadku tworzony jest nowy plik z jedn± ramk±.
+Je¶li plik AVI zawiera ju¿ maksymaln± (ustawion± w opcjach) liczbê ramek pierwsza ramka zostanie usuniêta a nowa do³±czona na koñcu sekwencji.
+.SH Kontrola g³o¶no¶ci
+Przy rejestrowaniu sygna³ów wa¿ne jest odpowiednie ustawienie g³o¶no¶ci. Je¶li poziom g³o¶no¶ci bêdzie zbyt wysoki nast±pi ograniczenie przenoszenia informacji o najja¶niejszych czê¶ciach obrazu. Zbyt niski poziom spowoduje ogóln± utratê szczegó³ów.
+.PP
+G³o¶no¶æ powinna zostaæ ustawiona podczas przelotu tak, aby wy¶wietlana w pasku statusu warto¶æ zawiera³a siê pomiêdzy 50 a 75. Wy¿sze warto¶ci oznaczaj± potrzebê zmniejszenia poziomu, natomiast ni¿sze oznaczaj± zbyt niski poziom.
+.PP
+G³o¶no¶æ bêdzie wy¶wietlana, podczas gdy sygna³ bêdzie rejestrowany. Mo¿esz dostosowaæ g³o¶no¶æ poprzez regulacjê odbiornika lub poprzez mikser karty d¼wiêkowej.
+Zauwa¿, ¿e nie jest polecane ustawianie g³o¶no¶ci podczas przelotu jako, ¿e bêd± widoczne ja¶niejsze oraz ciemniejsze pasy obrazu. G³o¶no¶æ powinna zostaæ ustawiona raz i tak pozostawiona.
+.PP
+Je¶li u¿ywasz 8-bitowych plików audio (nie zalecane) g³o¶no¶æ powinna byæ delikatnie regulowana pomiêdzy przelotami, a¿ do momentu, gdy ogólna g³o¶no¶æ bêdzie siê zawiera³a pomiêdzy 85.0 a 92.0. Niestety ka¿dy satelita bêdzie wymaga³ trochê innego, optymalnego ustawienia.
+Rezultaty nigdy nie bêd± tak dobre jak z u¿yciem nagrañ 16-bitowych, szczególnie je¶li u¿ywane s± przekszta³cenia.
+.PP
+Je¶li poziom g³o¶no¶ci jest bardzo wysoki WXtoImg wy¶wietli odpowiednie ostrze¿enie.
+.SH Wymagane wyposa¿enie
+W celu u¿ywania tego programu do odbioru transmisji APT bêdziesz potrzebowa³ odbiornika umo¿liwiaj±cego odbiór sygna³ów FM w pa¶mie 137-138 MHz (satelity nadaj± na czêstotliwo¶ciach: 137.30, 137.40, 137.50, 137.62, 137.80, oraz 137.85 MHz).
+Specjalnie do tego zaprojektowane odbiorniki satelitarne s± najlepszym wyborem jako, ¿e czu³o¶æ oraz pasmo przenoszenia na po¶redniej (oko³o 50kHz) bêd± prawid³owe.
+.PP
+Mog± zostaæ u¿yte skanery oraz odbiorniki komunikacyjne, jednak posiadaj± one w±ski filtr po¶redniej czêstotliwo¶ci (bliski 15 kHz) co zaowocuje obrazami z zaszumionymi lub obciêtymi obszarami bieli (warto¶ci sygna³u ponad 128 w skali 0-256 nie zostan± wy¶wietlone poprawnie).
+W±skie pasmo przenoszenia spowoduje tak¿e pojawienie siê du¿ej ilo¶ci szumu - poza momentem kiedy satelita znajduje siê nad g³ow± - jako, ¿e w po³±czeniu z efektem przesuniêcia dopplera otrzymamy sygna³ bardzo niskiej jako¶ci.
+Wersja zarejestrowana pozwoli na skorygowanie czêstotliwo¶ci odbioru je¶li odbiornik mo¿e byæ sterowany poprzez port szeregowy.
+Niektóre odbiorniki komunikacyjne posiadaj± filtr 30kHz (zapewniaj±cy poprawny odbiór w po³±czeniu ze zmian± czêstotliwo¶ci przez zarejestrowany WXtoImg) lub filtr 50kHz jako opcjê. Mo¿na tak¿e zmodyfikowaæ posiadany odbiornik.
+Przedwzmacniacz mo¿e rozwi±zaæ problem ma³ej czu³o¶ci jednak rezultaty nie bêd± tak dobre jak ze specjalnie zaprojektowanym odbiornikiem.
+.PP
+Program próbuje uzyskaæ jak najlepsze rezultaty nawet z u¿yciem s³abych sygna³ów. Jednak obrazy uzyskane z "w±skich" odbiorników nie pozwol± na wykorzystanie wielu przekszta³ceñ.
+.PP
+Rozszerzona wersja WxtoImg zawiera specjalny kod umo¿liwiaj±cy stworzenie o wiele lepszych obrazów z sygna³ów odbieranych odbiornikami z w±skim filtrem.
+Rozszerzenie mo¿e przynie¶æ efekty dla tych, którzy otrzymuj± w miarê czytelne obrazy przy u¿yciu przekszta³cenia \fIContrast enhance (NOAA ch B only)\fP.
+.PP
+Specjalna antena bêdzie wymagana bez wzglêdu na to jaki odbiornik posiadasz. Mo¿esz zbudowaæ w³asn± antenê zgodnie z instrukcjami zamieszczonymi w Internecie. Szczególnie polecana jest antena QFH. Mo¿na tak¿e wykorzystaæ skrzy¿owane dipole (polaryzacja ko³owa).
+.PP
+Oczywi¶cie bêdzie potrzebny kabel ³±cz±cy wyj¶cie odbiornika z komputerem.
+.PP
+Ostatecznie pomóc mo¿e znajomo¶æ czasu, w którym satelity bêd± przelatywa³y nad horyzontem, wiêc mo¿esz chcieæ zaopatrzyæ siê w program namierzaj±cy satelity.
+WXtoImg po wej¶ciu w tryb nagrywania poka¿e kiedy przewidywany jest nastêpny przelot oraz pozwala na wylistowanie przysz³ych przelotów, wiêc program namierzaj±cy nie jest bezwzglêdnie konieczny.
+.PP
+Dla odbioru transmisji WEFAX z satelitów geostacjonarnych wymagane bêdzie posiadanie ma³ej anteny parabolicznej po³±czonej z downconverterem do przemiany sygna³u 1,7 GHz na sygna³ w pa¶mie 137 MHz. W ten sposób jeden odbiornik mo¿e pos³u¿yæ do odbioru obrazów z satelitów polarnych oraz geostacjonarnych.
+.SH Wiêcej informacji
+Paul Hayes przedstawia instrukcjê budowy anteny QFH pod adresem:
+.nf
+    http://homepage.ntlworld.com/phqfh1/qfh_diy_guide.htm
+.fi
+.PP
+Sprawd¼ tak¿e informacje oraz najczê¶ciej zadawane pytania na temat WXtoImg dostêpne na stronie
+.nf
+    http://www.wxtoimg.com/
+.fi
+.PP
+.SH Znane b³êdy
+Funkcja resync, która koryguje okresy zaniku sygna³u w rejestrowanym sygnale nie zawsze pracuje poprawnie oraz mo¿e spowodowaæ problemu z poprawnymi sygna³ami.
+.PP
+Autodetekcja sygna³ów satelitów Okean przewa¿nie nie dzia³a. Zaznacz opcjê /fIOkean/fP w menu /fISatellite/fP przed zdekodowaniem sygna³u z tych satelitów.
+.PP
+Korygowanie zakrzywionych obrazów z satelitów Okean nie jest mo¿liwe, wiêc nale¿y bardzo dok³adnie okre¶liæ czêstotliwo¶æ próbkowania sygna³u (tak¿e dla satelitów Meteosat).
+.SH Warunki u¿ytkowania
+Program \fIWXtoImg\fP (zawieraj±cy wxtoimg, xwxtoimg, wxrec, wxmap,
+wxproj oraz wxbatch) oraz dokumentacja nie s± objête ¿adn± gwarancj±.
+Powiniene¶ posiadaæ kopiê zapasow± systemu przed zainstalowaniem programu. Unikaj uruchamiania programu jako root lub z uprawnieniami root'a, administratora lub uprawnieniami systemu.
+Poniewa¿ natura analogowych sygna³ów jest skomplikowana nie oczekuj, ¿e wyniki przetwarzania przez program bêd± poprawne (ca³kowicie lub czê¶ciowo).
+.PP
+Oprogramowanie to i wszystkie towarzysz±ce pliki jest rozprowadzane "jak jest", bez ¿adnych gwarancji. Poniewa¿ program ten mo¿e byæ u¿yty w ró¿nych ¶rodowiskach sprzêtowych i programowych, autor nie oferuje ¿adnych gwarancji co do tego, czy program nadaje siê do specyficznych zastosowañ.
+U¿ytkownik przyjmuje na siebie ca³e ryzyko u¿ywania tego programu. W ¿adnym wypadku autor programu, ani te¿ ¿aden dystrybutor oprogramowania nie mo¿e byæ poci±gniêty do odpowiedzialno¶ci za jakiekolwiek szkody czy straty spowodowane przez u¿ycie lub nadu¿ycie tego programu.
+.PP
+Program oraz dokumentacja nie powinny byæ u¿ywane w sytuacjach gdzie ¿ycie, zdrowie, bezpieczeñstwo lub w³asno¶æ mog± byæ zagro¿one.
+.PP
+Edycja freeware WXtoImg mo¿e byæ u¿ywana do prywatnych, nie komercyjnych celów bezp³atnie.
+Dodatkowe cechy oraz funkcje programu s± dostêpne tylko dla osób, które zakupi³y rozszerzone edycje programu.
+.PP
+U¿ywanie przez jak±kolwiek komercyjn± organizacjê lub osobê prywatn± w celach komercyjnych wymaga zakupu edycji Professional.
+Klucz rozszerzaj±cy mo¿e zostaæ uzyskany od:
+.nf
+    Central North Publishing Limited
+    P.O. Box 99597
+    Newmarket
+    Auckland
+    New Zealand
+    Email: http://www.wxtoimg.com/email.html
+    http://www.wxtoimg.com/reg/
+.fi
+.PP
+Program WXtoImg oraz dokumentacja mog± byæ tylko redystrybuowane dla u¿ytku prywatnego lub na niekomercyjnych zasadach w oryginalnej, niezmodyfikowanej formie. ¯adna inna dystrybucja nie jest dozwolona.
+Central North Publishing Limited zastrzega sobie mo¿liwo¶æ zatrzymania dystrybucji.
+Klucze rozszerzaj±ce mog± zostaæ u¿yte tylko na jednym komputerze oraz nie mog± zostaæ wygenerowane, dystrybuowane lub udostêpnione osobom trzecim.
+.PP
+Prawa autorskie do programu WXtoImg posiada:
+2001-2004 Central North Publishing Limited.  
+Wszelkie prawa zastrze¿one.
+.SH Zas³ugi
+Specjalne podziêkowania dla:
+Andreas Rehberg, Gerd Berg (DK1RR), John Boudreau, Adrian Chamberlain, Ari Ervaskivi, Andy Eskelson,
+Jakub Górzyñski (SQ2WB), Les Hamilton, Nakato Mikiya, Paul Hayes,
+Paul Holder, Pauli Nunez (EA3BLQ), Andre Phillips, Steven Ross, Jeremy Royle,
+Hartmut Schaksmeier
+oraz wielu innych osób, które testowa³y wersje beta programu.
+.PP
+NOAA udostêpnia bardzo du¿o informacji na swojej stronie internetowej, w swoich publikacjach, opracowa³a wiêkszo¶æ krzywych przekszta³ceñ u¿ywanych w WXtoImg oraz dostarcza³a bardzo dobre wsparcie.
+.SH Informacje
+Copyright (c) 2001-2004 Central North Publishing Limited.  All rights reserved.
+.PP
+Krzywe przekszta³ceñ: ZA, MB, MD, BD, CC, EC, HE, HF, JF, JJ, LC, TA, WV, WV-old oraz NO zosta³y dostarczone przez National Oceanic & Atmospheric Administration (NOAA).
+.PP
+Obs³ugê JPEG zapewni³a Independent JPEG Group.
+.PP
+Obs³uga map-nak³adek bazuje na pracy FreeType Team.
+.PP
+Polskie t³umaczenie: Jakub  SQ2WB

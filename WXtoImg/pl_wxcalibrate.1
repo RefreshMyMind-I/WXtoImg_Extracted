@@ -1,0 +1,92 @@
+.\" -*- nroff -*-
+.\" Copyright (c) 2001-2004 Central North Publishing Limited.
+.\" All rights reserved.
+.\"
+.\" Polskie t³umaczenie: Jakub SQ2WB 
+.\"
+.TH WXTOIMG Calibration  "version 2.7.3"
+.SH Kalibracja
+.I WXtoImg
+musi zostaæ skonfigurowany oraz skalibrowany, aby uzyskaæ u¿yteczne rezultaty. Wymagane jest ustawienie pozycji geograficznej stacji odbiorczej oraz pobranie aktualnych danych keplerowskich z Internetu.
+Kalibracja jest przeprowadzana w dwóch obszarach. Pierwszym jest g³o¶no¶æ nagrywania, drugim natomiast zrównanie czêstotliwo¶ci próbkowania programu oraz czêstotliwo¶ci próbkowania karty d¼wiêkowej.
+Kalibracjê trzeba wykonaæ tylko raz.
+.PP
+.B Zanim zaczniesz
+.br
+Pod³±cz wyj¶cie odbiornika do wej¶cia audio \fIline\fP  karty d¼wiêkowej wykorzystuj±c odpowiedni kabel. Je¶li posiadasz odbiornik ICOM PCR1000 upewnij siê, postêpuj±c zgodnie z instrukcj±, ¿e prze³±cznik jest w pozycji okre¶laj±cej poziom wyj¶ciowy na poziomie LineOut.
+.PP
+Satelity oko³obiegunowe nadaj± na czêstotliwo¶ciach 137.30, 137.40, 137.50, 137.62, 137.80 lub 137.85 MHz FM (50kHz lub WFM). Ka¿dy satelita przelatuje nad okre¶lonym punktem dwa razy dziennie (co oko³o 12 godzin) w prawie tych samych godzinach. Byæ mo¿e bêdziesz w stanie odebraæ przeloty o ni¿szej elewacji oko³o 1.5 do 2 godzin przed oraz po najlepszym przelocie.
+Niektóre satelity mog± byæ nieaktywne ze wzglêdu na porê roku, porê dnia lub blisko¶æ z innym satelit±. Dobry przelot trwa oko³o 15 minut. 
+Kiedy WXtoImg jest w trybie nagrywania pokazuje dane nastêpnego przelotu wraz z czêstotliwo¶ci±, na której nale¿y odbieraæ.
+.PP
+.B Ustawianie pozycji geograficznej stacji
+.br
+Wybierz \fIGround Station Location\fP z menu \fIOptions\fP.
+Wpisz nazwê Twojego miasta oraz pañstwa. Je¶li miasto, w którym ¿yjesz jest zamieszkane przez wiêcej ni¿ 100'000 osób kliknij na przycisk \fILookup Lat/Lon\fP.  Je¶li jeste¶ na morzu mo¿esz wpisaæ dowoln± nazwê.
+.PP
+Je¶li nie mo¿esz automatycznie znale¼æ pozycji Twojej miejscowo¶ci bêdziesz musia³ wpisaæ d³ugo¶æ i szeroko¶æ geograficzn±.
+Wspó³rzêdne musz± zostaæ wpisane w stopniach oraz czê¶ciach stopnia (na przyk³ad 52.500, natomiast nie 52:30, 52:30:00 ani 52:30.00).  Pozycje na pó³noc oraz wschód powinny zostaæ wpisane jako liczby dodatnie. Po³udnie oraz zachód reprezentowane s± poprzez liczby ujemne.
+Je¶li nie znasz w³asnej pozycji spróbuj odnale¼æ pozycjê najbli¿szego du¿ego miasta poprzez funkcjê \fILookup Lat/Lon\fP. Je¶li nie znasz wysoko¶ci nad poziomem morza wpisz 0.0.
+.PP
+.B Uaktualnianie danych keplerowskich
+.br
+Po³±cz siê z Internetem, nastêpnie wybierz \fIUpdate Keplers\fP z menu \fIFile\fP (aby pobraæ najnowsze dane dla satelitów meteorologicznych).
+Je¶li nie posiadasz po³±czenia z Internetem zignoruj to oraz wybierz \fIDisable Map Overlay\fP z menu \fIOptions\fP.
+.PP
+.B Sprawdzanie przelotów satelitów nad Twoj± stacj±.
+.br
+Wybierz \fISatellite Pass List\fP z menu \fIFile\fP. Wy¶wietli siê lista przelotów na dzi¶ oraz nastêpne 6 dni. Wy¶wietlane s± dwa czasy - lokalny oraz UTC.
+.PP
+.B Ustawianie g³o¶no¶ci
+.br
+Ustaw g³o¶no¶æ odbiornika na niskim lub ¶rednim poziomie, nastêpnie wybierz \fIMixer Control...\fP z menu \fIFile\fP. 
+Skonfiguruj mikser do nagrywania d¼wiêku z portu, do którego pod³±czony zosta³ odbiornik (normalnie Line In). W Linux'ie ustaw poziomy PCM and Recording (cassette) na najwy¿sz± warto¶æ oraz igain na ¶rednim poziomie.  W Windows ustaw ¶redni poziom g³o¶no¶ci wej¶cia Line In.
+Lepiej jest zaczynaæ ze zbyt niskim poziomem g³o¶no¶ci ni¿ ze zbyt wysokim.
+.PP
+W Windows 95 byæ mo¿e bêdziesz zmuszony wybraæ \fIW³a¶ciwo¶ci\fP z menu \fIOpcje\fP w oknie miksera oraz zaznaczyæ opcjê \fINagrywania\fP. Nastêpnie zaznaczyæ \fILine\fP aby by³y mo¿liwe opisane tutaj regulacje.
+.PP
+Wybierz \fIRecord...\fP z menu \fIFile\fP WXtoImg oraz kliknij przycisk \fIRecord\fP.
+.PP
+Poczekaj na przelot satelity. WXtoImg poka¿e na pasku statusu kiedy spodziewany jest nastêpny przelot (w UTC) oraz na jakiej czêstotliwo¶ci nale¿y odbieraæ.
+.PP
+WXtoImg zarejestruje przelot. Podczas nagrywania mo¿e byæ pokazywany obraz. Proszê nie przejmowaæ siê niepoprawn± jasno¶ci± lub obecno¶ci± tylko uko¶nych linii. Przy ustawianiu g³o¶no¶ci nie nale¿y kierowaæ siê obrazem. Nale¿y skorzystaæ z podanej tutaj metody. Gdy nagrywanie zostanie zakoñczone rozpocznie siê tworzenie mapy oraz ponowne dekodowanie obrazu, który zostanie nastêpnie wy¶wietlony. Postêpowanie takie ma na celu analizê ca³ego przelotu w celu uzyskania obrazu najlepszego z mo¿liwych.
+.PP
+Unikaj przesuwania obrazu za pomoc± pasków przewijania podczas nagrywania. Mo¿e to spowodowaæ podzia³ obrazu.
+.PP
+G³o¶no¶æ bêdzie wy¶wietlana, podczas gdy sygna³ bêdzie rejestrowany. Je¶li satelita znajduje siê ponad g³ow±, a program ca³y czas oczekuje na sygna³ g³o¶no¶æ odbiornika lub poziom ustawiony w mikserze mo¿e byæ za niski. Powoli zwiêksz g³o¶no¶æ lub/i poziom w mikserze, a¿ do chwili, gdy rozpocznie siê nagrywanie. G³o¶no¶æ powinna zostaæ ustawiona podczas przelotu tak, aby wy¶wietlana w pasku statusu warto¶æ zawiera³a siê pomiêdzy 50 a 75. Je¶li odbiornik nie umo¿liwia regulacji g³o¶no¶ci mo¿emy pos³u¿yæ siê mikserem programowym. Pasek g³o¶no¶ci powinien mieæ kolor zielony, gdy nagrywany jest sygna³. Czerwony lub ¿ó³ty kolor oznaczaj± odpowiednio za wysoki lub za niski poziom.
+.PP
+Obraz zostanie ponownie zdekodowany po zakoñczeniu przelotu. Kiedy proces zostanie zakoñczony ogólny poziom g³o¶no¶ci zostanie wy¶wietlony po prawej stronie paska statusu, poni¿ej obrazu.
+.PP
+ Ogólna g³o¶no¶æ powinna zawieraæ siê pomiêdzy 40.0 a 85.0. Wy¿sza warto¶æ oznacza, ¿e nale¿y zmniejszyæ g³o¶no¶æ, a warto¶æ ni¿sza oznacza konieczno¶æ zwiêkszenia poziomu sygna³u.
+.PP
+Je¶li g³o¶no¶æ jest zbyt wysoka nast±pi ograniczenie maksymalnych warto¶ci sygna³u co spowoduje straty w najja¶niejszych partiach obrazu. Zbyt niska g³o¶no¶æ objawi siê stratami w jako¶ci ca³ego obrazu.
+.PP
+Poza procesem kalibracji unikaj dostosowywania g³o¶no¶ci podczas przelotu satelity. Regulacja podczas nagrywania spowoduje wygiêcie obrazu wynikowego oraz wp³ynie na kalibracjê temperaturow±.
+.PP
+Wyreguluj odpowiednio g³o¶no¶æ oraz powtórz ca³± procedurê.
+.PP
+Je¶li u¿ywasz 8-bitowych plików audio (nie zalecane) g³o¶no¶æ powinna byæ delikatnie regulowana pomiêdzy przelotami, a¿ do momentu, gdy ogólna g³o¶no¶æ bêdzie siê zawiera³a pomiêdzy 85.0 a 92.0. Niestety ka¿dy satelita bêdzie wymaga³ trochê innego, optymalnego ustawienia.
+Rezultaty nigdy nie bêd± tak dobre jak z u¿yciem nagrañ 16-bitowych, szczególnie je¶li u¿ywane s± przekszta³cenia.
+.PP
+.B Ustawianie czêstotliwo¶ci próbkowania (Slant Correction)
+.br
+Zacznij poprzez zaznaczenie \fIDisable PLL\fP z menu \fIOptions\fP.
+.PP
+Nastêpnie wybierz nagranie do zdekodowania. Wybierz \fIOpen Audio File...\fP z menu \fIFile\fP oraz wska¿ plik d¼wiêkowy z zarejestrowanym przelotem. Najlepiej bêdzie, gdy wykorzystany zostanie przelot satelity NOAA (obraz bêdzie siê sk³ada³ z dwóch umieszczonych obok siebie czê¶ci) z wysok± maksymaln± elewacj±.
+.PP
+Poczekaj, a¿ plik d¼wiêkowy zostanie zdekodowany oraz wy¶wietlony. Obraz bêdzie nieco zakrzywiony w wyniku przesuniêcia dopplera. Jest to sytuacja normalna, gdy PLL jest wy³±czone.
+.PP
+Wybierz \fISlant Correction...\fP z menu \fIImage\fP. Przewiñ obraz do górnej krawêdzi oraz kliknij na pocz±tku pionowej krawêdzi widocznej na obrazie. Przytrzymaj dalej przycisk myszy przeci±gaj±c linie ku dolnej krawêdzi. Pozwól, aby obraz zosta³ przewiniêty do samego krañca. Upewnij siê ¿e wska¼nik myszy znajduje siê na tej samej pionowej krawêdzi, która zosta³a zaznaczona na pocz±tku. Na zakoñczenie pu¶æ przycisk myszy. Linia, która zosta³a w ten sposób wyznaczona powinna mniej wiêcej pokrywaæ siê z krawêdzi± widoczn± na obrazie.
+.PP
+Pojawi siê okno dialogowe, które zasugeruje obliczon± czêstotliwo¶æ próbkowania. WXtoImg mo¿e obliczyæ przybli¿on± warto¶æ tej czêstotliwo¶ci tak¿e dla innych satelitów. W tym celu nale¿y zaznaczyæ opcjê \fIEstimate and set sampling frequencies for all satellites\fP (je¶li nie jest ju¿ zaznaczona). Na zakoñczenie klikamy przycisk \fISet\fP.
+.PP
+Usuñ zaznaczenie opcji \fIDisable PLL\fP z menu \fIOptions\fP. Obraz zostanie ponownie zdekodowany. Powinien byæ teraz ca³kowicie prosty. Je¶li jest zakrzywiony sprawd¼ czy odznaczy³e¶ \fIDisable PLL\fP z menu \fIOptions\fP.
+Je¶li obraz nadal nie jest prosty nale¿y powtórzyæ ca³± procedurê.
+.PP
+Opcje s± zachowywane (domy¶lnie) przy zamykaniu programu. Jednak powiniene¶ siê upewniæ, ¿e czêstotliwo¶æ próbkowania zostanie zachowana poprzez wybranie \fISave Options\fP z menu \fIOptions\fP.
+.PP
+Mo¿esz poprawiæ efekty kalibracji poprzez powtórzenie ca³ej procedury dla innych typów satelitów. Nale¿y wtedy zaznaczyæ opcjê \fISet only XXX sampling frequency\fP w oknie dialogowym. Najprawdopodobniej bêdzie trzeba wykonaæ kalibracjê dla satelitów Meteosat oraz Okean jako, ¿e wymagaj± one bardzo dok³adnych ustawieñ.
+.SH Prawa autorskie
+Copyright (c) 2001-2004 Central North Publishing Limited.  All rights reserved.
+.PP
+Polskie t³umaczenie: Jakub  SQ2WB

@@ -1,0 +1,79 @@
+.\" -*- nroff -*-
+.\" Copyright (c) 2001, 2004 Central North Publishing Limited.
+.\" Traducción al español de Paulí Núñez, EA3BLQ. 
+.\"
+.\".hla es
+.TH Calibrado de WXtoImg  "versión 2.7.2"
+.SH Calibrado
+Para obtener resultados óptimos, \fIWXtoImg\fP debe ser configurado y calibrado. La configuración requiere indicar la ubicación de la estación receptora así como la descarga de Internet de los elementos Kepler actualizados. El calibrado es preciso efectuarlo en dos áreas: la primera es el ajuste del nivel de audio para el grabado de la señal y la segunda la introducción de la velocidad de la tarjeta de sonido como frecuencia de muestreo. Este calibrado solo es preciso hacerlo una vez.
+.PP
+.B Antes de comenzar
+.br
+Utilizando un cable adecuado, conecte la salida de audio de su receptor a la entrada de sonido, \fILine-In\fP de su tarjeta de sonido. Si utiliza un receptor ICOM PCR1000, es imprescindible que, siguiendo las instrucciones del manual, sitúe el puente interno en la posición de nivel de salida para línea.
+.PP
+Los satélites de órbita polar transmiten en FM en las frecuencias de 137.30, 137.40, 137.50, 137.62, 137.80, o 137.85 MHz (50kHz o NFM). Cada satélite nos ofrece dos pasadas diarias, con un intervalo de unas 12 horas, aproximadamente a la misma hora todos los días. Existe la posibilidad de que, alrededor de 1.5 a 2 horas antes y después del mejor pase, se puedan captar los pases de elevación inferior. 
+.PP
+A tener en cuenta la posibilidad de que no todos los satélites que nos sobrevuelen tengan activada la transmisión; ello dependerá de la época del año, la hora del día, su proximidad a otro satélite y si están en funcionamiento o no. Un buen pase dura aproximadamente 15 minutos. 
+.PP
+Cuando \fIWXtoImg\fP esté en la modalidad de grabación indicará el próximo pase de un satélite y la frecuencia en que hace la transmisión.
+.PP
+.B Como configurar la ubicación de la Estación Terrestre
+.br
+Seleccione la opción \fIGround Station Location\fP (Ubicación de la Estación Terrestre) en el menú \fIOptions\fP e introduzca el nombre de su ciudad y país. Si su ciudad tiene una población superior a los 100.000 habitantes, pulse el botón 
+\fILookup Lat/Lon\fP para ver las coordenadas. Si está en el mar, puede introducir la descripción que le parezca más apropiada para el nombre de la ciudad y el país.
+.PP
+Si no puede obtener la latitud y longitud porque su ciudad es desconocida para el programa, deberá introducir sus coordenadas manualmente. La latitud y la longitud debe introducirse expresada en grados y su fracción decimal (es decir: 52.500 y no 50:30 ni 50:30:00 o 52:30.00). Las posiciones Norte y Este deben ser introducidas como números positivos, mientras que las de Sur y Oeste precisan números negativos. Si desconoce las coordenadas de su ubicación, indique una gran ciudad cercana (con una población superior a 100.000) y pulse \fILookup Lat/Lon\fP. Si no conoce la altitud introduzca 0.0
+.PP
+.B Como actualizar los elementos Keplerianos
+.br
+A fin de descargar y actualizar los elementos orbitales de los satélites meteorológicos, conéctese a Internet y seleccione la opción \fIUpdate Keplers\fP en el menú \fIFile\fP. La actualización de estos elementos es imprescindible para situar la transparencia del mapa de límites y fronteras terrestres con la máxima precisión, por lo que en el supuesto de que no disponga de conexión a Internet, ignore la instrucción anterior y en su lugar seleccione la opción \fIDisable Map Overlay\fP del menú\fIOptions\fP para desactivar la inclusión de transparencias en la imagen.
+.PP
+.B Como obtener una predicción de pases de satélites.
+.br
+Para obtener una predicción de pases de los satélites que tenga seleccionados como activos, pulse \fISatellite Pass List\fP en el menú \fIFile\fP y emergerá una ventana mostrando el listado de los pases que, siendo visibles desde su ubicación, están previstos a partir de ese preciso instante y hasta siete días de antelación. Los horarios se dan en hora local y UTC. Pulsando la opción \fIPrint\fP podrá obtener una copia impresa.
+.PP 
+.B Como ajustar el volumen de audio.
+.br
+Sitúe el control de volumen de su receptor a un nivel entre bajo y moderado y a continuación pulse la opción \fIMixer Control...\fP en el menú \fIFile\fP. Configure el Control de Volumen seleccionando la entrada de sonido a la que esté conectado su receptor (normalmente "Line in"). Si su OS es Linux, sitúe los niveles "PCM" y "Recording" (cassette) al tope superior. Tanto para Windows como para Linux, el nivel de "Line in" debe situarse por la mitad de su recorrido al tiempo que, solo en el caso de Linux, se hace lo propio con "igain". Para empezar es mejor que los niveles de volumen y línea sean demasiado bajos que no demasiado altos.
+.PP
+Si su sistema operativo es Windows 95 quizás deba acceder al menú \fIOpciones\fP del Control de Volumen y pulsar \fIPropiedades\fP y a continuación \fIGrabación\fP para seleccionar \fILine-In\fP para poder ajustar los controles en la forma indicada más arriba.
+.PP
+Seleccione \fIRecord...\fP en el menú \fIFile\fP y pulse \fIRecord\fP.
+.PP
+Espere la llegada de un satélite. En la barra de estado del \fIWXtoImg\fP podrá leer la hora UTC de llegada del satélite y la frecuencia de transmisión.
+.PP
+WXtoImg grabará el pase. Durante el pase la pantalla puede mostrar una imagen, cuya brillantez, oscuridad u otros problemas como que la imagen consista solo de rayas diagonales, NO debe preocuparnos. Cuando establezca el volumen de audio no se guíe nunca por esta imagen. Utilice solo el método que se discute más adelante. Una vez completada la grabación, WxtoImg construirá un mapa y descodificará nuevamente la imagen. Lo hace así para obtener los mejores resultados posibles.
+.PP
+Durante el periodo de grabación evite utilizar las barras de desplazamiento. Podría provocar una partición de la imagen.
+.PP
+A medida que va grabando, el programa muestra el volumen (vol) de la señal que recibe en el extremo derecho de la barra de estado. Si un satélite nos está sobrevolando y la línea de estado indica que el programa está todavía a la espera de la portadora o de la señal, es muy probable que el nivel del volumen del receptor o el de "Line-In" en el Controlador de Volumen del Mixer sean bajos. Incremente suavemente uno o los dos volúmenes hasta que la línea de estado nos indique que el programa está grabando la señal. En ese momento y mientras pasa el satélite, podemos modificar suavemente el volumen del receptor o del nivel de grabación en el Mixer y situarlos a una lectura, en la ventana vol de la barra de estado, que oscile entre 50.0 y 75.0. Si el receptor no dispone de control de volumen o dicho control no afecta a la salida de la señal, deberá ajustar la configuración del Mixer (nivel de grabación, igain o Line-In) hasta que el volumen se sitúe entre el mencionado margen de lectura. El color de la barra indicadora del nivel debe ser verde; los colores rojo o amarillo indican un nivel de volumen demasiado alto o demasiado bajo.
+.PP
+Una vez completado el pase del satélite el programa volverá a decodificar la imagen y al terminar el proceso, debajo de la imagen, a la derecha de la pantalla, mostrará el valor medio del volumen de la señal recibida.
+.PP
+Este valor debe estar situado entre 40.0 y 85.0. Los valores superiores a 85.0, como por ejemplo 90.2, indican que debe procederse a una reducción de volumen y, a la inversa, los inferiores a 40.0, por ejemplo 24.7, indican que es preciso incrementar dicho nivel.
+.PP
+Si el volumen es demasiado alto se producirán cortes en la amplitud de la señal ("clipping") y algunos detalles se perderán en las áreas blancas de la imagen. Si por el contrario es demasiado bajo, se perderán detalles en toda la imagen.
+.PP
+Exceptuando este calibrado, evite ajustar el volumen cuando el pase del satélite esté dentro del área de recepción de su estación. El ajuste del volumen durante el pase provoca una doblez al final de la imagen y afectará negativamente el calibrado de la temperatura.
+.PP
+.B Como ajustar la frecuencia de muestreo (Corrección de la inclinación)
+.br
+Comenzaremos por seleccionar únicamente la opción \fIDisable PLL\fP del menú \fIOptions\fP. Al desactivar el PLL es posible establecer un ajuste más preciso de la frecuencia de muestreo.
+.PP
+A continuación y utilizando la opción \fIOpen Audio File...\fP del menú \fIFile\fP, seleccione uno de los ficheros wav grabados anteriormente. Lo ideal sería seleccionar la grabación de un satélite NOAA en su pase sobrevolando nuestra estación a gran altura (el resultado es una imagen conteniendo dos imágenes juntas).
+.PP
+Ahora espere a que la imagen sea descodificada y mostrada en la pantalla. La vertical de la imagen, como resultado del desplazamiento "doppler" estará ligeramente inclinada en la parte inferior. Ello es normal cuando se desactiva el PLL.
+.PP
+En el menú \fIImage\fP seleccione la opción \fISlant Correction...\fP. A continuación desplace la imagen hasta el borde superior y sitúe el puntero del ratón sobre uno de los bordes verticales. Pulse el botón izquierdo del ratón y manteniendo el botón pulsado arrastre el puntero hacia el borde inferior de la imagen, dibujando una línea. Cuando la imagen se haya desplazado completamente asegúrese que sitúa el puntero en el borde inferior de la imagen sobre el mismo borde vertical que ha seleccionado en la parte superior y suelte el botón del ratón.
+.PP
+Se abrirá una caja de dialogo sugiriendo la frecuencia de muestreo adecuada. Como quiera que el programa \fIWXtoImg\fP puede calcular las frecuencias de muestreo de todos los satélites se recomienda seleccionar la opción \fIEstimate and set sampling frequencies for all satellites\fP, si esta no está ya seleccionada por defecto. A continuación pulse sobre \fISet\fP.
+.PP
+Desactive la selección de la opción \fIDisable PLL\fP del menú \fIOptions\fP. La imagen volverá a decodificarse y debería aparecer completamente recta en su verticalidad. Si no es así compruebe y confirme que la opción \fIDisable PLL\fP del menú \fIOptions\fP \fBNO\fP esté seleccionada. Si se confirma que la opción \fBNO\fP está seleccionada, repita todo el proceso siguiendo atentamente las instrucciones anteriores.
+.PP
+Si bien por defecto la configuración de las opciones se guarda al salir del programa, es aconsejable asegurarse que la frecuencia de muestreo queda salvada, seleccionando la opción \fISave Options\fP en el menú \fIOptions\fP.
+.PP
+Se pueden obtener resultados más óptimos repitiendo este proceso para cada uno de los satélites, pero debe seleccionarse la opción \fISet only XXX sampling frequency\fP. Puesto que los satélites Meteosat y Okean requieren un ajuste muy preciso, probablemente será preciso rehacer este proceso para cada uno de ellos.
+.SH Copyright
+Traducción al español de Paulí Núñez, EA3BLQ
+.PP
+Copyright (c) 2001, 2004 Central North Publishing Limited.  All rights reserved.
